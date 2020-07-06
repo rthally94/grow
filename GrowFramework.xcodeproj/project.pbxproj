@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		21E98A8824B38C5C0078D5CF /* GrowFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21E98A7E24B38C5C0078D5CF /* GrowFramework.framework */; };
-		21E98A8D24B38C5C0078D5CF /* GrowFrameworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E98A8C24B38C5C0078D5CF /* GrowFrameworkTests.swift */; };
-		21E98A8F24B38C5C0078D5CF /* GrowFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 21E98A8124B38C5C0078D5CF /* GrowFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		21E98A9B24B38C9F0078D5CF /* GrowModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E98A9A24B38C9F0078D5CF /* GrowModelTest.swift */; };
+		21E98A9F24B39DFB0078D5CF /* GrowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E98A9E24B39DFB0078D5CF /* GrowModel.swift */; };
+		21E98AA124B3A8C80078D5CF /* PlantStoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E98AA024B3A8C80078D5CF /* PlantStoreTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,11 +25,12 @@
 
 /* Begin PBXFileReference section */
 		21E98A7E24B38C5C0078D5CF /* GrowFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GrowFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		21E98A8124B38C5C0078D5CF /* GrowFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GrowFramework.h; sourceTree = "<group>"; };
 		21E98A8224B38C5C0078D5CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21E98A8724B38C5C0078D5CF /* GrowFrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrowFrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		21E98A8C24B38C5C0078D5CF /* GrowFrameworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowFrameworkTests.swift; sourceTree = "<group>"; };
 		21E98A8E24B38C5C0078D5CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21E98A9A24B38C9F0078D5CF /* GrowModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowModelTest.swift; sourceTree = "<group>"; };
+		21E98A9E24B39DFB0078D5CF /* GrowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowModel.swift; sourceTree = "<group>"; };
+		21E98AA024B3A8C80078D5CF /* PlantStoreTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantStoreTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +73,8 @@
 		21E98A8024B38C5C0078D5CF /* GrowFramework */ = {
 			isa = PBXGroup;
 			children = (
-				21E98A8124B38C5C0078D5CF /* GrowFramework.h */,
 				21E98A8224B38C5C0078D5CF /* Info.plist */,
+				21E98A9E24B39DFB0078D5CF /* GrowModel.swift */,
 			);
 			path = GrowFramework;
 			sourceTree = "<group>";
@@ -80,8 +82,9 @@
 		21E98A8B24B38C5C0078D5CF /* GrowFrameworkTests */ = {
 			isa = PBXGroup;
 			children = (
-				21E98A8C24B38C5C0078D5CF /* GrowFrameworkTests.swift */,
 				21E98A8E24B38C5C0078D5CF /* Info.plist */,
+				21E98A9A24B38C9F0078D5CF /* GrowModelTest.swift */,
+				21E98AA024B3A8C80078D5CF /* PlantStoreTest.swift */,
 			);
 			path = GrowFrameworkTests;
 			sourceTree = "<group>";
@@ -93,7 +96,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21E98A8F24B38C5C0078D5CF /* GrowFramework.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,9 +150,11 @@
 				TargetAttributes = {
 					21E98A7D24B38C5C0078D5CF = {
 						CreatedOnToolsVersion = 11.5;
+						LastSwiftMigration = 1150;
 					};
 					21E98A8624B38C5C0078D5CF = {
 						CreatedOnToolsVersion = 11.5;
+						LastSwiftMigration = 1150;
 					};
 				};
 			};
@@ -195,6 +199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21E98A9F24B39DFB0078D5CF /* GrowModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +207,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21E98A8D24B38C5C0078D5CF /* GrowFrameworkTests.swift in Sources */,
+				21E98A9B24B38C9F0078D5CF /* GrowModelTest.swift in Sources */,
+				21E98AA124B3A8C80078D5CF /* PlantStoreTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +345,7 @@
 		21E98A9324B38C5C0078D5CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -356,6 +363,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ryanthally.GrowFramework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -363,6 +371,7 @@
 		21E98A9424B38C5C0078D5CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -387,6 +396,8 @@
 		21E98A9624B38C5C0078D5CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = B3L9HWP3QN;
@@ -398,6 +409,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ryanthally.GrowFrameworkTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -405,6 +417,8 @@
 		21E98A9724B38C5C0078D5CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = B3L9HWP3QN;
