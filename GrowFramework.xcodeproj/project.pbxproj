@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		21BFB39F24B5313700B94A72 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB39D24B5313700B94A72 /* Formatters.swift */; };
+		21BFB3A024B5313700B94A72 /* RelativeDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB39E24B5313700B94A72 /* RelativeDateFormatter.swift */; };
+		21BFB3A224B533EB00B94A72 /* CareIntervalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3A124B533EB00B94A72 /* CareIntervalTest.swift */; };
+		21BFB3A424B5345400B94A72 /* Plant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3A324B5345400B94A72 /* Plant.swift */; };
 		21E98A8824B38C5C0078D5CF /* GrowFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21E98A7E24B38C5C0078D5CF /* GrowFramework.framework */; };
 		21E98A9B24B38C9F0078D5CF /* GrowModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E98A9A24B38C9F0078D5CF /* GrowModelTest.swift */; };
 		21E98A9F24B39DFB0078D5CF /* GrowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E98A9E24B39DFB0078D5CF /* GrowModel.swift */; };
@@ -24,6 +28,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		21BFB39D24B5313700B94A72 /* Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		21BFB39E24B5313700B94A72 /* RelativeDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelativeDateFormatter.swift; sourceTree = "<group>"; };
+		21BFB3A124B533EB00B94A72 /* CareIntervalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareIntervalTest.swift; sourceTree = "<group>"; };
+		21BFB3A324B5345400B94A72 /* Plant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plant.swift; sourceTree = "<group>"; };
 		21E98A7E24B38C5C0078D5CF /* GrowFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GrowFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21E98A8224B38C5C0078D5CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21E98A8724B38C5C0078D5CF /* GrowFrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrowFrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,6 +60,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		21BFB39C24B5311000B94A72 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				21BFB39D24B5313700B94A72 /* Formatters.swift */,
+				21BFB39E24B5313700B94A72 /* RelativeDateFormatter.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		21E98A7424B38C5C0078D5CF = {
 			isa = PBXGroup;
 			children = (
@@ -73,8 +90,10 @@
 		21E98A8024B38C5C0078D5CF /* GrowFramework */ = {
 			isa = PBXGroup;
 			children = (
+				21BFB39C24B5311000B94A72 /* Helpers */,
 				21E98A8224B38C5C0078D5CF /* Info.plist */,
 				21E98A9E24B39DFB0078D5CF /* GrowModel.swift */,
+				21BFB3A324B5345400B94A72 /* Plant.swift */,
 			);
 			path = GrowFramework;
 			sourceTree = "<group>";
@@ -85,6 +104,7 @@
 				21E98A8E24B38C5C0078D5CF /* Info.plist */,
 				21E98A9A24B38C9F0078D5CF /* GrowModelTest.swift */,
 				21E98AA024B3A8C80078D5CF /* PlantStoreTest.swift */,
+				21BFB3A124B533EB00B94A72 /* CareIntervalTest.swift */,
 			);
 			path = GrowFrameworkTests;
 			sourceTree = "<group>";
@@ -199,6 +219,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21BFB39F24B5313700B94A72 /* Formatters.swift in Sources */,
+				21BFB3A424B5345400B94A72 /* Plant.swift in Sources */,
+				21BFB3A024B5313700B94A72 /* RelativeDateFormatter.swift in Sources */,
 				21E98A9F24B39DFB0078D5CF /* GrowModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,6 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				21E98A9B24B38C9F0078D5CF /* GrowModelTest.swift in Sources */,
+				21BFB3A224B533EB00B94A72 /* CareIntervalTest.swift in Sources */,
 				21E98AA124B3A8C80078D5CF /* PlantStoreTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
