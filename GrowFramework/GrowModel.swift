@@ -52,8 +52,3 @@ class PlantStore {
         }
     }
 }
-
-struct Plant: Hashable {
-    let id: UUID
-    var name: String
-}
