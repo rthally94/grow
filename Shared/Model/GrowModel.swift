@@ -7,36 +7,34 @@
 //
 
 import Foundation
+import Combine
 
-class GrowModel {
-    var plantStore: PlantStore
+class GrowModel: ObservableObject {
+    @Published var plants = [Plant]()
     
-    init(plants: PlantStore) {
-        self.plantStore = plants
-    }
 }
 
-class PlantStore {
-    private var plants: [Plant] = []
-    
+extension GrowModel {
+    /// Adds a default plant to the dataset
     func addPlant() {
-        let newPlantName = "Plant"
+        let newPlantCount = plants.reduce(0) { (count, plant) in
+            plant.name.hasPrefix("New Plant") ? count + 1 : count
+        }
+        let newPlantName = "New Plant \(newPlantCount + 1)"
         addPlant(name: newPlantName)
     }
     
+    /// Adds a parameterized plant to the dataset
+    /// - Parameter name: The name of the plant
     func addPlant(name: String) {
         let newPlant = Plant(id: UUID(), name: name)
         plants.append(newPlant)
     }
     
-    func getPlants() -> [Plant] {
-        return plants
-    }
-    
-    func getPlant(at index: Int) -> Plant? {
-        return plants[index]
-    }
-    
+    /// Updates a plant model in the dataset with the specified parameters
+    /// - Parameters:
+    ///   - oldPlant: The plant to update
+    ///   - name: The new name of the plant
     func updatePlant(_ oldPlant: Plant, name: String? = nil) {
         if let oldIndex = plants.firstIndex(of: oldPlant) {
             var updatedPlant = oldPlant
@@ -45,6 +43,8 @@ class PlantStore {
         }
     }
     
+    /// Removes a plant from the dataset
+    /// - Parameter plant: The plant to remove
     func deletePlant(plant: Plant) {
         if let index = plants.firstIndex(of: plant) {
             plants.remove(at: index)

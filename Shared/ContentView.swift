@@ -9,8 +9,27 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var model: GrowModel
+    
     var body: some View {
-        Text("Hello, World!")
+        NavigationView {
+            List(model.plants) { plant in
+                NavigationLink(plant.name, destination: Text(plant.name))
+            }
+            .listStyle(GroupedListStyle())
+            .navigationBarTitle("Plants")
+            .navigationBarItems(trailing: Button(
+                action: {
+                    withAnimation {
+                        self.model.addPlant()
+                    }
+                },
+                label: {
+                    Image(systemName: "plus.circle")
+                        .imageScale(.large)
+                })
+            )
+        }
     }
 }
 

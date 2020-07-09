@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct Plant: Hashable {
+struct Plant: Identifiable, Hashable {
     // General Plant Info
-    let id: UUID
+    var id: UUID
     var name: String
     var pottingDate: Date?
     
