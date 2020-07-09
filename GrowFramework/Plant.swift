@@ -20,13 +20,6 @@ struct Plant: Hashable {
     var age: TimeInterval {
         return DateInterval(start: pottingDate ?? Date(), end: Date()).duration
     }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-        hasher.combine(name)
-        hasher.combine(pottingDate)
-        hasher.combine(wateringInterval)
-    }
 }
 
 struct CareInterval: Hashable, CustomStringConvertible {

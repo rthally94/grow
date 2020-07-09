@@ -14,8 +14,6 @@ class GrowModel {
     init(plants: PlantStore) {
         self.plantStore = plants
     }
-    
-    
 }
 
 class PlantStore {
@@ -41,7 +39,8 @@ class PlantStore {
     
     func updatePlant(_ oldPlant: Plant, name: String? = nil) {
         if let oldIndex = plants.firstIndex(of: oldPlant) {
-            let updatedPlant = Plant(id: oldPlant.id, name: name ?? oldPlant.name)
+            var updatedPlant = oldPlant
+            updatedPlant.name = name ?? oldPlant.name
             plants[oldIndex] = updatedPlant
         }
     }
