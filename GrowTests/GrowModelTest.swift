@@ -58,4 +58,17 @@ class GrowModelTest: XCTestCase {
         sut.updatePlant(plant, name: newName)
         XCTAssertEqual(sut.plants[0].name, newName)
     }
+    
+    func testPlantStore_WhenCareLogIsAdded_PlantIsUpdatedInCollection() {
+        let sut = GrowModel()
+        sut.addPlant()
+            
+        XCTAssertEqual(sut.plants[0].getLogs().count, 0)
+        
+        let careActivity = CareActivity()
+        sut.addCareActivity(careActivity, to: sut.plants[0])
+        
+        XCTAssertEqual(sut.plants[0].getLogs().count, 1)
+        print(sut.plants[0].getLogs())
+    }
 }
