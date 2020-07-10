@@ -11,6 +11,14 @@ import Foundation
 struct CareActivity: Identifiable, Hashable {
     enum CareType {
         case water, prune, fertilize
+        
+        var description: String {
+            switch self {
+            case .water: return "Watering"
+            case .prune: return "Pruning"
+            case .fertilize: return "Fertilizing"
+            }
+        }
     }
     
     var id: UUID
