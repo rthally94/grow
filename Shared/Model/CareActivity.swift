@@ -8,29 +8,27 @@
 
 import Foundation
 
-protocol CareActivity: Identifiable, Hashable {
-    var id: UUID { get set }
-    var date: Date { get set }
+struct CareActivity: Identifiable, Hashable {
+    enum CareType {
+        case water, prune, fertilize
+    }
     
-    init()
-    init(date: Date)
-    init(id: UUID, date: Date)
-}
-
-struct WaterActivity: CareActivity {
     var id: UUID
+    var type: CareType
     var date: Date
     
+    
     init() {
-        self.init(id: UUID(), date: Date())
+        self.init(id: UUID(), type: .water, date: Date())
     }
     
-    init(date: Date) {
-        self.init(id: UUID(), date: date)
+    init(type: CareType, date: Date) {
+        self.init(id: UUID(), type: type, date: date)
     }
     
-    init(id: UUID, date: Date) {
+    init(id: UUID, type: CareType, date: Date) {
         self.id = id
+        self.type = type
         self.date = date
     }
 }
