@@ -36,10 +36,22 @@ extension Plant {
     }
     
     func getWaterLogs(max: Int = 1) -> [CareActivity] {
+        return getLogs(type: .water, max: max)
+    }
+    
+    func getLogs(type: CareActivity.CareType? = nil, max: Int = 1) -> [CareActivity] {
         var logs = [CareActivity]()
-        for activity in careActivity where activity.type == .water {
-            logs.append(activity)
-            if logs.count == max { break }
+        
+        if let logType = type {
+            for activity in careActivity where activity.type == logType {
+                logs.append(activity)
+                if logs.count == max { break }
+            }
+        } else {
+            for activity in careActivity {
+                logs.append(activity)
+                if logs.count == max { break }
+            }
         }
         
         return logs
