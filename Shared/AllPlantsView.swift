@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct AllPlantsView: View {
     @EnvironmentObject var model: GrowModel
     
     var body: some View {
@@ -33,8 +33,8 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct AllPlantsView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        AllPlantsView().environmentObject(GrowModel())
     }
 }
