@@ -22,17 +22,27 @@ struct Plant: Identifiable, Hashable {
     }
     
     // Care Activity
-    var careActivity = [CareActivity]()
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-        hasher.combine(name)
-        hasher.combine(pottingDate)
-        hasher.combine(wateringInterval)
+    private(set) var careActivity = [CareActivity]()
+}
+
+// MARK: Plant Intents
+extension Plant {
+    mutating func addCareActivity(_ log: CareActivity) {
+        careActivity.insert(log, at: 0)
     }
     
-    static func == (lhs: Plant, rhs: Plant) -> Bool {
-        return lhs.hashValue == rhs.hashValue
+    var lastWaterLog: CareActivity? {
+        return getWaterLogs().first
+    }
+    
+    func getWaterLogs(max: Int = 1) -> [CareActivity] {
+        var logs = [CareActivity]()
+        for activity in careActivity where activity.type == .water {
+            logs.append(activity)
+            if logs.count == max { break }
+        }
+        
+        return logs
     }
 }
 
