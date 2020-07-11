@@ -40,10 +40,12 @@ class Plant: ObservableObject, Identifiable, Hashable, Equatable {
         self.wateringInterval = wateringInterval
     }
     
+    // Hashable
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
     
+    // Equatable
     static func == (lhs: Plant, rhs: Plant) -> Bool {
         return lhs.hashValue == rhs.hashValue
     }
