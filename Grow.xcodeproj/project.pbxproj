@@ -50,7 +50,7 @@
 /* Begin PBXFileReference section */
 		212A1E8924B7664C002C147F /* PlantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailView.swift; sourceTree = "<group>"; };
 		212A1E8B24B893F7002C147F /* CareActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareActivity.swift; sourceTree = "<group>"; };
-		21BFB3AE24B66E0800B94A72 /* Grow iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grow iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		21BFB3AE24B66E0800B94A72 /* Grow!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grow!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21BFB3B124B66E0800B94A72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21BFB3B324B66E0800B94A72 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		21BFB3B624B66E0800B94A72 /* Grow.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Grow.xcdatamodel; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 		21BFB3AF24B66E0800B94A72 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				21BFB3AE24B66E0800B94A72 /* Grow iOS.app */,
+				21BFB3AE24B66E0800B94A72 /* Grow!.app */,
 				21BFB40B24B67A2400B94A72 /* GrowTests.xctest */,
 			);
 			name = Products;
@@ -178,7 +178,7 @@
 			);
 			name = "Grow iOS";
 			productName = Grow;
-			productReference = 21BFB3AE24B66E0800B94A72 /* Grow iOS.app */;
+			productReference = 21BFB3AE24B66E0800B94A72 /* Grow!.app */;
 			productType = "com.apple.product-type.application";
 		};
 		21BFB40A24B67A2400B94A72 /* GrowTests */ = {
@@ -437,7 +437,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ryanthally.Grow;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Grow!";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -458,7 +458,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ryanthally.Grow;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Grow!";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
