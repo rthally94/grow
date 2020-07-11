@@ -36,9 +36,8 @@ extension GrowModel {
     ///   - name: The new name of the plant
     func updatePlant(_ oldPlant: Plant, name: String? = nil) {
         if let oldIndex = plants.firstIndex(of: oldPlant) {
-            var updatedPlant = oldPlant
+            let updatedPlant = plants[oldIndex]
             updatedPlant.name = name ?? oldPlant.name
-            plants[oldIndex] = updatedPlant
         }
     }
     
