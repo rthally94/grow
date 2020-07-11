@@ -124,7 +124,8 @@ struct PlantDetailView: View {
         .actionSheet(isPresented: $plantActionSheetIsPresented) {
             ActionSheet(title: Text("Plant Options"), buttons: [
                 ActionSheet.Button.default(Text("Log Care Activity"), action: addCareActivity),
-                ActionSheet.Button.destructive(Text("Delete Plant"), action: deletePlant)
+                ActionSheet.Button.destructive(Text("Delete Plant"), action: deletePlant),
+                ActionSheet.Button.cancel()
             ])
         }
     }
