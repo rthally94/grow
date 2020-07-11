@@ -22,6 +22,15 @@ struct StatCell: View {
         }
         .padding()
     }
+    
+    init(title: String, subtitle: String) {
+        self.init(title: Text(title), subtitle: Text(subtitle))
+    }
+    
+    init(title: Text, subtitle: Text) {
+        self.title = title
+        self.subtitle = subtitle
+    }
 }
 
 struct StatRow<Content: View>: View {
@@ -81,9 +90,9 @@ struct PlantDetailView: View {
     var body: some View {
         List {
             StatRow(
-                StatCell(title: Text("Watering"), subtitle: Text(plantWateringString)),
-                StatCell(title: Text("Pruning"), subtitle: Text("ABC")),
-                StatCell(title: Text("Fertilizing"), subtitle: Text("ABC"))
+                StatCell(title: "Watering", subtitle: plantWateringString),
+                StatCell(title: "Pruning", subtitle: plantWateringString),
+                StatCell(title: "Fertilizing", subtitle: plantWateringString)
             )
             
             Section(header: Text("Growing Conditions")) {
