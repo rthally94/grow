@@ -33,24 +33,6 @@ struct StatCell: View {
     }
 }
 
-struct StatRow<Content: View>: View {
-    let count: Int
-    let content: (Int) -> Content
-    
-    var body: some View {
-        HStack {
-            ForEach(0..<count) { index in
-                Spacer()
-                self.content(index)
-                Spacer()
-                if index < self.count - 1 {
-                    Divider()
-                }
-            }
-        }
-    }
-}
-
 struct ListRow: View {
     var image: Image?
     var title: Text
@@ -81,19 +63,19 @@ struct PlantDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     
     // Model State
-    var viewModel: PlantDetailViewModel
+    @ObservedObject var viewModel: PlantDetailViewModel
     
     // View State
     @State private var plantActionSheetIsPresented = false
     
     var body: some View {
         List {
-            StatRow<StatCell>(count: 1) { index in
-                switch index {
-                case 0: return StatCell(title: self.viewModel.plantWateringTitle, subtitle: self.viewModel.plantWateringValue)
-                default: return StatCell(title: "", subtitle: "")
-                }
+            HStack(alignment: .center) {
+                Spacer()
+                StatCell(title: self.viewModel.plantWateringTitle, subtitle: self.viewModel.plantWateringValue)
+                Spacer()
             }
+            .animation(.none)
             
             Section(header: Text("Growing Conditions")) {
                 ListRow(title: "Age", value: viewModel.ageValue)
@@ -120,13 +102,13 @@ struct PlantDetailView: View {
         .navigationBarItems(trailing: Button(action: showActionSheet) {
             Image(systemName: "ellipsis.circle")
         })
-        
-        .actionSheet(isPresented: $plantActionSheetIsPresented) {
-            ActionSheet(title: Text("Plant Options"), buttons: [
-                ActionSheet.Button.default(Text("Log Care Activity"), action: addCareActivity),
-                ActionSheet.Button.destructive(Text("Delete Plant"), action: deletePlant),
-                ActionSheet.Button.cancel()
-            ])
+            
+            .actionSheet(isPresented: $plantActionSheetIsPresented) {
+                ActionSheet(title: Text("Plant Options"), buttons: [
+                    ActionSheet.Button.default(Text("Log Care Activity"), action: addCareActivity),
+                    ActionSheet.Button.destructive(Text("Delete Plant"), action: deletePlant),
+                    ActionSheet.Button.cancel()
+                ])
         }
     }
     
