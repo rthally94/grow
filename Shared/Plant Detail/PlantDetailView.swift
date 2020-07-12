@@ -34,19 +34,16 @@ struct StatCell: View {
 }
 
 struct StatRow<Content: View>: View {
-    let content: [Content]
-    
-    init(_ content: Content...) {
-        self.content = content
-    }
+    let count: Int
+    let content: (Int) -> Content
     
     var body: some View {
         HStack {
-            ForEach(0..<content.count) { index in
+            ForEach(0..<count) { index in
                 Spacer()
-                self.content[index]
+                self.content(index)
                 Spacer()
-                if index < self.content.count - 1 {
+                if index < self.count - 1 {
                     Divider()
                 }
             }
@@ -82,18 +79,34 @@ struct ListRow: View {
 
 struct PlantDetailView: View {
     @Environment(\.presentationMode) var presentationMode
+    // Model State
     @EnvironmentObject var model: GrowModel
     @ObservedObject private(set) var plant: Plant
     
+    
+    var latestWateringText: String {
+        return plantCareString(for: plant.wateringInterval, latestActivity: plant.latestWaterActivity)
+    }
+    
+    var latestWateringTitle: String {
+        if let _ = plant.wateringInterval {
+            return "Watering"
+        } else {
+            return "Watered"
+        }
+    }
+    
+    // View State
     @State private var plantActionSheetIsPresented = false
     
     var body: some View {
         List {
-            StatRow(
-                StatCell(title: "Watering", subtitle: plantWateringString),
-                StatCell(title: "Pruning", subtitle: plantWateringString),
-                StatCell(title: "Fertilizing", subtitle: plantWateringString)
-            )
+            StatRow<StatCell>(count: 1) { index in
+                switch index {
+                case 0: return StatCell(title: self.latestWateringTitle, subtitle: self.latestWateringText)
+                default: return StatCell(title: "", subtitle: "")
+                }
+            }
             
             Section(header: Text("Growing Conditions")) {
                 ListRow(title: "Age", value: plantAgeString)
@@ -110,7 +123,7 @@ struct PlantDetailView: View {
                     }
                 }
             ) {
-                ForEach(plant.getLogs(max: 10)) { log in
+                ForEach(plant.careActivity) { log in
                     ListRow(image: Image(systemName: "scissors"), title: log.type.description, value: Formatters.dateFormatter.string(from: log.date))
                 }
             }
@@ -158,13 +171,17 @@ extension PlantDetailView {
         }
     }
     
-    private var plantWateringString: String {
-        if let interval = plant.wateringInterval {
-            let next = interval.next(from: plant.lastWaterLog?.date ?? Date())
+    private func plantCareString(for interval: CareInterval?, latestActivity: CareActivity?) -> String {
+        // Check if plant has a care interval
+        if let interval = interval {
+            // Format for next care activity
+            let next = interval.next(from: latestActivity?.date ?? Date())
             return Formatters.relativeDateFormatter.string(for: next)
         } else {
-            if let lastLogDate = plant.lastWaterLog?.date {
-                return Formatters.dateFormatter.string(for: lastLogDate) ?? "Never"
+            // Check if a log has been recorded
+            if let lastLogDate = latestActivity?.date {
+                // Display the date of the last log
+                return Formatters.dateFormatter.string(for: lastLogDate) ?? "Nil"
             } else {
                 return "Never"
             }
