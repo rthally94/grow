@@ -57,15 +57,15 @@ extension Plant {
         careActivity.insert(log, at: 0)
     }
     
-    var lastWaterLog: CareActivity? {
-        return getWaterLogs().first
+    var latestWaterActivity: CareActivity? {
+        return getWaterActivity().first
     }
     
-    func getWaterLogs(max: Int = 1) -> [CareActivity] {
-        return getLogs(type: .water, max: max)
+    func getWaterActivity(max: Int = 1) -> [CareActivity] {
+        return getActivity(for: .water, max: max)
     }
     
-    func getLogs(type: CareActivity.CareType? = nil, max: Int = 1) -> [CareActivity] {
+    func getActivity(for type: CareActivity.CareType? = nil, max: Int = 1) -> [CareActivity] {
         var logs = [CareActivity]()
         
         if let logType = type {
