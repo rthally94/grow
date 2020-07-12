@@ -79,22 +79,9 @@ struct ListRow: View {
 
 struct PlantDetailView: View {
     @Environment(\.presentationMode) var presentationMode
+    
     // Model State
-    @EnvironmentObject var model: GrowModel
-    @ObservedObject private(set) var plant: Plant
-    
-    
-    var latestWateringText: String {
-        return plantCareString(for: plant.wateringInterval, latestActivity: plant.latestWaterActivity)
-    }
-    
-    var latestWateringTitle: String {
-        if let _ = plant.wateringInterval {
-            return "Watering"
-        } else {
-            return "Watered"
-        }
-    }
+    var viewModel: PlantDetailViewModel
     
     // View State
     @State private var plantActionSheetIsPresented = false
@@ -103,15 +90,15 @@ struct PlantDetailView: View {
         List {
             StatRow<StatCell>(count: 1) { index in
                 switch index {
-                case 0: return StatCell(title: self.latestWateringTitle, subtitle: self.latestWateringText)
+                case 0: return StatCell(title: self.viewModel.plantWateringTitle, subtitle: self.viewModel.plantWateringValue)
                 default: return StatCell(title: "", subtitle: "")
                 }
             }
             
             Section(header: Text("Growing Conditions")) {
-                ListRow(title: "Age", value: plantAgeString)
+                ListRow(title: "Age", value: viewModel.ageValue)
                 ListRow(title: "Sun Tolerance", value: "NO VAL")
-                ListRow(title: "Watering Interval", value: plant.wateringInterval?.description ?? "None")
+                ListRow(title: "Watering Interval", value: viewModel.wateringIntervalValue)
             }
             
             Section(header:
@@ -123,13 +110,13 @@ struct PlantDetailView: View {
                     }
                 }
             ) {
-                ForEach(plant.careActivity) { log in
+                ForEach(viewModel.recentCareActivity) { log in
                     ListRow(image: Image(systemName: "scissors"), title: log.type.description, value: Formatters.dateFormatter.string(from: log.date))
                 }
             }
         }
         .listStyle(GroupedListStyle())
-        .navigationBarTitle(plant.name)
+        .navigationBarTitle(viewModel.name)
         .navigationBarItems(trailing: Button(action: showActionSheet) {
             Image(systemName: "ellipsis.circle")
         })
@@ -149,54 +136,27 @@ struct PlantDetailView: View {
     
     private func addCareActivity() {
         withAnimation {
-            self.model.addCareActivity(.init(type: .water, date: Date()), to: self.plant)
+            self.viewModel.addCareActivity(type: .water)
         }
     }
     
     private func deletePlant() {
         withAnimation {
             self.presentationMode.wrappedValue.dismiss()
-            self.model.deletePlant(plant: plant)
+            self.viewModel.deletePlant()
         }
     }
 }
-
-
-extension PlantDetailView {
-    private var plantAgeString: String {
-        if let potted = plant.pottingDate, let ageString = Formatters.dateComponentsFormatter.string(from: potted, to: Date()) {
-            return "Potted \(ageString) ago"
-        } else {
-            return "Not Potted Yet"
-        }
-    }
-    
-    private func plantCareString(for interval: CareInterval?, latestActivity: CareActivity?) -> String {
-        // Check if plant has a care interval
-        if let interval = interval {
-            // Format for next care activity
-            let next = interval.next(from: latestActivity?.date ?? Date())
-            return Formatters.relativeDateFormatter.string(for: next)
-        } else {
-            // Check if a log has been recorded
-            if let lastLogDate = latestActivity?.date {
-                // Display the date of the last log
-                return Formatters.dateFormatter.string(for: lastLogDate) ?? "Nil"
-            } else {
-                return "Never"
-            }
-        }
-    }
-}
-
 
 struct PlantDetailView_Previews: PreviewProvider {
     static var previews: some View {
         let model = GrowModel()
         model.addPlant()
         
+        let viewModel = PlantDetailViewModel(model: model, plant: model.plants[0])
+        
         let view = NavigationView {
-            PlantDetailView(plant: model.plants[0]).environmentObject(model)
+            PlantDetailView(viewModel: viewModel)
         }
         
         return view

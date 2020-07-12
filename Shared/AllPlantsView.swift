@@ -14,7 +14,7 @@ struct AllPlantsView: View {
     var body: some View {
         NavigationView {
             List(model.plants) { plant in
-                NavigationLink(plant.name, destination: PlantDetailView(plant: plant))
+                NavigationLink(plant.name, destination: PlantDetailView(viewModel: .init(model: self.model, plant: plant)))
             }
             .listStyle(GroupedListStyle())
             .navigationBarTitle("Plants")
