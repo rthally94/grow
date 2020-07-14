@@ -9,13 +9,39 @@
 import SwiftUI
 
 struct ListRow: View {
+    var image: Image?
+    var title: Text
+    var value: Text
+    
+    init(image: Image? = nil, title: String?, value: String?) {
+        self.init(image: image, title: Text(title ?? ""), value: Text(value ?? ""))
+    }
+    
+    init(image: Image? = nil, title: Text, value: Text) {
+        self.image = image
+        self.title = title
+        self.value = value
+    }
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            image
+            title
+            Spacer()
+            value
+                .opacity(0.7)
+        }
     }
 }
 
 struct ListRow_Previews: PreviewProvider {
     static var previews: some View {
-        ListRow()
+        Group {
+            ListRow(image: Image(systemName: "gauge"), title: "Title", value: "Value")
+            ListRow(title: "Title", value: "Value")
+            ListRow(title: "Title", value: "Value")
+        }
+        .previewLayout(.sizeThatFits)
     }
 }

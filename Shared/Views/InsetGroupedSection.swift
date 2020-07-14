@@ -8,14 +8,30 @@
 
 import SwiftUI
 
-struct InsetGroupedSection: View {
+struct InsetGroupedSection<Header: View, Content: View>: View {
+    let header: () -> Header
+    var content: () -> Content
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            header()
+                .padding(.bottom)
+            content()
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .foregroundColor(.systemGroupedBackground)
+        )
     }
 }
 
 struct InsetGroupedSection_Previews: PreviewProvider {
     static var previews: some View {
-        InsetGroupedSection()
+        InsetGroupedSection(header: {
+            Text("Header")
+        }) {
+            Text("Content")
+        }
     }
 }
