@@ -10,6 +10,9 @@
 		212A1E8A24B7664C002C147F /* PlantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E8924B7664C002C147F /* PlantDetailView.swift */; };
 		212A1E8C24B893F7002C147F /* CareActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E8B24B893F7002C147F /* CareActivity.swift */; };
 		212A1E8F24BB194C002C147F /* PlantDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E8E24BB194C002C147F /* PlantDetailViewModel.swift */; };
+		212A1E9124BD2143002C147F /* CareActivityList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9024BD2143002C147F /* CareActivityList.swift */; };
+		212A1E9324BD4BC8002C147F /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9224BD4BC7002C147F /* RootView.swift */; };
+		212A1E9524BD4EA5002C147F /* Color+SystemColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9424BD4EA5002C147F /* Color+SystemColor.swift */; };
 		21BFB3B224B66E0800B94A72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3B124B66E0800B94A72 /* AppDelegate.swift */; };
 		21BFB3B424B66E0800B94A72 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3B324B66E0800B94A72 /* SceneDelegate.swift */; };
 		21BFB3B724B66E0800B94A72 /* Grow.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3B524B66E0800B94A72 /* Grow.xcdatamodeld */; };
@@ -52,6 +55,9 @@
 		212A1E8924B7664C002C147F /* PlantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailView.swift; sourceTree = "<group>"; };
 		212A1E8B24B893F7002C147F /* CareActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareActivity.swift; sourceTree = "<group>"; };
 		212A1E8E24BB194C002C147F /* PlantDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailViewModel.swift; sourceTree = "<group>"; };
+		212A1E9024BD2143002C147F /* CareActivityList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareActivityList.swift; sourceTree = "<group>"; };
+		212A1E9224BD4BC7002C147F /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		212A1E9424BD4EA5002C147F /* Color+SystemColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+SystemColor.swift"; sourceTree = "<group>"; };
 		21BFB3AE24B66E0800B94A72 /* Grow!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grow!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21BFB3B124B66E0800B94A72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21BFB3B324B66E0800B94A72 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +100,7 @@
 			children = (
 				212A1E8924B7664C002C147F /* PlantDetailView.swift */,
 				212A1E8E24BB194C002C147F /* PlantDetailViewModel.swift */,
+				212A1E9024BD2143002C147F /* CareActivityList.swift */,
 			);
 			path = "Plant Detail";
 			sourceTree = "<group>";
@@ -129,6 +136,8 @@
 				21BFB3B524B66E0800B94A72 /* Grow.xcdatamodeld */,
 				21BFB3BC24B66E0A00B94A72 /* Preview Content */,
 				21BFB3B824B66E0800B94A72 /* AllPlantsView.swift */,
+				212A1E9224BD4BC7002C147F /* RootView.swift */,
+				212A1E9424BD4EA5002C147F /* Color+SystemColor.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -274,13 +283,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				21BFB3B224B66E0800B94A72 /* AppDelegate.swift in Sources */,
+				212A1E9124BD2143002C147F /* CareActivityList.swift in Sources */,
 				21BFB3B424B66E0800B94A72 /* SceneDelegate.swift in Sources */,
 				21BFB3F824B678DC00B94A72 /* GrowModel.swift in Sources */,
+				212A1E9524BD4EA5002C147F /* Color+SystemColor.swift in Sources */,
 				21BFB3B924B66E0800B94A72 /* AllPlantsView.swift in Sources */,
 				212A1E8A24B7664C002C147F /* PlantDetailView.swift in Sources */,
 				21BFB3F924B678DC00B94A72 /* RelativeDateFormatter.swift in Sources */,
 				212A1E8F24BB194C002C147F /* PlantDetailViewModel.swift in Sources */,
 				21BFB3FB24B678DC00B94A72 /* Plant.swift in Sources */,
+				212A1E9324BD4BC8002C147F /* RootView.swift in Sources */,
 				212A1E8C24B893F7002C147F /* CareActivity.swift in Sources */,
 				21BFB3B724B66E0800B94A72 /* Grow.xcdatamodeld in Sources */,
 				21BFB3FA24B678DC00B94A72 /* Formatters.swift in Sources */,
