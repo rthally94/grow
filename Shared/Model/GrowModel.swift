@@ -11,7 +11,6 @@ import Combine
 
 class GrowModel: ObservableObject {
     @Published var plants = [Plant]()
-    
 }
 
 extension GrowModel {
@@ -37,9 +36,8 @@ extension GrowModel {
     ///   - name: The new name of the plant
     func updatePlant(_ oldPlant: Plant, name: String? = nil) {
         if let oldIndex = plants.firstIndex(of: oldPlant) {
-            var updatedPlant = oldPlant
+            let updatedPlant = plants[oldIndex]
             updatedPlant.name = name ?? oldPlant.name
-            plants[oldIndex] = updatedPlant
         }
     }
     
@@ -48,6 +46,12 @@ extension GrowModel {
     func deletePlant(plant: Plant) {
         if let index = plants.firstIndex(of: plant) {
             plants.remove(at: index)
+        }
+    }
+    
+    func addCareActivity(_ care: CareActivity , to plant: Plant) {
+        if let plantIndex = plants.firstIndex(of: plant) {
+            plants[plantIndex].addCareActivity(care)
         }
     }
 }

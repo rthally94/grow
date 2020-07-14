@@ -14,21 +14,22 @@ struct AllPlantsView: View {
     var body: some View {
         NavigationView {
             List(model.plants) { plant in
-                NavigationLink(plant.name, destination: Text(plant.name))
+                NavigationLink(plant.name, destination: PlantDetailView(viewModel: .init(model: self.model, plant: plant)))
             }
             .listStyle(GroupedListStyle())
             .navigationBarTitle("Plants")
             .navigationBarItems(trailing: Button(
-                action: {
-                    withAnimation {
-                        self.model.addPlant()
-                    }
-                },
+                action: addPlant,
                 label: {
                     Image(systemName: "plus.circle")
-                        .imageScale(.large)
                 })
             )
+        }
+    }
+    
+    private func addPlant() {
+        withAnimation {
+            self.model.addPlant()
         }
     }
 }

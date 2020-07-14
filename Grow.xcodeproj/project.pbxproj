@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		212A1E8A24B7664C002C147F /* PlantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E8924B7664C002C147F /* PlantDetailView.swift */; };
 		212A1E8C24B893F7002C147F /* CareActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E8B24B893F7002C147F /* CareActivity.swift */; };
+		212A1E8F24BB194C002C147F /* PlantDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E8E24BB194C002C147F /* PlantDetailViewModel.swift */; };
+		212A1E9124BD2143002C147F /* CareActivityList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9024BD2143002C147F /* CareActivityList.swift */; };
+		212A1E9324BD4BC8002C147F /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9224BD4BC7002C147F /* RootView.swift */; };
+		212A1E9524BD4EA5002C147F /* Color+SystemColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9424BD4EA5002C147F /* Color+SystemColor.swift */; };
+		212A1E9824BE0F05002C147F /* InsetGroupedSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9724BE0F05002C147F /* InsetGroupedSection.swift */; };
+		212A1E9A24BE0FAF002C147F /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9924BE0FAF002C147F /* ListRow.swift */; };
+		212A1E9C24BE1137002C147F /* StatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9B24BE1137002C147F /* StatCell.swift */; };
 		21BFB3B224B66E0800B94A72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3B124B66E0800B94A72 /* AppDelegate.swift */; };
 		21BFB3B424B66E0800B94A72 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3B324B66E0800B94A72 /* SceneDelegate.swift */; };
 		21BFB3B724B66E0800B94A72 /* Grow.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3B524B66E0800B94A72 /* Grow.xcdatamodeld */; };
@@ -50,7 +57,14 @@
 /* Begin PBXFileReference section */
 		212A1E8924B7664C002C147F /* PlantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailView.swift; sourceTree = "<group>"; };
 		212A1E8B24B893F7002C147F /* CareActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareActivity.swift; sourceTree = "<group>"; };
-		21BFB3AE24B66E0800B94A72 /* Grow iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grow iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		212A1E8E24BB194C002C147F /* PlantDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailViewModel.swift; sourceTree = "<group>"; };
+		212A1E9024BD2143002C147F /* CareActivityList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareActivityList.swift; sourceTree = "<group>"; };
+		212A1E9224BD4BC7002C147F /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		212A1E9424BD4EA5002C147F /* Color+SystemColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+SystemColor.swift"; sourceTree = "<group>"; };
+		212A1E9724BE0F05002C147F /* InsetGroupedSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetGroupedSection.swift; sourceTree = "<group>"; };
+		212A1E9924BE0FAF002C147F /* ListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRow.swift; sourceTree = "<group>"; };
+		212A1E9B24BE1137002C147F /* StatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCell.swift; sourceTree = "<group>"; };
+		21BFB3AE24B66E0800B94A72 /* Grow!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grow!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21BFB3B124B66E0800B94A72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21BFB3B324B66E0800B94A72 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		21BFB3B624B66E0800B94A72 /* Grow.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Grow.xcdatamodel; sourceTree = "<group>"; };
@@ -87,6 +101,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		212A1E8D24BB192C002C147F /* Plant Detail */ = {
+			isa = PBXGroup;
+			children = (
+				212A1E8924B7664C002C147F /* PlantDetailView.swift */,
+				212A1E8E24BB194C002C147F /* PlantDetailViewModel.swift */,
+				212A1E9024BD2143002C147F /* CareActivityList.swift */,
+			);
+			path = "Plant Detail";
+			sourceTree = "<group>";
+		};
+		212A1E9624BE0EE3002C147F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				212A1E9724BE0F05002C147F /* InsetGroupedSection.swift */,
+				212A1E9924BE0FAF002C147F /* ListRow.swift */,
+				212A1E9B24BE1137002C147F /* StatCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		21BFB3A524B66E0800B94A72 = {
 			isa = PBXGroup;
 			children = (
@@ -99,7 +133,7 @@
 		21BFB3AF24B66E0800B94A72 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				21BFB3AE24B66E0800B94A72 /* Grow iOS.app */,
+				21BFB3AE24B66E0800B94A72 /* Grow!.app */,
 				21BFB40B24B67A2400B94A72 /* GrowTests.xctest */,
 			);
 			name = Products;
@@ -108,6 +142,8 @@
 		21BFB3B024B66E0800B94A72 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				212A1E9624BE0EE3002C147F /* Views */,
+				212A1E8D24BB192C002C147F /* Plant Detail */,
 				21BFB3E924B678A100B94A72 /* Model */,
 				21BFB3B124B66E0800B94A72 /* AppDelegate.swift */,
 				21BFB3B324B66E0800B94A72 /* SceneDelegate.swift */,
@@ -117,7 +153,8 @@
 				21BFB3B524B66E0800B94A72 /* Grow.xcdatamodeld */,
 				21BFB3BC24B66E0A00B94A72 /* Preview Content */,
 				21BFB3B824B66E0800B94A72 /* AllPlantsView.swift */,
-				212A1E8924B7664C002C147F /* PlantDetailView.swift */,
+				212A1E9224BD4BC7002C147F /* RootView.swift */,
+				212A1E9424BD4EA5002C147F /* Color+SystemColor.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -178,7 +215,7 @@
 			);
 			name = "Grow iOS";
 			productName = Grow;
-			productReference = 21BFB3AE24B66E0800B94A72 /* Grow iOS.app */;
+			productReference = 21BFB3AE24B66E0800B94A72 /* Grow!.app */;
 			productType = "com.apple.product-type.application";
 		};
 		21BFB40A24B67A2400B94A72 /* GrowTests */ = {
@@ -263,12 +300,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				21BFB3B224B66E0800B94A72 /* AppDelegate.swift in Sources */,
+				212A1E9124BD2143002C147F /* CareActivityList.swift in Sources */,
 				21BFB3B424B66E0800B94A72 /* SceneDelegate.swift in Sources */,
 				21BFB3F824B678DC00B94A72 /* GrowModel.swift in Sources */,
+				212A1E9524BD4EA5002C147F /* Color+SystemColor.swift in Sources */,
+				212A1E9824BE0F05002C147F /* InsetGroupedSection.swift in Sources */,
 				21BFB3B924B66E0800B94A72 /* AllPlantsView.swift in Sources */,
 				212A1E8A24B7664C002C147F /* PlantDetailView.swift in Sources */,
 				21BFB3F924B678DC00B94A72 /* RelativeDateFormatter.swift in Sources */,
+				212A1E8F24BB194C002C147F /* PlantDetailViewModel.swift in Sources */,
 				21BFB3FB24B678DC00B94A72 /* Plant.swift in Sources */,
+				212A1E9324BD4BC8002C147F /* RootView.swift in Sources */,
+				212A1E9A24BE0FAF002C147F /* ListRow.swift in Sources */,
+				212A1E9C24BE1137002C147F /* StatCell.swift in Sources */,
 				212A1E8C24B893F7002C147F /* CareActivity.swift in Sources */,
 				21BFB3B724B66E0800B94A72 /* Grow.xcdatamodeld in Sources */,
 				21BFB3FA24B678DC00B94A72 /* Formatters.swift in Sources */,
@@ -437,7 +481,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ryanthally.Grow;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Grow!";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -458,7 +502,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = dev.ryanthally.Grow;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Grow!";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

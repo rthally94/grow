@@ -8,17 +8,79 @@
 
 import Foundation
 
-struct Plant: Identifiable, Hashable {
+class Plant: ObservableObject, Identifiable, Hashable, Equatable {
     // General Plant Info
     var id: UUID
-    var name: String
-    var pottingDate: Date?
+    @Published var name: String
+    @Published var pottingDate: Date?
     
     // Care Info
-    var wateringInterval: CareInterval?
+    @Published var wateringInterval: CareInterval?
     
     var age: TimeInterval {
         return DateInterval(start: pottingDate ?? Date(), end: Date()).duration
+    }
+    
+    // Care Activity
+    @Published private(set) var careActivity = [CareActivity]()
+    
+    // MARK: Initializers
+    convenience init() {
+        self.init(id: UUID(), name: "My Plant")
+    }
+    
+    convenience init(name: String, pottingDate: Date? = nil, wateringInterval: CareInterval? = nil) {
+        self.init(id: UUID(), name: name, pottingDate: pottingDate, wateringInterval: wateringInterval)
+    }
+    
+    init(id: UUID, name: String, pottingDate: Date? = nil, wateringInterval: CareInterval? = nil) {
+        self.id = id
+        self.name = name
+        self.pottingDate = pottingDate
+        self.wateringInterval = wateringInterval
+    }
+    
+    // Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    // Equatable
+    static func == (lhs: Plant, rhs: Plant) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+}
+
+// MARK: Plant Intents
+extension Plant {
+    func addCareActivity(_ log: CareActivity) {
+        careActivity.insert(log, at: 0)
+    }
+    
+    var latestWaterActivity: CareActivity? {
+        return getWaterActivity().first
+    }
+    
+    func getWaterActivity(max: Int = 1) -> [CareActivity] {
+        return getActivity(for: .water, max: max)
+    }
+    
+    func getActivity(for type: CareActivity.CareType? = nil, max: Int = 1) -> [CareActivity] {
+        var logs = [CareActivity]()
+        
+        if let logType = type {
+            for activity in careActivity where activity.type == logType {
+                logs.append(activity)
+                if logs.count == max { break }
+            }
+        } else {
+            for activity in careActivity {
+                logs.append(activity)
+                if logs.count == max { break }
+            }
+        }
+        
+        return logs
     }
 }
 
