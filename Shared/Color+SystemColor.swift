@@ -7,3 +7,10 @@
 //
 
 import Foundation
+import SwiftUI
+
+extension Color {
+    static let systemGreen = Color(UIColor.systemGreen)
+    static let systemGroupedBackground = Color(UIColor.systemGray6)
+    static let secondarySystemGroupedBackground = Color(UIColor.secondarySystemGroupedBackground)
+}
