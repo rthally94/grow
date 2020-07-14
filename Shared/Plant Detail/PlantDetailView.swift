@@ -13,14 +13,11 @@ struct StatCell: View {
     let subtitle: Text
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             title
-                .font(.subheadline)
-                .padding(.bottom)
-            
-            subtitle.font(.headline)
+                .opacity(0.8)
+            subtitle.fontWeight(.bold)
         }
-        .padding()
     }
     
     init(title: String, subtitle: String) {
@@ -59,6 +56,24 @@ struct ListRow: View {
     }
 }
 
+struct GroupedSection<Header: View, Content: View>: View {
+    let header: () -> Header
+    var content: () -> Content
+    
+    var body: some View {
+        VStack {
+            header()
+                .padding(.bottom)
+            content()
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .foregroundColor(.systemGroupedBackground)
+        )
+    }
+}
+
 struct PlantDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     
@@ -68,44 +83,103 @@ struct PlantDetailView: View {
     // View State
     @State private var plantActionSheetIsPresented = false
     
+    // Static Views
+    
+    private let growingConditionSectionHeader: () -> AnyView = {
+        AnyView (
+            HStack {
+                //                Image(systemName: "scissors")
+                Text("Growing Conditions").font(.callout)
+                Spacer()
+            }
+        )
+    }
+    
+    private let recentCareSectionHeader: () -> AnyView = {
+        AnyView (
+            HStack {
+                //                Image(systemName: "heart")
+                Text("Recent Care Activity").font(.callout)
+                Spacer()
+                Button(action: {}, label: {Text("View All")})
+            }
+        )
+    }
+    
     var body: some View {
-        List {
-            HStack(alignment: .center) {
-                Spacer()
-                StatCell(title: self.viewModel.plantWateringTitle, subtitle: self.viewModel.plantWateringValue)
-                Spacer()
-            }
-            .animation(.none)
-            
-            Section(header: Text("Growing Conditions")) {
-                ListRow(title: "Age", value: viewModel.ageValue)
-                ListRow(title: "Sun Tolerance", value: "NO VAL")
-                ListRow(title: "Watering Interval", value: viewModel.wateringIntervalValue)
-            }
-            
-            Section(header:
-                HStack {
-                    Text("Recent Care Activity")
-                    Spacer()
-                    Button("View All") {
-                        print("Pressed")
+        ScrollView {
+            VStack(alignment: .leading, spacing: 15) {
+                Text(self.viewModel.ageValue)
+                GroupedSection( header: {
+                    HStack {
+                        Group {
+                            Image(systemName: "heart.fill")
+                            Text("Care Activity")
+                        }
+                        .font(.headline)
+                        
+                        Spacer()
+                        Group {
+                            Text(self.viewModel.careActivityCount)
+                            Button(action: {}, label: {Image(systemName: "chevron.right")})
+                        }
+                        .foregroundColor(.gray)
+                        .font(.caption)
+                    }
+                }) {
+                    HStack(alignment: .bottom) {
+                        StatCell(title: self.viewModel.plantWateringTitle, subtitle: self.viewModel.plantWateringValue)
+                        Spacer()
+                    }
+                    .animation(.none)
+                }
+                
+                GroupedSection(header: {
+                    HStack {
+                        Group {
+                            Image(systemName: "scissors")
+                            Text("Growing Conditions")
+                        }
+                        .font(.headline)
+                        
+                        Spacer()
+                    }
+                }) {
+                    VStack(spacing: 10) {
+                        HStack {
+                            Group {
+                                StatCell(title: "Sun Tolerance", subtitle: "No Val")
+                                StatCell(title: "Watering", subtitle: self.viewModel.plantWateringValue)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        
+                        HStack {
+                            Group {
+                                StatCell(title: "Fertilizing", subtitle: "No Val")
+                                StatCell(title: "Pruning", subtitle: "No Val")
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                     }
                 }
-            ) {
-                ForEach(viewModel.recentCareActivity) { log in
-                    ListRow(image: Image(systemName: "scissors"), title: log.type.description, value: Formatters.dateFormatter.string(from: log.date))
-                }
+                
+                //                GroupedSection(header: self.recentCareSectionHeader) {
+                //                    ForEach(self.viewModel.recentCareActivity) { log in
+                //                        ListRow(image: Image(systemName: "scissors"), title: log.type.description, value: Formatters.dateFormatter.string(from: log.date))
+                //                    }
+                //                }
             }
+            .padding(.horizontal)
         }
-        .listStyle(GroupedListStyle())
         .navigationBarTitle(viewModel.name)
         .navigationBarItems(trailing: Button(action: showActionSheet) {
             Image(systemName: "ellipsis.circle")
         })
-            
             .actionSheet(isPresented: $plantActionSheetIsPresented) {
                 ActionSheet(title: Text("Plant Options"), buttons: [
                     ActionSheet.Button.default(Text("Log Care Activity"), action: addCareActivity),
+                    ActionSheet.Button.default(Text("Edit Plant"), action: {}),
                     ActionSheet.Button.destructive(Text("Delete Plant"), action: deletePlant),
                     ActionSheet.Button.cancel()
                 ])

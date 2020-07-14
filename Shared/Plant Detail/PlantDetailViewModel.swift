@@ -17,53 +17,7 @@ class PlantDetailViewModel: ObservableObject {
     init(model: GrowModel, plant: Plant) {
         self.model = model
         self.plant = plant
-        
-        plant.$wateringInterval
-            .map {
-                if let interval = $0 {
-                    return interval.description
-                } else {
-                    return "None"
-                }
-            }
-        .assign(to: \.wateringIntervalValue, on: self)
-        .store(in: &cancellables)
-        
-        plant.$wateringInterval
-            .map { $0 != nil ? "Watering" : "Watered" }
-            .assign(to: \.plantWateringTitle, on: self)
-            .store(in: &cancellables)
-        
-        plant.$wateringInterval
-            .combineLatest(plant.$careActivity)
-            .map { interval, activity in
-                // Check if plant has a care interval
-                if let interval = interval {
-                    // Format for next care activity
-                    let next = interval.next(from: activity.first?.date ?? Date())
-                    return Formatters.relativeDateFormatter.string(for: next)
-                } else {
-                    // Check if a log has been recorded
-                    if let lastLogDate = activity.first?.date {
-                        // Display the date of the last log
-                        return Formatters.dateFormatter.string(for: lastLogDate) ?? "Nil"
-                    } else {
-                        return "Never"
-                    }
-                }
-        }
-        .assign(to: \.plantWateringValue, on: self)
-        .store(in: &cancellables)
-        
-        plant.$careActivity
-            .map {
-                Array($0.prefix(10))
-            }
-        .assign(to: \.recentCareActivity, on: self)
-        .store(in: &cancellables)
     }
-    
-    private var cancellables = [AnyCancellable]()
     
     // MARK: Properties
     
@@ -72,8 +26,30 @@ class PlantDetailViewModel: ObservableObject {
     }
     
     // Care Cells
-    @Published var plantWateringTitle: String = ""
-    @Published var plantWateringValue: String = ""
+    var careActivityCount: String {
+        "\(plant.careActivity.count)"
+    }
+    
+    var plantWateringTitle: String {
+        plant.wateringInterval == nil ? "Watered" : "Watering"
+    }
+    
+    var plantWateringValue: String {
+        // Check if plant has a care interval
+        if let interval = plant.wateringInterval {
+            // Format for next care activity
+            let next = interval.next(from: plant.careActivity.first?.date ?? Date())
+            return Formatters.relativeDateFormatter.string(for: next)
+        } else {
+            // Check if a log has been recorded
+            if let lastLogDate = plant.careActivity.first?.date {
+                // Display the date of the last log
+                return Formatters.relativeDateFormatter.string(for: lastLogDate)
+            } else {
+                return "Never"
+            }
+        }
+    }
     
     // Growing Conditions
     var ageValue: String {
@@ -84,10 +60,9 @@ class PlantDetailViewModel: ObservableObject {
         }
     }
     
-    @Published var wateringIntervalValue: String = ""
-    
-    // Recent Care Activity
-    @Published var recentCareActivity = [CareActivity]()
+    var wateringIntervalValue: String {
+        plant.wateringInterval == nil ? "Watered" : "Watering"
+    }
     
     // MARK: Intents
     func addCareActivity(type: CareActivity.CareType, date: Date = Date()) {
