@@ -9,13 +9,23 @@
 import SwiftUI
 
 struct PlantEditorForm: View {
+    @EnvironmentObject var model: GrowModel
+    @ObservedObject private var plant: Plant
+    
+    init(plant: Plant) {
+        self._plant = ObservedObject(initialValue: plant)
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Form {
+            UITextFieldWrapper("Name", text: $plant.name)
+            Text(plant.name)
+        }
     }
 }
 
 struct PlantEditorForm_Previews: PreviewProvider {
     static var previews: some View {
-        PlantEditorForm()
+        PlantEditorForm(plant: Plant()).environmentObject(GrowModel())
     }
 }

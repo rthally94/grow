@@ -1,5 +1,5 @@
 //
-//  UITextField.swift
+//  UITextFieldWrapper.swift
 //  Grow iOS
 //
 //  Created by Ryan Thally on 7/15/20.
@@ -8,8 +8,27 @@
 
 import SwiftUI
 
-struct UITextFieldWrapper: UIViewControllerRepresentable {
-    typealias UIViewControllerType = UIViewController
+struct UITextFieldWrapper: UIViewRepresentable {
+    func makeUIView(context: Context) -> UITextField {
+        let textField = UITextField()
+        
+        textField.placeholder = placeholder
+        textField.text = text
+        
+        textField.autocapitalizationType = .words
+        textField.clearButtonMode = .whileEditing
+        textField.returnKeyType = .done
+        
+        textField.delegate = context.coordinator
+        
+        return textField
+    }
+    
+    func updateUIView(_ uiView: UITextField, context: Context) {
+        uiView.text = text
+    }
+    
+    typealias UIViewType = UITextField
     
     var placeholder: String
     @Binding var text: String
@@ -20,36 +39,39 @@ struct UITextFieldWrapper: UIViewControllerRepresentable {
     }
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(self)
+        Coordinator($text)
     }
     
-    func makeUIViewController(context: Context) -> UIViewController {
-        let textField = UITextField()
-        textField.delegate = context.coordinator
-        textField.autocapitalizationType = .words
-        
-        let vc = UIViewController()
-        vc.view.addSubview(textField)
-        return vc
-    }
     
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-        if let textField = uiViewController.view.subviews.first as? UITextField {
-            textField.text = text
-            textField.placeholder = placeholder
-        }
-    }
     
     class Coordinator: NSObject, UITextFieldDelegate {
-        var parent: UITextFieldWrapper
+        @Binding var text: String
         
-        init(_ viewController: UITextFieldWrapper) {
-            self.parent = viewController
+        init(_ text: Binding<String>) {
+            self._text = text
         }
         
         func textFieldDidEndEditing(_ textField: UITextField) {
             print("Did End")
+            text = textField.text ?? ""
+        }
+        
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            textField.resignFirstResponder()
+            
+            return true
         }
     }
+    
+}
 
+struct UITextFieldWrapper_Previews: PreviewProvider {
+    static var previews: some View {
+        StatefulPreviewWrapper("") { state in
+            VStack {
+                UITextFieldWrapper("Text", text: state)
+                Text(state.wrappedValue)
+            }
+        }
+    }
 }
