@@ -16,6 +16,7 @@ struct PlantDetailView: View {
     
     // View State
     @State private var plantActionSheetIsPresented = false
+    @State private var plantEditorSheetIsPresented = false
     
     var body: some View {
         ScrollView {
@@ -78,11 +79,12 @@ struct PlantDetailView: View {
             .actionSheet(isPresented: $plantActionSheetIsPresented) {
                 ActionSheet(title: Text("Options"), buttons: [
                     ActionSheet.Button.default(Text("Log Care Activity"), action: addCareActivity),
-                    ActionSheet.Button.default(Text("Edit Plant"), action: {}),
+                    ActionSheet.Button.default(Text("Edit Plant"), action: {self.plantEditorSheetIsPresented = true}),
                     ActionSheet.Button.destructive(Text("Delete Plant"), action: deletePlant),
                     ActionSheet.Button.cancel()
                 ])
         }
+        .sheet(isPresented: $plantEditorSheetIsPresented, content: { PlantEditorForm(plant: self.viewModel.plant) })
     }
     
     // MARK: Actions
