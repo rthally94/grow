@@ -15,6 +15,7 @@ class Plant: ObservableObject, Identifiable, Hashable, Equatable {
     @Published var pottingDate: Date?
     
     // Care Info
+    @Published var sunTolerance: SunTolerance?
     @Published var wateringInterval: CareInterval?
     
     var age: TimeInterval {
