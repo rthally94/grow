@@ -24,6 +24,11 @@ struct InsetGroupedSection<Header: View, Content: View>: View {
                 .foregroundColor(.systemGroupedBackground)
         )
     }
+    
+    init(header: @escaping () -> Header, @ViewBuilder content: @escaping () -> Content) {
+        self.header = header
+        self.content = content
+    }
 }
 
 struct InsetGroupedSection_Previews: PreviewProvider {
