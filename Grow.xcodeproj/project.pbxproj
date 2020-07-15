@@ -16,7 +16,13 @@
 		212A1E9824BE0F05002C147F /* InsetGroupedSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9724BE0F05002C147F /* InsetGroupedSection.swift */; };
 		212A1E9A24BE0FAF002C147F /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9924BE0FAF002C147F /* ListRow.swift */; };
 		212A1E9C24BE1137002C147F /* StatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9B24BE1137002C147F /* StatCell.swift */; };
-		212A1E9F24BE277D002C147F /* Plant Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9E24BE277D002C147F /* Plant Editor.swift */; };
+		212A1EA924BE6759002C147F /* PlantEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1EA824BE6759002C147F /* PlantEditor.swift */; };
+		212A1EAC24BE694B002C147F /* Interval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1EAA24BE694B002C147F /* Interval.swift */; };
+		212A1EAD24BE694B002C147F /* SunTolerance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1EAB24BE694B002C147F /* SunTolerance.swift */; };
+		212A1EB124BE93D7002C147F /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1EB024BE93D7002C147F /* TextFieldCell.swift */; };
+		212A1EB524BE93EA002C147F /* PlantEditorFormTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1EB224BE93E9002C147F /* PlantEditorFormTableViewController.swift */; };
+		212A1EB624BE93EA002C147F /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1EB324BE93E9002C147F /* DatePickerViewController.swift */; };
+		212A1EB724BE93EA002C147F /* SunTolerancePickerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1EB424BE93E9002C147F /* SunTolerancePickerTableViewController.swift */; };
 		21BFB3B224B66E0800B94A72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3B124B66E0800B94A72 /* AppDelegate.swift */; };
 		21BFB3B424B66E0800B94A72 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3B324B66E0800B94A72 /* SceneDelegate.swift */; };
 		21BFB3B724B66E0800B94A72 /* Grow.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3B524B66E0800B94A72 /* Grow.xcdatamodeld */; };
@@ -65,7 +71,13 @@
 		212A1E9724BE0F05002C147F /* InsetGroupedSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetGroupedSection.swift; sourceTree = "<group>"; };
 		212A1E9924BE0FAF002C147F /* ListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRow.swift; sourceTree = "<group>"; };
 		212A1E9B24BE1137002C147F /* StatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCell.swift; sourceTree = "<group>"; };
-		212A1E9E24BE277D002C147F /* Plant Editor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Plant Editor.swift"; sourceTree = "<group>"; };
+		212A1EA824BE6759002C147F /* PlantEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantEditor.swift; sourceTree = "<group>"; };
+		212A1EAA24BE694B002C147F /* Interval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Interval.swift; path = ../../../../Agronomist/Agronomist/Model/Interval.swift; sourceTree = "<group>"; };
+		212A1EAB24BE694B002C147F /* SunTolerance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SunTolerance.swift; path = ../../../../Agronomist/Agronomist/Model/SunTolerance.swift; sourceTree = "<group>"; };
+		212A1EB024BE93D7002C147F /* TextFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
+		212A1EB224BE93E9002C147F /* PlantEditorFormTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlantEditorFormTableViewController.swift; sourceTree = "<group>"; };
+		212A1EB324BE93E9002C147F /* DatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
+		212A1EB424BE93E9002C147F /* SunTolerancePickerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SunTolerancePickerTableViewController.swift; sourceTree = "<group>"; };
 		21BFB3AE24B66E0800B94A72 /* Grow!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grow!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21BFB3B124B66E0800B94A72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21BFB3B324B66E0800B94A72 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -126,7 +138,11 @@
 		212A1E9D24BE2768002C147F /* Plant Editor */ = {
 			isa = PBXGroup;
 			children = (
-				212A1E9E24BE277D002C147F /* Plant Editor.swift */,
+				212A1EB324BE93E9002C147F /* DatePickerViewController.swift */,
+				212A1EB224BE93E9002C147F /* PlantEditorFormTableViewController.swift */,
+				212A1EB424BE93E9002C147F /* SunTolerancePickerTableViewController.swift */,
+				212A1EB024BE93D7002C147F /* TextFieldCell.swift */,
+				212A1EA824BE6759002C147F /* PlantEditor.swift */,
 			);
 			path = "Plant Editor";
 			sourceTree = "<group>";
@@ -181,6 +197,8 @@
 		21BFB3E924B678A100B94A72 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				212A1EAA24BE694B002C147F /* Interval.swift */,
+				212A1EAB24BE694B002C147F /* SunTolerance.swift */,
 				21BFB3F324B678DB00B94A72 /* GrowModel.swift */,
 				21BFB3F424B678DC00B94A72 /* Helpers */,
 				21BFB3F724B678DC00B94A72 /* Plant.swift */,
@@ -310,22 +328,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				212A1EB524BE93EA002C147F /* PlantEditorFormTableViewController.swift in Sources */,
 				21BFB3B224B66E0800B94A72 /* AppDelegate.swift in Sources */,
 				212A1E9124BD2143002C147F /* CareActivityList.swift in Sources */,
 				21BFB3B424B66E0800B94A72 /* SceneDelegate.swift in Sources */,
 				21BFB3F824B678DC00B94A72 /* GrowModel.swift in Sources */,
 				212A1E9524BD4EA5002C147F /* Color+SystemColor.swift in Sources */,
+				212A1EB124BE93D7002C147F /* TextFieldCell.swift in Sources */,
 				212A1E9824BE0F05002C147F /* InsetGroupedSection.swift in Sources */,
 				21BFB3B924B66E0800B94A72 /* AllPlantsView.swift in Sources */,
+				212A1EAD24BE694B002C147F /* SunTolerance.swift in Sources */,
 				212A1E8A24B7664C002C147F /* PlantDetailView.swift in Sources */,
 				21BFB3F924B678DC00B94A72 /* RelativeDateFormatter.swift in Sources */,
 				212A1E8F24BB194C002C147F /* PlantDetailViewModel.swift in Sources */,
 				21BFB3FB24B678DC00B94A72 /* Plant.swift in Sources */,
+				212A1EB724BE93EA002C147F /* SunTolerancePickerTableViewController.swift in Sources */,
+				212A1EAC24BE694B002C147F /* Interval.swift in Sources */,
 				212A1E9324BD4BC8002C147F /* RootView.swift in Sources */,
 				212A1E9A24BE0FAF002C147F /* ListRow.swift in Sources */,
+				212A1EA924BE6759002C147F /* PlantEditor.swift in Sources */,
 				212A1E9C24BE1137002C147F /* StatCell.swift in Sources */,
 				212A1E8C24B893F7002C147F /* CareActivity.swift in Sources */,
-				212A1E9F24BE277D002C147F /* Plant Editor.swift in Sources */,
+				212A1EB624BE93EA002C147F /* DatePickerViewController.swift in Sources */,
 				21BFB3B724B66E0800B94A72 /* Grow.xcdatamodeld in Sources */,
 				21BFB3FA24B678DC00B94A72 /* Formatters.swift in Sources */,
 			);
