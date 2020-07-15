@@ -8,14 +8,16 @@
 
 import SwiftUI
 
-struct StatefulPreviewWrapper: View {
+struct StatefulPreviewWrapper<Value, Content: View>: View {
+    @State var value: Value
+    var content: (Binding<Value>) -> Content
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        content($value)
     }
-}
-
-struct StatefulPreviewWrapper_Previews: PreviewProvider {
-    static var previews: some View {
-        StatefulPreviewWrapper()
+    
+    init(_ value: Value, content: @escaping (Binding<Value>) -> Content) {
+        self._value = State(initialValue: value)
+        self.content = content
     }
 }
