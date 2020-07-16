@@ -14,8 +14,7 @@ struct InsetGroupedSection<Header: View, Content: View>: View {
     
     var body: some View {
         VStack {
-            header()
-                .padding(.bottom)
+            header().padding(.bottom)
             content()
         }
         .padding()
