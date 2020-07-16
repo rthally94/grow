@@ -31,6 +31,14 @@ struct InsetGroupedSection<Header: View, Content: View>: View {
     }
 }
 
+extension InsetGroupedSection where Header == EmptyView {
+    init(@ViewBuilder content: @escaping () -> Content) {
+        self.init(
+            header: {EmptyView()},
+            content: content)
+    }
+}
+
 struct InsetGroupedSection_Previews: PreviewProvider {
     static var previews: some View {
         InsetGroupedSection(header: {
