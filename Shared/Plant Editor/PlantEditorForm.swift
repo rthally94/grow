@@ -12,20 +12,52 @@ struct PlantEditorForm: View {
     @EnvironmentObject var model: GrowModel
     @ObservedObject private var plant: Plant
     
+    // Form State
+    @State var showPlantedPicker = false
+    @State var plantingDate = Date()
+    
+    init() {
+        let plant = Plant(id: UUID(), name: "")
+        self._plant = ObservedObject(initialValue: plant)
+    }
+    
     init(plant: Plant) {
         self._plant = ObservedObject(initialValue: plant)
     }
     
     var body: some View {
         Form {
-            UITextFieldWrapper("Name", text: $plant.name)
-            Text(plant.name)
+            Section {
+                UITextFieldWrapper("Plant Name", text: self.$plant.name)
+            }
+            
+            Section {
+                Toggle(isOn: self.$showPlantedPicker, label: {Text("Planted")})
+                if self.showPlantedPicker {
+                    DatePicker("Planting Date", selection: self.$plantingDate, displayedComponents: [.date])
+                }
+            }
+            
+            Section {
+                ListRow(title: "Watering Interval", value: self.plant.wateringInterval?.description ?? "None")
+            }
         }
+        .navigationBarTitle("Details", displayMode: .inline)
+        .navigationBarItems(leading: Button("Cancel", action: {}), trailing: Button("Save", action: {}))
+        
     }
 }
 
 struct PlantEditorForm_Previews: PreviewProvider {
     static var previews: some View {
-        PlantEditorForm(plant: Plant()).environmentObject(GrowModel())
+        Group {
+            NavigationView {
+                PlantEditorForm().environmentObject(GrowModel())
+            }.previewDisplayName("New Plant")
+            
+            NavigationView {
+                PlantEditorForm(plant: Plant()).environmentObject(GrowModel())
+            }.previewDisplayName("Existing Plant")
+        }
     }
 }
