@@ -17,6 +17,7 @@
 		212A1E9A24BE0FAF002C147F /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9924BE0FAF002C147F /* ListRow.swift */; };
 		212A1E9C24BE1137002C147F /* StatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9B24BE1137002C147F /* StatCell.swift */; };
 		212A1EAD24BE694B002C147F /* SunTolerance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1EAB24BE694B002C147F /* SunTolerance.swift */; };
+		2188FAC124C13E830090F5F1 /* swift.gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2188FAC024C13E830090F5F1 /* swift.gitignore */; };
 		2193552824BF2C1900F38392 /* UITextFieldWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2193552724BF2C1900F38392 /* UITextFieldWrapper.swift */; };
 		2193552A24C07CC600F38392 /* IntervalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2193552924C07CC600F38392 /* IntervalPicker.swift */; };
 		2193552C24C1217E00F38392 /* CareInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2193552B24C1217E00F38392 /* CareInterval.swift */; };
@@ -72,6 +73,7 @@
 		212A1E9924BE0FAF002C147F /* ListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRow.swift; sourceTree = "<group>"; };
 		212A1E9B24BE1137002C147F /* StatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCell.swift; sourceTree = "<group>"; };
 		212A1EAB24BE694B002C147F /* SunTolerance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SunTolerance.swift; path = ../../../../Agronomist/Agronomist/Model/SunTolerance.swift; sourceTree = "<group>"; };
+		2188FAC024C13E830090F5F1 /* swift.gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = swift.gitignore; sourceTree = "<group>"; };
 		2193552724BF2C1900F38392 /* UITextFieldWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldWrapper.swift; sourceTree = "<group>"; };
 		2193552924C07CC600F38392 /* IntervalPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalPicker.swift; sourceTree = "<group>"; };
 		2193552B24C1217E00F38392 /* CareInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareInterval.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 		21BFB3A524B66E0800B94A72 = {
 			isa = PBXGroup;
 			children = (
+				2188FAC024C13E830090F5F1 /* swift.gitignore */,
 				21BFB3B024B66E0800B94A72 /* Shared */,
 				21BFB40C24B67A2400B94A72 /* GrowTests */,
 				21BFB3AF24B66E0800B94A72 /* Products */,
@@ -310,6 +313,7 @@
 			files = (
 				21BFB3C124B66E0A00B94A72 /* LaunchScreen.storyboard in Resources */,
 				21BFB3BE24B66E0A00B94A72 /* Preview Assets.xcassets in Resources */,
+				2188FAC124C13E830090F5F1 /* swift.gitignore in Resources */,
 				21BFB3BB24B66E0A00B94A72 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
