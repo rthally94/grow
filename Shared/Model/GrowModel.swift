@@ -26,7 +26,7 @@ extension GrowModel {
     /// Adds a parameterized plant to the dataset
     /// - Parameter name: The name of the plant
     func addPlant(name: String) {
-        let newPlant = Plant(id: UUID(), name: name)
+        let newPlant = Plant(name: name)
         plants.append(newPlant)
     }
     
