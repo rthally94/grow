@@ -27,17 +27,18 @@ class Plant: ObservableObject, Identifiable, Hashable, Equatable {
     
     // MARK: Initializers
     convenience init() {
-        self.init(id: UUID(), name: "My Plant")
+        self.init(id: UUID(), name: "My Plant", pottingDate: nil, sunTolerance: .fullShade, wateringInterval: CareInterval())
     }
     
-    convenience init(name: String, pottingDate: Date? = nil, wateringInterval: CareInterval? = nil) {
-        self.init(id: UUID(), name: name, pottingDate: pottingDate, wateringInterval: wateringInterval)
+    convenience init(name: String) {
+        self.init(id: UUID(), name: name, pottingDate: nil, sunTolerance: .fullShade, wateringInterval: CareInterval())
     }
     
-    init(id: UUID, name: String, pottingDate: Date? = nil, wateringInterval: CareInterval? = nil) {
+    init(id: UUID, name: String, pottingDate: Date?, sunTolerance: SunTolerance, wateringInterval: CareInterval) {
         self.id = id
         self.name = name
         self.pottingDate = pottingDate
+        self.sunTolerance = sunTolerance
         self.wateringInterval = wateringInterval
     }
     
