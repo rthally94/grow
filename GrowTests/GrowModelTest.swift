@@ -63,12 +63,12 @@ class GrowModelTest: XCTestCase {
         let sut = GrowModel()
         sut.addPlant()
             
-        XCTAssertEqual(sut.plants[0].getLogs().count, 0)
+        XCTAssertEqual(sut.plants[0].getActivity().count, 0)
         
         let careActivity = CareActivity()
         sut.addCareActivity(careActivity, to: sut.plants[0])
         
-        XCTAssertEqual(sut.plants[0].getLogs().count, 1)
-        print(sut.plants[0].getLogs())
+        XCTAssertEqual(sut.plants[0].getActivity().count, 1)
+        print(sut.plants[0].getActivity())
     }
 }
