@@ -33,11 +33,11 @@ extension GrowModel {
     /// Updates a plant model in the dataset with the specified parameters
     /// - Parameters:
     ///   - oldPlant: The plant to update
-    ///   - name: The new name of the plant
-    func updatePlant(_ oldPlant: Plant, name: String? = nil) {
+    ///   - newPlant: The plant to which new values will be sourced
+    func updatePlant(_ oldPlant: Plant, with newPlant: Plant) {
         if let oldIndex = plants.firstIndex(of: oldPlant) {
-            let updatedPlant = plants[oldIndex]
-            updatedPlant.name = name ?? oldPlant.name
+            newPlant.id = plants[oldIndex].id
+            plants[oldIndex] = newPlant
         }
     }
     
