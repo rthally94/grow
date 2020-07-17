@@ -12,19 +12,22 @@ struct PlantEditorForm: View {
     @EnvironmentObject var model: GrowModel
     @ObservedObject private var plant: Plant
     
+    // Save Callback
+    var onSave: (Plant) -> Void
+    
     // Form State
     @State var showPlantedPicker = false
     @State var plantingDate = Date()
-    
     @State var showWaterIntervalPicker = false
     
-    init() {
+    init(onSave: @escaping (Plant) -> Void ) {
         let plant = Plant(name: "")
-        self._plant = ObservedObject(initialValue: plant)
+        self.init(plant: plant, onSave: {_ in} )
     }
     
-    init(plant: Plant) {
+    init(plant: Plant, onSave: @escaping (Plant) -> Void ) {
         self._plant = ObservedObject(initialValue: plant)
+        self.onSave = onSave
     }
     
     var body: some View {
@@ -59,11 +62,17 @@ struct PlantEditorForm_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NavigationView {
-                PlantEditorForm().environmentObject(GrowModel())
+                PlantEditorForm { plant in
+                    print(plant)
+                }
+                .environmentObject(GrowModel())
             }.previewDisplayName("New Plant")
             
             NavigationView {
-                PlantEditorForm(plant: Plant()).environmentObject(GrowModel())
+                PlantEditorForm(plant: Plant()) { plant in
+                    print(plant)
+                }
+                .environmentObject(GrowModel())
             }.previewDisplayName("Existing Plant")
         }
     }
