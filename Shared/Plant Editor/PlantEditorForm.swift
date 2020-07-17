@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct PlantEditorForm: View {
-    @EnvironmentObject var model: GrowModel
-    @ObservedObject private var plant: Plant
+    @Environment(\.presentationMode) var presentationMode
     
     // Save Callback
     var onSave: (Plant) -> Void
     
     // Form State
+    @State var plant: Plant
     @State var showPlantedPicker = false
     @State var plantingDate = Date()
     @State var showWaterIntervalPicker = false
@@ -26,7 +26,7 @@ struct PlantEditorForm: View {
     }
     
     init(plant: Plant, onSave: @escaping (Plant) -> Void ) {
-        self._plant = ObservedObject(initialValue: plant)
+        self._plant = State(initialValue: plant)
         self.onSave = onSave
     }
     
