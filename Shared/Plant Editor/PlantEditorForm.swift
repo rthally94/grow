@@ -53,7 +53,7 @@ struct PlantEditorForm: View {
             }
         }
         .navigationBarTitle("Details", displayMode: .inline)
-        .navigationBarItems(leading: Button("Cancel", action: {}), trailing: Button("Save", action: {}))
+        .navigationBarItems(leading: Button("Cancel", action: {}), trailing: Button("Save", action: { self.onSave(self.plant) }))
         
     }
 }
