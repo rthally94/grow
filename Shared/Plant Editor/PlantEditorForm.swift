@@ -15,10 +15,12 @@ struct PlantEditorForm: View {
     var onSave: (Plant) -> Void
     
     // Form State
-    @State var plant: Plant
+    @State var plantName = ""
     @State var showPlantedPicker = false
-    @State var plantingDate = Date()
+    @State var plantedDate = Date()
+    
     @State var showWaterIntervalPicker = false
+    @State var waterInterval = CareInterval()
     
     init(onSave: @escaping (Plant) -> Void ) {
         let plant = Plant(name: "")
@@ -26,20 +28,27 @@ struct PlantEditorForm: View {
     }
     
     init(plant: Plant, onSave: @escaping (Plant) -> Void ) {
-        self._plant = State(initialValue: plant)
         self.onSave = onSave
+        
+        // Setup internal state
+        showPlantedPicker = plant.pottingDate != nil
+        plantedDate = plant.pottingDate ?? Date()
+        
+        showWaterIntervalPicker = plant.wateringInterval.unit != .none
+        waterInterval = plant.wateringInterval
+        
     }
     
     var body: some View {
         Form {
             Section {
-                UITextFieldWrapper("Plant Name", text: self.$plant.name)
+                UITextFieldWrapper("Plant Name", text: $plantName)
             }
             
             Section {
                 Toggle(isOn: self.$showPlantedPicker.animation(.easeInOut), label: {Text("Planted")})
                 if self.showPlantedPicker {
-                    DatePicker("Planting Date", selection: self.$plantingDate, in: ...Date(), displayedComponents: [.date])
+                    DatePicker("Planting Date", selection: $plantedDate, in: ...Date(), displayedComponents: [.date])
                 }
             }
             
@@ -47,7 +56,7 @@ struct PlantEditorForm: View {
                 HStack {
                     Text("Watering Interval")
                     Spacer()
-                    Text(plant.wateringInterval.description)
+                    Text(waterInterval.description)
                     Image(systemName: "chevron.right")
                 }
             }
@@ -57,9 +66,7 @@ struct PlantEditorForm: View {
     }
     
     private func save() {
-        plant.pottingDate = showPlantedPicker ? plantingDate : nil
-        
-        onSave(plant)
+//        onSave(plant)
         dismiss()
     }
     
