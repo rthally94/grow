@@ -26,16 +26,20 @@ struct WeekPicker: View {
     var body: some View {
         HStack {
             ForEach(calendar.weekdaySymbols.indices) { index in
+                if index != 0 {
+                    Spacer()
+                }
+                
                 self.symbolForWeekday(index)
                     .imageScale(.large)
                     .onTapGesture {
+                        print("Tap")
                         withAnimation {
                             self.handleSelection(for: index)
                         }
                 }
             }
         }
-        
     }
     
     private func handleSelection(for index: Int) {
