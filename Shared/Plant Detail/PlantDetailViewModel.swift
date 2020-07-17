@@ -73,4 +73,8 @@ class PlantDetailViewModel: ObservableObject {
     func deletePlant() {
         self.model.deletePlant(plant: plant)
     }
+    
+    func updatePlant(to newPlant: Plant) {
+        self.model.updatePlant(self.plant, with: newPlant)
+    }
 }
