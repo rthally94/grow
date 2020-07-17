@@ -3,4 +3,54 @@
    uuid = "7579B5A6-9585-42B5-A519-8F7E9F1C719D"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B3EC59A0-1956-4421-89CD-9F1531A8F91A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Views/WeekPicker.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "symbolForWeekday(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B3EC59A0-1956-4421-89CD-9F1531A8F91A - d689037403517ca3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Grow_.WeekPicker.(symbolForWeekday in _C19D302850664B0B1CBCF89DA041260C)(Swift.Int) -&gt; SwiftUI.Image"
+                  moduleName = "Grow!"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rthally94/Development/Grow/Grow/Shared/Views/WeekPicker.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "61"
+                  endingLineNumber = "61"
+                  offsetFromSymbolStart = "903">
+               </Location>
+               <Location
+                  uuid = "B3EC59A0-1956-4421-89CD-9F1531A8F91A - c031d0bc5ff63838"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(extension in Grow__PreviewReplacement_WeekPicker_6):Grow_.WeekPicker.(__preview__symbolForWeekday in _069D6DD96B104C5635647ABC37F267A4)(Swift.Int) -&gt; SwiftUI.Image"
+                  moduleName = "WeekPicker.6.preview-thunk.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rthally94/Development/Grow/Grow/Shared/Views/WeekPicker.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "61"
+                  endingLineNumber = "61"
+                  offsetFromSymbolStart = "543">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
