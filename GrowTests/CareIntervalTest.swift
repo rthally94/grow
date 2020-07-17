@@ -76,7 +76,7 @@ class CareIntervalTest: XCTestCase {
     
     // MARK: Next Date
     func testCareInterval_WhenUnitIsDaily_NextDateIsTomorrow() {
-        let sut = CareInterval()
+        let sut = CareInterval(unit: .daily, interval: 1)
 
         let today = Date()
         let next = sut.next(from: today)
