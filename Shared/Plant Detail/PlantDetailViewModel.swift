@@ -31,14 +31,14 @@ class PlantDetailViewModel: ObservableObject {
     }
     
     var plantWateringTitle: String {
-        plant.wateringInterval == nil ? "Watered" : "Watering"
+        plant.wateringInterval.unit == .none ? "Watered" : "Watering"
     }
     
     var plantWateringValue: String {
         // Check if plant has a care interval
-        if let interval = plant.wateringInterval {
+        if plant.wateringInterval.unit == .none {
             // Format for next care activity
-            let next = interval.next(from: plant.careActivity.first?.date ?? Date())
+            let next = plant.wateringInterval.next(from: plant.careActivity.first?.date ?? Date())
             return Formatters.relativeDateFormatter.string(for: next)
         } else {
             // Check if a log has been recorded
@@ -61,7 +61,7 @@ class PlantDetailViewModel: ObservableObject {
     }
     
     var wateringIntervalValue: String {
-        plant.wateringInterval == nil ? "Watered" : "Watering"
+        plant.wateringInterval.unit == .none ? "Watered" : "Watering"
     }
     
     // MARK: Intents
