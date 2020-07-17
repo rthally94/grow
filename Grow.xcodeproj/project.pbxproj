@@ -168,9 +168,9 @@
 		21BFB3B024B66E0800B94A72 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				212A1E9D24BE2768002C147F /* Plant Editor */,
 				212A1E9624BE0EE3002C147F /* Views */,
 				212A1E8D24BB192C002C147F /* Plant Detail */,
+				212A1E9D24BE2768002C147F /* Plant Editor */,
 				21BFB3E924B678A100B94A72 /* Model */,
 				21BFB3B124B66E0800B94A72 /* AppDelegate.swift */,
 				21BFB3B324B66E0800B94A72 /* SceneDelegate.swift */,
