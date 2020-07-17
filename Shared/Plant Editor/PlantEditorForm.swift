@@ -16,8 +16,10 @@ struct PlantEditorForm: View {
     @State var showPlantedPicker = false
     @State var plantingDate = Date()
     
+    @State var showWaterIntervalPicker = false
+    
     init() {
-        let plant = Plant(id: UUID(), name: "")
+        let plant = Plant(name: "")
         self._plant = ObservedObject(initialValue: plant)
     }
     
@@ -32,14 +34,19 @@ struct PlantEditorForm: View {
             }
             
             Section {
-                Toggle(isOn: self.$showPlantedPicker, label: {Text("Planted")})
+                Toggle(isOn: self.$showPlantedPicker.animation(.easeInOut), label: {Text("Planted")})
                 if self.showPlantedPicker {
                     DatePicker("Planting Date", selection: self.$plantingDate, displayedComponents: [.date])
                 }
             }
             
             Section {
-                ListRow(title: "Watering Interval", value: self.plant.wateringInterval?.description ?? "None")
+                HStack {
+                    Text("Watering Interval")
+                    Spacer()
+                    Text(plant.wateringInterval.description)
+                    Image(systemName: "chevron.right")
+                }
             }
         }
         .navigationBarTitle("Details", displayMode: .inline)
