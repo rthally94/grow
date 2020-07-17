@@ -53,8 +53,18 @@ struct PlantEditorForm: View {
             }
         }
         .navigationBarTitle("Details", displayMode: .inline)
-        .navigationBarItems(leading: Button("Cancel", action: {}), trailing: Button("Save", action: { self.onSave(self.plant) }))
+        .navigationBarItems(leading: Button("Cancel", action: dismiss), trailing: Button("Save", action: save) )
+    }
+    
+    private func save() {
+        plant.pottingDate = showPlantedPicker ? plantingDate : nil
         
+        onSave(plant)
+        dismiss()
+    }
+    
+    private func dismiss() {
+        presentationMode.wrappedValue.dismiss()
     }
 }
 
