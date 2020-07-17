@@ -84,7 +84,16 @@ struct PlantDetailView: View {
                     ActionSheet.Button.cancel()
                 ])
         }
-        .sheet(isPresented: $plantEditorSheetIsPresented, content: { PlantEditorForm(plant: self.viewModel.plant) })
+        .sheet(
+            isPresented: $plantEditorSheetIsPresented,
+            content: {
+                NavigationView {
+                    PlantEditorForm(plant: self.viewModel.plant) { newPlant in
+                        self.viewModel.updatePlant(to: newPlant)
+                    }
+                    
+                }
+        })
     }
     
     // MARK: Actions
