@@ -39,7 +39,7 @@ struct PlantEditorForm: View {
             Section {
                 Toggle(isOn: self.$showPlantedPicker.animation(.easeInOut), label: {Text("Planted")})
                 if self.showPlantedPicker {
-                    DatePicker("Planting Date", selection: self.$plantingDate, displayedComponents: [.date])
+                    DatePicker("Planting Date", selection: self.$plantingDate, in: ...Date(), displayedComponents: [.date])
                 }
             }
             
