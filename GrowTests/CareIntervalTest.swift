@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-@testable import Grow_iOS
+@testable import Grow_
 
 class CareIntervalTest: XCTestCase {
     let cal = Calendar.current

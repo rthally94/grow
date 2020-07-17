@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-@testable import Grow_iOS
+@testable import Grow_
 
 class GrowModelTest: XCTestCase {
     func testPlantStore_WhenInitialized_NoPlantsAreStored() {
