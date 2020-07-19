@@ -10,18 +10,20 @@ import SwiftUI
 
 struct PlantDetailView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var model: GrowModel
+    
+    var plant: Plant
     
     // Model State
-    @ObservedObject var viewModel: PlantDetailViewModel
+    @State private var editorConfig = EditorConfig()
     
     // View State
     @State private var plantActionSheetIsPresented = false
-    @State private var plantEditorSheetIsPresented = false
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 15) {
-                Text(self.viewModel.ageValue)
+                Text(ageValue)
                 InsetGroupedSection( header: {
                     HStack {
                         Group {
