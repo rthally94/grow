@@ -8,29 +8,29 @@
 
 import Foundation
 
-class Plant: ObservableObject, Identifiable, Hashable, Equatable {
+struct Plant: Identifiable, Hashable, Equatable {
     // General Plant Info
-    var id: UUID
-    @Published var name: String
-    @Published var pottingDate: Date?
+    let id: UUID
+    var name: String
+    var pottingDate: Date?
     
     // Care Info
-    @Published var sunTolerance: SunTolerance
-    @Published var wateringInterval: CareInterval
+    var sunTolerance: SunTolerance
+    var wateringInterval: CareInterval
     
     var age: TimeInterval {
         return DateInterval(start: pottingDate ?? Date(), end: Date()).duration
     }
     
     // Care Activity
-    @Published private(set) var careActivity = [CareActivity]()
+    private(set) var careActivity = [CareActivity]()
     
     // MARK: Initializers
-    convenience init() {
+    init() {
         self.init(id: UUID(), name: "My Plant", pottingDate: nil, sunTolerance: .fullShade, wateringInterval: CareInterval())
     }
     
-    convenience init(name: String) {
+    init(name: String) {
         self.init(id: UUID(), name: name, pottingDate: nil, sunTolerance: .fullShade, wateringInterval: CareInterval())
     }
     
@@ -41,21 +41,11 @@ class Plant: ObservableObject, Identifiable, Hashable, Equatable {
         self.sunTolerance = sunTolerance
         self.wateringInterval = wateringInterval
     }
-    
-    // Hashable
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    // Equatable
-    static func == (lhs: Plant, rhs: Plant) -> Bool {
-        return lhs.hashValue == rhs.hashValue
-    }
 }
 
 // MARK: Plant Intents
 extension Plant {
-    func addCareActivity(_ log: CareActivity) {
+    mutating func addCareActivity(_ log: CareActivity) {
         careActivity.insert(log, at: 0)
     }
     

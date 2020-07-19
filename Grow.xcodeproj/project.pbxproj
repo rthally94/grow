@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		212A1E8A24B7664C002C147F /* PlantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E8924B7664C002C147F /* PlantDetailView.swift */; };
 		212A1E8C24B893F7002C147F /* CareActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E8B24B893F7002C147F /* CareActivity.swift */; };
-		212A1E8F24BB194C002C147F /* PlantDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E8E24BB194C002C147F /* PlantDetailViewModel.swift */; };
 		212A1E9124BD2143002C147F /* CareActivityList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9024BD2143002C147F /* CareActivityList.swift */; };
 		212A1E9324BD4BC8002C147F /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9224BD4BC7002C147F /* RootView.swift */; };
 		212A1E9524BD4EA5002C147F /* Color+SystemColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9424BD4EA5002C147F /* Color+SystemColor.swift */; };
@@ -64,7 +63,6 @@
 /* Begin PBXFileReference section */
 		212A1E8924B7664C002C147F /* PlantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailView.swift; sourceTree = "<group>"; };
 		212A1E8B24B893F7002C147F /* CareActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareActivity.swift; sourceTree = "<group>"; };
-		212A1E8E24BB194C002C147F /* PlantDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailViewModel.swift; sourceTree = "<group>"; };
 		212A1E9024BD2143002C147F /* CareActivityList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareActivityList.swift; sourceTree = "<group>"; };
 		212A1E9224BD4BC7002C147F /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		212A1E9424BD4EA5002C147F /* Color+SystemColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+SystemColor.swift"; sourceTree = "<group>"; };
@@ -119,7 +117,6 @@
 			isa = PBXGroup;
 			children = (
 				212A1E8924B7664C002C147F /* PlantDetailView.swift */,
-				212A1E8E24BB194C002C147F /* PlantDetailViewModel.swift */,
 				212A1E9024BD2143002C147F /* CareActivityList.swift */,
 			);
 			path = "Plant Detail";
@@ -343,7 +340,6 @@
 				212A1E8A24B7664C002C147F /* PlantDetailView.swift in Sources */,
 				21F4C23624BF267A00EB73E0 /* PlantEditorForm.swift in Sources */,
 				21BFB3F924B678DC00B94A72 /* RelativeDateFormatter.swift in Sources */,
-				212A1E8F24BB194C002C147F /* PlantDetailViewModel.swift in Sources */,
 				21BFB3FB24B678DC00B94A72 /* Plant.swift in Sources */,
 				21F4C23424BF15A900EB73E0 /* StatefulPreviewWrapper.swift in Sources */,
 				212A1E9324BD4BC8002C147F /* RootView.swift in Sources */,

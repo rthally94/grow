@@ -8,55 +8,59 @@
 
 import SwiftUI
 
-struct PlantEditorForm: View {
-    @Environment(\.presentationMode) var presentationMode
+struct EditorConfig {
+    var isPresented: Bool = false
     
-    // Save Callback
-    var onSave: (Plant) -> Void
+    var name = ""
     
-    // Form State
-    @State var plantName = ""
-    @State var showPlantedPicker = false
-    @State var plantedDate = Date()
+    var isPlanted = false
+    var plantedDate = Date()
     
-    @State var showWaterIntervalPicker = false
-    @State var waterInterval = CareInterval()
+    var sunTolerance = SunTolerance.fullShade
     
-    init(onSave: @escaping (Plant) -> Void ) {
-        let plant = Plant(name: "")
-        self.init(plant: plant, onSave: {_ in} )
-    }
+    var hasWaterInterval = false
+    var waterInterval = CareInterval()
     
-    init(plant: Plant, onSave: @escaping (Plant) -> Void ) {
-        self.onSave = onSave
+    mutating func presentForEditing(plant: Plant) {
+        name = plant.name
         
-        // Setup internal state
-        showPlantedPicker = plant.pottingDate != nil
+        isPlanted = plant.pottingDate != nil
         plantedDate = plant.pottingDate ?? Date()
         
-        showWaterIntervalPicker = plant.wateringInterval.unit != .none
+        hasWaterInterval = plant.wateringInterval.unit != .none
         waterInterval = plant.wateringInterval
         
+        isPresented = true
     }
+}
+
+struct PlantEditorForm: View {
+    @Binding var editorConfig: EditorConfig
+    // Save Callback
+    var onSave: () -> Void
     
     var body: some View {
         Form {
             Section {
-                UITextFieldWrapper("Plant Name", text: $plantName)
-            }
-            
-            Section {
-                Toggle(isOn: self.$showPlantedPicker.animation(.easeInOut), label: {Text("Planted")})
-                if self.showPlantedPicker {
-                    DatePicker("Planting Date", selection: $plantedDate, in: ...Date(), displayedComponents: [.date])
+                UITextFieldWrapper("Plant Name", text: $editorConfig.name)
+                Toggle(isOn: $editorConfig.isPlanted.animation(.easeInOut), label: {Text("Planted")})
+                if editorConfig.isPlanted {
+                    DatePicker("Planting Date", selection: $editorConfig.plantedDate, in: ...Date(), displayedComponents: [.date])
                 }
             }
             
             Section {
                 HStack {
+                    Text("Sun Tolerance")
+                    Spacer()
+                    Text(editorConfig.sunTolerance.name)
+                    Image(systemName: "chevron.right")
+                }
+                
+                HStack {
                     Text("Watering Interval")
                     Spacer()
-                    Text(waterInterval.description)
+                    Text(editorConfig.waterInterval.description)
                     Image(systemName: "chevron.right")
                 }
             }
@@ -66,12 +70,12 @@ struct PlantEditorForm: View {
     }
     
     private func save() {
-//        onSave(plant)
+        onSave()
         dismiss()
     }
     
     private func dismiss() {
-        presentationMode.wrappedValue.dismiss()
+        editorConfig.isPresented = false
     }
 }
 
@@ -79,18 +83,13 @@ struct PlantEditorForm_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NavigationView {
-                PlantEditorForm { plant in
-                    print(plant)
+                StatefulPreviewWrapper(EditorConfig()) { config in
+                    PlantEditorForm(editorConfig: config) {
+                        print(config)
+                    }
+                    .environmentObject(GrowModel())
                 }
-                .environmentObject(GrowModel())
             }.previewDisplayName("New Plant")
-            
-            NavigationView {
-                PlantEditorForm(plant: Plant()) { plant in
-                    print(plant)
-                }
-                .environmentObject(GrowModel())
-            }.previewDisplayName("Existing Plant")
         }
     }
 }
