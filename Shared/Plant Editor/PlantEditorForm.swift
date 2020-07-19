@@ -16,6 +16,8 @@ struct EditorConfig {
     var isPlanted = false
     var plantedDate = Date()
     
+    var sunTolerance = SunTolerance.fullShade
+    
     var hasWaterInterval = false
     var waterInterval = CareInterval()
     
@@ -48,6 +50,13 @@ struct PlantEditorForm: View {
             }
             
             Section {
+                HStack {
+                    Text("Sun Tolerance")
+                    Spacer()
+                    Text(editorConfig.sunTolerance.name)
+                    Image(systemName: "chevron.right")
+                }
+                
                 HStack {
                     Text("Watering Interval")
                     Spacer()
