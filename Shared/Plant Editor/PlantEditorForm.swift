@@ -8,47 +8,45 @@
 
 import SwiftUI
 
-struct PlantEditorForm: View {
-    @Environment(\.presentationMode) var presentationMode
+struct EditorConfig {
+    var isPresented: Bool = false
     
-    // Save Callback
-    var onSave: (Plant) -> Void
+    var name = ""
     
-    // Form State
-    @State var plantName = ""
-    @State var showPlantedPicker = false
-    @State var plantedDate = Date()
+    var isPlanted = false
+    var plantedDate = Date()
     
-    @State var showWaterIntervalPicker = false
-    @State var waterInterval = CareInterval()
+    var hasWaterInterval = false
+    var waterInterval = CareInterval()
     
-    init(onSave: @escaping (Plant) -> Void ) {
-        let plant = Plant(name: "")
-        self.init(plant: plant, onSave: {_ in} )
-    }
-    
-    init(plant: Plant, onSave: @escaping (Plant) -> Void ) {
-        self.onSave = onSave
+    mutating func presentForEditing(plant: Plant) {
+        name = plant.name
         
-        // Setup internal state
-        showPlantedPicker = plant.pottingDate != nil
+        isPlanted = plant.pottingDate != nil
         plantedDate = plant.pottingDate ?? Date()
         
-        showWaterIntervalPicker = plant.wateringInterval.unit != .none
+        hasWaterInterval = plant.wateringInterval.unit != .none
         waterInterval = plant.wateringInterval
         
+        isPresented = true
     }
+}
+
+struct PlantEditorForm: View {
+    @Binding var editorConfig: EditorConfig
+    // Save Callback
+    var onSave: () -> Void
     
     var body: some View {
         Form {
             Section {
-                UITextFieldWrapper("Plant Name", text: $plantName)
+                UITextFieldWrapper("Plant Name", text: $editorConfig.name)
             }
             
             Section {
-                Toggle(isOn: self.$showPlantedPicker.animation(.easeInOut), label: {Text("Planted")})
-                if self.showPlantedPicker {
-                    DatePicker("Planting Date", selection: $plantedDate, in: ...Date(), displayedComponents: [.date])
+                Toggle(isOn: $editorConfig.isPlanted.animation(.easeInOut), label: {Text("Planted")})
+                if editorConfig.isPlanted {
+                    DatePicker("Planting Date", selection: $editorConfig.plantedDate, in: ...Date(), displayedComponents: [.date])
                 }
             }
             
