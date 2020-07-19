@@ -41,9 +41,6 @@ struct PlantEditorForm: View {
         Form {
             Section {
                 UITextFieldWrapper("Plant Name", text: $editorConfig.name)
-            }
-            
-            Section {
                 Toggle(isOn: $editorConfig.isPlanted.animation(.easeInOut), label: {Text("Planted")})
                 if editorConfig.isPlanted {
                     DatePicker("Planting Date", selection: $editorConfig.plantedDate, in: ...Date(), displayedComponents: [.date])
