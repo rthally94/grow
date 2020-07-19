@@ -20,24 +20,18 @@ extension GrowModel {
             plant.name.hasPrefix("New Plant") ? count + 1 : count
         }
         let newPlantName = "New Plant \(newPlantCount + 1)"
-        addPlant(name: newPlantName)
+        
+        addPlant(Plant(name: newPlantName))
     }
     
     /// Adds a parameterized plant to the dataset
     /// - Parameter name: The name of the plant
-    func addPlant(name: String) {
-        let newPlant = Plant(name: name)
-        plants.append(newPlant)
-    }
-    
-    /// Updates a plant model in the dataset with the specified parameters
-    /// - Parameters:
-    ///   - oldPlant: The plant to update
-    ///   - newPlant: The plant to which new values will be sourced
-    func updatePlant(_ oldPlant: Plant, with newPlant: Plant) {
-        if let oldIndex = plants.firstIndex(of: oldPlant) {
-            newPlant.id = plants[oldIndex].id
-            plants[oldIndex] = newPlant
+    func addPlant(_ plant: Plant) {
+        if let oldPlantIndex = plants.firstIndex(where: { $0.id == plant.id }) {
+            plants[oldPlantIndex] = plant
+            print(plants[0])
+        } else {
+            plants.append(plant)
         }
     }
     
