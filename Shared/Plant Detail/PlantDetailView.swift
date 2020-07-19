@@ -34,7 +34,7 @@ struct PlantDetailView: View {
                         
                         Spacer()
                         Group {
-                            Text(self.viewModel.careActivityCount)
+                            Text(self.careActivityCount)
                             Button(action: {}, label: {Image(systemName: "chevron.right")})
                         }
                         .foregroundColor(.gray)
@@ -42,7 +42,7 @@ struct PlantDetailView: View {
                     }
                 }) {
                     HStack(alignment: .bottom) {
-                        StatCell(title: Text(self.viewModel.plantWateringTitle)) { Text(self.viewModel.plantWateringValue) }
+                        StatCell(title: Text(self.plantWateringTitle)) { Text(self.plantWateringValue) }
                         Spacer()
                     }
                     .animation(.none)
@@ -65,7 +65,7 @@ struct PlantDetailView: View {
                                 StatCell(title: Text("Sun Tolerance")) {
                                     Text("No Val")
                                 }
-                                StatCell(title: Text("Watering")) { Text(self.viewModel.plantWateringValue) }
+                                StatCell(title: Text("Watering")) { Text(self.plantWateringValue) }
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                         }
@@ -74,26 +74,23 @@ struct PlantDetailView: View {
             }
             .padding(.horizontal)
         }
-        .navigationBarTitle(viewModel.name)
+        .navigationBarTitle(plant.name)
         .navigationBarItems(trailing: Button(action: showActionSheet) {
             Image(systemName: "ellipsis.circle")
         })
             .actionSheet(isPresented: $plantActionSheetIsPresented) {
                 ActionSheet(title: Text("Options"), buttons: [
                     ActionSheet.Button.default(Text("Log Care Activity"), action: addCareActivity),
-                    ActionSheet.Button.default(Text("Edit Plant"), action: {self.plantEditorSheetIsPresented = true}),
+                    ActionSheet.Button.default(Text("Edit Plant"), action: presentEditor),
                     ActionSheet.Button.destructive(Text("Delete Plant"), action: deletePlant),
                     ActionSheet.Button.cancel()
                 ])
         }
         .sheet(
-            isPresented: $plantEditorSheetIsPresented,
+            isPresented: $editorConfig.isPresented,
             content: {
                 NavigationView {
-                    PlantEditorForm(plant: self.viewModel.plant) { newPlant in
-                        self.viewModel.updatePlant(to: newPlant)
-                    }
-                    
+                    PlantEditorForm(editorConfig: self.$editorConfig, onSave: self.saveChanges)
                 }
         })
     }
@@ -105,15 +102,78 @@ struct PlantDetailView: View {
     
     private func addCareActivity() {
         withAnimation {
-            self.viewModel.addCareActivity(type: .water)
+            let activity = CareActivity(type: .water, date: Date())
+            model.addCareActivity(activity, to: plant)
         }
     }
     
     private func deletePlant() {
         withAnimation {
             self.presentationMode.wrappedValue.dismiss()
-            self.viewModel.deletePlant()
+            self.model.deletePlant(plant: plant)
         }
+    }
+    
+    private func presentEditor() {
+        editorConfig.presentForEditing(plant: plant)
+    }
+    
+    private func saveChanges() {
+        let name = editorConfig.name
+        let pottingDate = editorConfig.isPlanted ? editorConfig.plantedDate : nil
+        
+        let wateringInterval = editorConfig.waterInterval
+        
+        let updatedPlant = Plant(id: plant.id, name: name, pottingDate: pottingDate, sunTolerance: .fullSun, wateringInterval: wateringInterval)
+        
+        print(updatedPlant)
+        model.addPlant(updatedPlant)
+    }
+}
+
+// MARK: Computed Properties
+extension PlantDetailView {
+    var plantIndex: Int {
+        guard let plantIndex =  model.plants.firstIndex(of: plant) else { fatalError("Plant must be in model to be in detail view.") }
+        return plantIndex
+    }
+    
+    var careActivityCount: String {
+        "\(plant.careActivity.count)"
+    }
+    
+    var plantWateringTitle: String {
+        plant.wateringInterval.unit == .none ? "Watered" : "Watering"
+    }
+    
+    var plantWateringValue: String {
+        // Check if plant has a care interval
+        if plant.wateringInterval.unit == .none {
+            // Format for next care activity
+            let next = plant.wateringInterval.next(from: plant.careActivity.first?.date ?? Date())
+            return Formatters.relativeDateFormatter.string(for: next)
+        } else {
+            // Check if a log has been recorded
+            if let lastLogDate = plant.careActivity.first?.date {
+                // Display the date of the last log
+                return Formatters.relativeDateFormatter.string(for: lastLogDate)
+            } else {
+                return "Never"
+            }
+        }
+    }
+    
+    // Growing Conditions
+    var ageValue: String {
+        if let potted = plant.pottingDate, let ageString = Formatters.dateComponentsFormatter.string(from: potted, to: Date()) {
+            return "Potted \(ageString) ago"
+        } else {
+            return "Not Potted Yet"
+        }
+    }
+    
+    var wateringIntervalValue: String {
+        plant.wateringInterval.unit == .none ? "Watered" : "Watering"
     }
 }
 
@@ -122,10 +182,8 @@ struct PlantDetailView_Previews: PreviewProvider {
         let model = GrowModel()
         model.addPlant()
         
-        let viewModel = PlantDetailViewModel(model: model, plant: model.plants[0])
-        
         let view = NavigationView {
-            PlantDetailView(viewModel: viewModel)
+            PlantDetailView(plant: model.plants[0])
         }
         
         return Group {
