@@ -54,7 +54,7 @@ struct PlantEditorForm: View {
                 HStack {
                     Text("Watering Interval")
                     Spacer()
-                    Text(waterInterval.description)
+                    Text(editorConfig.waterInterval.description)
                     Image(systemName: "chevron.right")
                 }
             }
@@ -64,12 +64,12 @@ struct PlantEditorForm: View {
     }
     
     private func save() {
-//        onSave(plant) 
+        onSave()
         dismiss()
     }
     
     private func dismiss() {
-        presentationMode.wrappedValue.dismiss()
+        editorConfig.isPresented = false
     }
 }
 
@@ -77,18 +77,13 @@ struct PlantEditorForm_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NavigationView {
-                PlantEditorForm { plant in
-                    print(plant)
+                StatefulPreviewWrapper(EditorConfig()) { config in
+                    PlantEditorForm(editorConfig: config) {
+                        print(config)
+                    }
+                    .environmentObject(GrowModel())
                 }
-                .environmentObject(GrowModel())
             }.previewDisplayName("New Plant")
-            
-            NavigationView {
-                PlantEditorForm(plant: Plant()) { plant in
-                    print(plant)
-                }
-                .environmentObject(GrowModel())
-            }.previewDisplayName("Existing Plant")
         }
     }
 }
