@@ -9,33 +9,29 @@
 import SwiftUI
 
 struct EditorConfig {
-    var isPresented: Bool = false
+    var isPresented = false
     
     var name = ""
     
     var isPlanted = false
     var plantedDate = Date()
     
-    var sunTolerance = SunTolerance.fullShade
-    
-    var hasWaterInterval = false
-    var waterInterval = CareInterval()
+    var careTasks = [CareTask]()
     
     mutating func presentForEditing(plant: Plant) {
-        name = plant.name
+        isPresented = true
         
+        name = plant.name
         isPlanted = plant.pottingDate != nil
         plantedDate = plant.pottingDate ?? Date()
-        
-        hasWaterInterval = plant.wateringInterval.unit != .none
-        waterInterval = plant.wateringInterval
-        
-        isPresented = true
+        careTasks = plant.careTasks
     }
 }
 
 struct PlantEditorForm: View {
     @Binding var editorConfig: EditorConfig
+    @State private var taskEditorConfig = CareTaskEditorConfig()
+    
     // Save Callback
     var onSave: () -> Void
     
@@ -49,25 +45,31 @@ struct PlantEditorForm: View {
                 }
             }
             
-            Section {
-                HStack {
-                    Text("Sun Tolerance")
-                    Spacer()
-                    Text(editorConfig.sunTolerance.name)
-                    Image(systemName: "chevron.right")
+            Section (header: Text("Plant Care")){
+                ForEach(editorConfig.careTasks) { task in
+                    NavigationLink(task.name, destination: CareTaskEditor(editorConfig: self.$taskEditorConfig), tag: task.id, selection: self.$taskEditorConfig.presentedTaskId)
                 }
                 
-                HStack {
-                    Text("Watering Interval")
-                    Spacer()
-                    Text(editorConfig.waterInterval.description)
-                    Image(systemName: "chevron.right")
-                }
+                Button(action: addTask, label: {
+                    HStack {
+                        Image(systemName: "plus.circle.fill")
+                        Text("add task")
+                    }
+                })
             }
         }
         .navigationBarTitle("Details", displayMode: .inline)
         .navigationBarItems(leading: Button("Cancel", action: dismiss), trailing: Button("Save", action: save) )
     }
+    
+    // MARK: Actions
+    private func addTask() {
+        let task = CareTask()
+        editorConfig.careTasks.append(task)
+        
+        taskEditorConfig.present(task: task)
+    }
+    
     
     private func save() {
         onSave()
