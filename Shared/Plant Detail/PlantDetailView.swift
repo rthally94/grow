@@ -23,51 +23,53 @@ struct PlantDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 15) {
-                Text(ageValue)
-                InsetGroupedSection( header: {
-                    HStack {
-                        Group {
-                            Image(systemName: "heart.fill")
-                            Text("Care Activity")
-                        }
-                        .font(.headline)
-                        
-                        Spacer()
-                        Group {
-                            Text(self.careActivityCount)
-                            Button(action: {}, label: {Image(systemName: "chevron.right")})
-                        }
-                        .foregroundColor(.gray)
-                        .font(.caption)
-                    }
-                }) {
-                    HStack(alignment: .bottom) {
-                        StatCell(title: Text(self.plantWateringTitle)) { Text(self.plantWateringValue) }
-                        Spacer()
-                    }
-                    .animation(.none)
+                HStack {
+                    Text(ageValue)
+                    Spacer()
                 }
+//                InsetGroupedSection( header: {
+//                    HStack {
+//                        Group {
+//                            Image(systemName: "heart.fill")
+//                            Text("Care Activity")
+//                        }
+//                        .font(.headline)
+//
+//                        Spacer()
+//                        Group {
+//                            Text(self.careTaskLogCount)
+//                            Button(action: {}, label: {Image(systemName: "chevron.right")})
+//                        }
+//                        .foregroundColor(.gray)
+//                        .font(.caption)
+//                    }
+//                }) {
+//                    HStack(alignment: .bottom) {
+//                        StatCell(title: Text(self.plantWateringTitle)) { Text(self.plantWateringValue) }
+//                        Spacer()
+//                    }
+//                    .animation(.none)
+//                }
                 
-                InsetGroupedSection(header: {
-                    HStack {
-                        Group {
-                            Image(systemName: "scissors")
-                            Text("Growing Conditions")
-                        }
-                        .font(.headline)
-                        
-                        Spacer()
-                    }
-                }) {
-                    VStack(spacing: 20) {
+                if editorConfig.careTasks.count > 0 {
+                    InsetGroupedSection(header: {
                         HStack {
                             Group {
-                                StatCell(title: Text("Sun Tolerance")) {
-                                    Text("No Val")
-                                }
-                                StatCell(title: Text("Watering")) { Text(self.plantWateringValue) }
+                                Image(systemName: "scissors")
+                                Text("Growing Conditions")
                             }
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .font(.headline)
+                            
+                            Spacer()
+                        }
+                    }) {
+                        VStack(spacing: 20) {
+                            ForEach(self.editorConfig.careTasks) { task in
+                                StatCell(title: Text(task.name)) {
+                                    Text(task.interval.description)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            }
                         }
                     }
                 }
@@ -80,7 +82,6 @@ struct PlantDetailView: View {
         })
             .actionSheet(isPresented: $plantActionSheetIsPresented) {
                 ActionSheet(title: Text("Options"), buttons: [
-                    ActionSheet.Button.default(Text("Log Care Activity"), action: addCareActivity),
                     ActionSheet.Button.default(Text("Edit Plant"), action: presentEditor),
                     ActionSheet.Button.destructive(Text("Delete Plant"), action: deletePlant),
                     ActionSheet.Button.cancel()
@@ -100,13 +101,11 @@ struct PlantDetailView: View {
         plantActionSheetIsPresented.toggle()
     }
     
-    private func addCareActivity() {
-        withAnimation {
-            let activity = CareActivity(type: .water, date: Date())
-            model.addCareActivity(activity, to: plant)
-        }
+    private func presentEditor() {
+        editorConfig.presentForEditing(plant: plant)
     }
     
+    // MARK: Intents
     private func deletePlant() {
         withAnimation {
             self.presentationMode.wrappedValue.dismiss()
@@ -114,17 +113,13 @@ struct PlantDetailView: View {
         }
     }
     
-    private func presentEditor() {
-        editorConfig.presentForEditing(plant: plant)
-    }
-    
     private func saveChanges() {
         let name = editorConfig.name
         let pottingDate = editorConfig.isPlanted ? editorConfig.plantedDate : nil
         
-        let wateringInterval = editorConfig.waterInterval
+        let careTasks = editorConfig.careTasks
         
-        let updatedPlant = Plant(id: plant.id, name: name, pottingDate: pottingDate, sunTolerance: .fullSun, wateringInterval: wateringInterval)
+        let updatedPlant = Plant(id: plant.id, name: name, pottingDate: pottingDate, careTasks: careTasks)
         
         print(updatedPlant)
         model.addPlant(updatedPlant)
@@ -138,30 +133,30 @@ extension PlantDetailView {
         return plantIndex
     }
     
-    var careActivityCount: String {
-        "\(plant.careActivity.count)"
-    }
-    
-    var plantWateringTitle: String {
-        plant.wateringInterval.unit == .none ? "Watered" : "Watering"
-    }
-    
-    var plantWateringValue: String {
-        // Check if plant has a care interval
-        if plant.wateringInterval.unit == .none {
-            // Format for next care activity
-            let next = plant.wateringInterval.next(from: plant.careActivity.first?.date ?? Date())
-            return Formatters.relativeDateFormatter.string(for: next)
-        } else {
-            // Check if a log has been recorded
-            if let lastLogDate = plant.careActivity.first?.date {
-                // Display the date of the last log
-                return Formatters.relativeDateFormatter.string(for: lastLogDate)
-            } else {
-                return "Never"
-            }
-        }
-    }
+//    var careTaskLogCount: String {
+//        "\(plant.careTaskLogs.count)"
+//    }
+//
+//    var plantWateringTitle: String {
+//        plant.wateringInterval.unit == .none ? "Watered" : "Watering"
+//    }
+//
+//    var plantWateringValue: String {
+//        // Check if plant has a care interval
+//        if plant.wateringInterval.unit == .none {
+//            // Format for next care activity
+//            let next = plant.wateringInterval.next(from: plant.careActivity.first?.date ?? Date())
+//            return Formatters.relativeDateFormatter.string(for: next)
+//        } else {
+//            // Check if a log has been recorded
+//            if let lastLogDate = plant.careActivity.first?.date {
+//                // Display the date of the last log
+//                return Formatters.relativeDateFormatter.string(for: lastLogDate)
+//            } else {
+//                return "Never"
+//            }
+//        }
+//    }
     
     // Growing Conditions
     var ageValue: String {
@@ -172,9 +167,9 @@ extension PlantDetailView {
         }
     }
     
-    var wateringIntervalValue: String {
-        plant.wateringInterval.unit == .none ? "Watered" : "Watering"
-    }
+//    var wateringIntervalValue: String {
+//        plant.wateringInterval.unit == .none ? "Watered" : "Watering"
+//    }
 }
 
 struct PlantDetailView_Previews: PreviewProvider {
