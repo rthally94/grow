@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CareActivity: Identifiable, Hashable {
+struct CareTaskLog: Identifiable, Hashable {
     enum CareType {
         case water, prune, fertilize
         
