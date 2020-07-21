@@ -28,6 +28,7 @@ struct CareTaskEditorConfig {
 
 struct CareTaskEditor: View {
     @Binding var editorConfig: CareTaskEditorConfig
+    var onSave: () -> Void
     
     var body: some View {
         List {
