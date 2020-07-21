@@ -47,7 +47,16 @@ struct PlantEditorForm: View {
             
             Section (header: Text("Plant Care")){
                 ForEach(editorConfig.careTasks) { task in
-                    NavigationLink(task.name, destination: CareTaskEditor(editorConfig: self.$taskEditorConfig), tag: task.id, selection: self.$taskEditorConfig.presentedTaskId)
+                    NavigationLink(
+                        destination: CareTaskEditor(editorConfig: self.$taskEditorConfig, onSave: self.saveTask),
+                        tag: task.id,
+                        selection: self.customBinding()) {
+                            HStack {
+                                Text(task.name)
+                                Spacer()
+                                Text(task.interval.description.capitalized).foregroundColor(.gray)
+                            }
+                        }
                 }
                 
                 Button(action: addTask, label: {
@@ -63,13 +72,31 @@ struct PlantEditorForm: View {
     }
     
     // MARK: Actions
-    private func addTask() {
-        let task = CareTask()
-        editorConfig.careTasks.append(task)
+    private func customBinding() -> Binding<UUID?> {
+        let binding = Binding<UUID?>(get: {
+            self.taskEditorConfig.presentedTaskId
+        } , set: { newID in
+            if let task = self.editorConfig.careTasks.first(where: {$0.id == newID}) {
+                self.taskEditorConfig.present(task: task)
+            }
+        })
         
-        taskEditorConfig.present(task: task)
+        return binding
     }
     
+    private func addTask() {
+        var task = CareTask()
+        task.name = ""
+        editorConfig.careTasks.append(task)
+    }
+    
+    private func saveTask() {
+        if let index = editorConfig.careTasks.firstIndex(where: { $0.id == taskEditorConfig.presentedTaskId} ) {
+            editorConfig.careTasks[index].name = taskEditorConfig.name
+            editorConfig.careTasks[index].interval = taskEditorConfig.interval
+            editorConfig.careTasks[index].notes = taskEditorConfig.note
+        }
+    }
     
     private func save() {
         onSave()
