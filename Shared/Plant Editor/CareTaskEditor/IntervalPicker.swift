@@ -48,30 +48,42 @@ struct IntervalPicker<Header: View>: View {
             if unitChoice == .weekly {
                 Section {
                     WeekPicker(selection: $weekdayChoices)
+                        .frame(maxWidth: .infinity)
                 }
             }
             
             if unitChoice == .monthly {
-                Section {
-                    DatePicker("Starting on", selection: $startDayChoice, in: startDate...endDate, displayedComponents: .date)
+                Section(footer: Text(monthlyFooter)) {
+                    DatePicker("Starting", selection: $startDayChoice, in: startDate...endDate, displayedComponents: .date)
                 }
             }
         }
-        .listStyle(GroupedListStyle())
-        .navigationBarTitle("Inerval Picker", displayMode: .inline)
     }
     
     // MARK: Constants
     private let startDate = Date()
     private let endDate = Calendar.current.date(byAdding: .year, value: 10, to: Date()) ?? Date()
+    
+    // MARK: Computed Properties
+    private var monthlyFooter: String {
+        let component = Calendar.current.component(.day, from: startDayChoice)
+        let dayOfMonth = Formatters.ordinalNumberFormatter.string(for: component) ?? "nil"
+        return "This task will repeat on the \(dayOfMonth) day of every month."
+    }
+}
+
+extension IntervalPicker where Header == EmptyView {
+    init(onSave: @escaping (CareInterval) -> Void) {
+        self.init(header: EmptyView(), onSave: onSave)
+    }
 }
 
 struct IntervalPicker_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            IntervalPicker { interval in
+        List {
+            IntervalPicker  { interval in
                 print(interval)
             }
-        }
+        }.listStyle(GroupedListStyle())
     }
 }
