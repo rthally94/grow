@@ -34,13 +34,13 @@ class CareIntervalTest: XCTestCase {
     
     // MARK: Unit Interval Boundary
     func testCareInterval_WhenUnitIsNone_IntervalIsZero() {
-        let unit: CareInterval.Unit = .none
+        let unit: CareInterval.Unit = .never
         let interval = 0
         XCTAssertTrue(CareInterval.isValid(interval: interval, for: unit))
     }
     
     func test_CareInterval_WhenUnitIsNone_IntervalIsZero() {
-        let sut = CareInterval(unit: .none, interval: 4)
+        let sut = CareInterval(unit: .never, interval: 4)
         XCTAssertEqual(sut.interval, 0)
     }
     

@@ -12,11 +12,11 @@ struct CareInterval: Hashable, CustomStringConvertible {
         case daily
         case weekly
         case monthly
-        case none
+        case never
         
         var description: String {
             switch self {
-            case .none: return "none"
+            case .never: return "never"
             case .daily: return "daily"
             case .weekly: return "weekly"
             case .monthly: return "monthly"
@@ -45,7 +45,7 @@ struct CareInterval: Hashable, CustomStringConvertible {
     ///   - interval: The associated value for the interval
     init(unit: Unit, interval: Int) {
         switch unit {
-        case .none:
+        case .never:
             self.unit = unit
             self.interval = 0
             
@@ -57,7 +57,7 @@ struct CareInterval: Hashable, CustomStringConvertible {
     
     /// Initializer - Creates an instance with no interval
     init() {
-        self.init(unit: .none, interval: 0)
+        self.init(unit: .never, interval: 0)
     }
     
     /// Initializer - Creates an instance for a weekly repeat interval on the desired weekday ordinal
@@ -75,7 +75,7 @@ struct CareInterval: Hashable, CustomStringConvertible {
     /// A user friendly description of the current interval
     var description: String {
         switch unit {
-        case .none: return "none"
+        case .never: return "none"
         case .daily: return unit.description
         case .weekly:
             guard let dayOfWeek = Formatters.fullDayOfWeek(for: interval) else { return unit.description }
@@ -93,7 +93,7 @@ struct CareInterval: Hashable, CustomStringConvertible {
         let cal = Calendar.current
         
         switch unit {
-        case .none: return Date()
+        case .never: return Date()
         case .daily:
             let next = cal.date(byAdding: .day, value: interval, to: date) ?? date
             return cal.startOfDay(for: next)
@@ -117,7 +117,7 @@ struct CareInterval: Hashable, CustomStringConvertible {
         let cal = Calendar.current
         
         switch (unit, interval) {
-        case (.none, let value): return value == 0
+        case (.never, let value): return value == 0
         case (.daily, _): return true
         case (.weekly, let value) where 0 <= value && value < cal.weekdaySymbols.count: return true
         case (.monthly, let value):
