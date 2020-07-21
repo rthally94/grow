@@ -14,9 +14,17 @@ struct WeekPicker: View {
     }
     
     @Binding var selection: Set<Int>
-    var selectionMode: SelectionMode
     
-    private let calendar = Calendar.current
+    var daysOfWeek: [(String, Bool)] {
+        return symbols.enumerated().map { (index, value) in
+            let isSelected = selection.contains(index)
+            
+            return ("\(value.lowercased()).circle.fill", isSelected)
+        }
+    }
+    
+    var selectionMode: SelectionMode
+    private let symbols = Calendar.current.veryShortStandaloneWeekdaySymbols
     
     init(selection: Binding<Set<Int>>, selectionMode: SelectionMode = .single) {
         self._selection = selection
@@ -25,28 +33,21 @@ struct WeekPicker: View {
     
     var body: some View {
         HStack {
-            ForEach(calendar.weekdaySymbols.indices) { index in
-                if index != 0 {
-                    Spacer()
-                }
-                
-                self.symbolForWeekday(index)
-                    .imageScale(.large)
-                    .onTapGesture {
-                        print("Tap")
-                        withAnimation {
-                            self.handleSelection(for: index)
-                        }
-                }
+            ForEach(Array(daysOfWeek.enumerated()), id: \.0) { (index, day) in
+                Image(systemName: day.0)
+                    .font(.title)
+                    .foregroundColor(day.1 ? .accentColor : .gray)
+                    .frame(maxWidth: .infinity)
+                    .onTapGesture{ self.handleSelection(index: index) }
             }
         }
     }
     
-    private func handleSelection(for index: Int) {
+    func handleSelection(index: Int) {
         switch selectionMode {
-            case .single:
-                selection.removeAll()
-                selection.insert(index)
+        case .single:
+            selection.removeAll()
+            selection.insert(index)
         case .multiple:
             if selection.contains(index) {
                 selection.remove(index)
@@ -55,26 +56,28 @@ struct WeekPicker: View {
             }
         }
     }
-    
-    private func symbolForWeekday(_ index: Int) -> Image {
-        let dayOfWeek = calendar.veryShortWeekdaySymbols[index].lowercased()
-        let isSelected = selection.contains(index)
-        return Image(systemName: isSelected ? "\(dayOfWeek).circle.fill" : "\(dayOfWeek).circle")
-    }
 }
 
 struct WeekPicker_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             StatefulPreviewWrapper(Set(arrayLiteral: 0)) { value in
-                WeekPicker(selection: value)
+                VStack {
+                    WeekPicker(selection: value)
+                    Text(value.wrappedValue.description)
+                }
             }
             .previewDisplayName("Single Selection")
             
-            StatefulPreviewWrapper(Set(arrayLiteral: 0)) { value in
-                WeekPicker(selection: value, selectionMode: .multiple)
+            StatefulPreviewWrapper(Set(0...6)) { value in
+                VStack {
+                    WeekPicker(selection: value, selectionMode: .multiple)
+                    Text(value.wrappedValue.description)
+                }
             }
             .previewDisplayName("Multiple Selection")
-        }.previewLayout(.sizeThatFits)
+        }
+        .previewLayout(.sizeThatFits)
+        .foregroundColor(.green)
     }
 }
