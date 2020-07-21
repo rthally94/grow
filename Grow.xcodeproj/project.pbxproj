@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		212A1E8A24B7664C002C147F /* PlantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E8924B7664C002C147F /* PlantDetailView.swift */; };
-		212A1E8C24B893F7002C147F /* CareActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E8B24B893F7002C147F /* CareActivity.swift */; };
+		212A1E8C24B893F7002C147F /* CareTaskLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E8B24B893F7002C147F /* CareTaskLog.swift */; };
 		212A1E9124BD2143002C147F /* CareActivityList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9024BD2143002C147F /* CareActivityList.swift */; };
 		212A1E9324BD4BC8002C147F /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9224BD4BC7002C147F /* RootView.swift */; };
 		212A1E9524BD4EA5002C147F /* Color+SystemColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9424BD4EA5002C147F /* Color+SystemColor.swift */; };
@@ -32,6 +32,8 @@
 		21BFB3FB24B678DC00B94A72 /* Plant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3F724B678DC00B94A72 /* Plant.swift */; };
 		21BFB41524B67A5D00B94A72 /* CareIntervalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3FF24B6793500B94A72 /* CareIntervalTest.swift */; };
 		21BFB41724B67A5D00B94A72 /* GrowModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3FD24B6793500B94A72 /* GrowModelTest.swift */; };
+		21DC516D24C506A1007372B1 /* CareTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DC516C24C506A1007372B1 /* CareTask.swift */; };
+		21DC517024C50AF2007372B1 /* CareTaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DC516F24C50AF2007372B1 /* CareTaskEditor.swift */; };
 		21F4C23224BF0E2300EB73E0 /* WeekPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23124BF0E2300EB73E0 /* WeekPicker.swift */; };
 		21F4C23424BF15A900EB73E0 /* StatefulPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */; };
 		21F4C23624BF267A00EB73E0 /* PlantEditorForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */; };
@@ -62,7 +64,7 @@
 
 /* Begin PBXFileReference section */
 		212A1E8924B7664C002C147F /* PlantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailView.swift; sourceTree = "<group>"; };
-		212A1E8B24B893F7002C147F /* CareActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareActivity.swift; sourceTree = "<group>"; };
+		212A1E8B24B893F7002C147F /* CareTaskLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskLog.swift; sourceTree = "<group>"; };
 		212A1E9024BD2143002C147F /* CareActivityList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareActivityList.swift; sourceTree = "<group>"; };
 		212A1E9224BD4BC7002C147F /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		212A1E9424BD4EA5002C147F /* Color+SystemColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+SystemColor.swift"; sourceTree = "<group>"; };
@@ -90,6 +92,8 @@
 		21BFB3FF24B6793500B94A72 /* CareIntervalTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareIntervalTest.swift; sourceTree = "<group>"; };
 		21BFB40B24B67A2400B94A72 /* GrowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		21BFB40F24B67A2400B94A72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21DC516C24C506A1007372B1 /* CareTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTask.swift; sourceTree = "<group>"; };
+		21DC516F24C50AF2007372B1 /* CareTaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskEditor.swift; sourceTree = "<group>"; };
 		21F4C23124BF0E2300EB73E0 /* WeekPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekPicker.swift; sourceTree = "<group>"; };
 		21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewWrapper.swift; sourceTree = "<group>"; };
 		21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantEditorForm.swift; sourceTree = "<group>"; };
@@ -137,9 +141,9 @@
 		212A1E9D24BE2768002C147F /* Plant Editor */ = {
 			isa = PBXGroup;
 			children = (
+				21DC516E24C50AD9007372B1 /* CareTaskEditor */,
 				21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */,
 				2193552724BF2C1900F38392 /* UITextFieldWrapper.swift */,
-				2193552924C07CC600F38392 /* IntervalPicker.swift */,
 			);
 			path = "Plant Editor";
 			sourceTree = "<group>";
@@ -198,8 +202,9 @@
 				21BFB3F324B678DB00B94A72 /* GrowModel.swift */,
 				21BFB3F424B678DC00B94A72 /* Helpers */,
 				21BFB3F724B678DC00B94A72 /* Plant.swift */,
-				212A1E8B24B893F7002C147F /* CareActivity.swift */,
+				212A1E8B24B893F7002C147F /* CareTaskLog.swift */,
 				2193552B24C1217E00F38392 /* CareInterval.swift */,
+				21DC516C24C506A1007372B1 /* CareTask.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -221,6 +226,15 @@
 				21BFB40F24B67A2400B94A72 /* Info.plist */,
 			);
 			path = GrowTests;
+			sourceTree = "<group>";
+		};
+		21DC516E24C50AD9007372B1 /* CareTaskEditor */ = {
+			isa = PBXGroup;
+			children = (
+				2193552924C07CC600F38392 /* IntervalPicker.swift */,
+				21DC516F24C50AF2007372B1 /* CareTaskEditor.swift */,
+			);
+			path = CareTaskEditor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -344,10 +358,12 @@
 				21F4C23424BF15A900EB73E0 /* StatefulPreviewWrapper.swift in Sources */,
 				212A1E9324BD4BC8002C147F /* RootView.swift in Sources */,
 				212A1E9A24BE0FAF002C147F /* ListRow.swift in Sources */,
+				21DC517024C50AF2007372B1 /* CareTaskEditor.swift in Sources */,
 				212A1E9C24BE1137002C147F /* StatCell.swift in Sources */,
-				212A1E8C24B893F7002C147F /* CareActivity.swift in Sources */,
+				212A1E8C24B893F7002C147F /* CareTaskLog.swift in Sources */,
 				21BFB3B724B66E0800B94A72 /* Grow.xcdatamodeld in Sources */,
 				21BFB3FA24B678DC00B94A72 /* Formatters.swift in Sources */,
+				21DC516D24C506A1007372B1 /* CareTask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
