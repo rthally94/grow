@@ -8,27 +8,35 @@
 
 import SwiftUI
 
-struct IntervalPicker: View {
+struct IntervalPicker<Header: View>: View {
     @Environment(\.presentationMode) var presentationMode
     
+    var header: Header
     var onSave: (CareInterval) -> Void
     
     @State private var unitChoice = CareInterval.Unit.daily
     @State private var weekdayChoices = Set(arrayLiteral: 0)
     @State private var startDayChoice = Date()
     
+    init(header: Header, onSave: @escaping (CareInterval) -> Void) {
+        self.header = header
+        self.onSave = onSave
+    }
+    
     var body: some View {
-        List {
-            Section {
+        Group {
+            Section(header: header) {
                 ForEach(CareInterval.Unit.allCases, id: \.self) { unit in
                     HStack {
-                        Text(unit.description)
+                        Text(unit.description.capitalized)
                         Spacer()
                         if self.unitChoice == unit {
                             Image(systemName: "checkmark")
+                                .foregroundColor(.accentColor)
                                 .transition(.identity)
                         }
                     }
+                    .contentShape(Rectangle())
                     .onTapGesture {
                         withAnimation {
                             self.unitChoice = unit
