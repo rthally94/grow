@@ -12,15 +12,54 @@ struct IntervalPicker<Header: View>: View {
     @Environment(\.presentationMode) var presentationMode
     
     var header: Header
-    var onSave: (CareInterval) -> Void
+    @Binding var selection: CareInterval
     
-    @State private var unitChoice = CareInterval.Unit.daily
-    @State private var weekdayChoices = Set(arrayLiteral: 0)
-    @State private var startDayChoice = Date()
+    private var unitChoice: CareInterval.Unit {
+        return selection.unit
+    }
     
-    init(header: Header, onSave: @escaping (CareInterval) -> Void) {
+    private func updateUnitSelection(unit: CareInterval.Unit) {
+        switch unit {
+        case .daily: selection = CareInterval(unit: .daily, interval: 1)
+        case .weekly: selection = CareInterval(weekdayOrdinal: 0)
+        case .monthly: selection = CareInterval(dayOfMonth: Calendar.current.component(.day, from: Date()))
+        case .never: selection = CareInterval()
+        }
+    }
+    
+    private func weekdayChoicesBinding() -> Binding<Set<Int>> {
+        return Binding<Set<Int>>(get: {self.weekdaySelection}, set: updateWeekdaySelection)
+    }
+    
+    private var weekdaySelection: Set<Int> {
+        return Set(arrayLiteral: selection.interval)
+    }
+    
+    private func updateWeekdaySelection(daysOfWeek: Set<Int>) {
+        if selection.unit == .weekly {
+            selection.interval = daysOfWeek.first ?? 0
+        }
+    }
+    
+    private func dayOfMonthBinding() -> Binding<Date> {
+        return Binding<Date>(get: {self.dateForSelectedDayOfMonth}, set: updateDayOfMonth)
+    }
+    
+    private var dateForSelectedDayOfMonth: Date {
+        return Calendar.current.date(bySetting: .day, value: selection.interval, of: Date()) ?? Date()
+    }
+    
+    private func updateDayOfMonth(date: Date) {
+        if selection.unit == .monthly {
+            selection.interval = Calendar.current.component(.day, from: date)
+        }
+    }
+    
+    
+    
+    init(header: Header, selection: Binding<CareInterval>) {
         self.header = header
-        self.onSave = onSave
+        self._selection = selection
     }
     
     var body: some View {
@@ -39,7 +78,7 @@ struct IntervalPicker<Header: View>: View {
                     .contentShape(Rectangle())
                     .onTapGesture {
                         withAnimation {
-                            self.unitChoice = unit
+                            self.updateUnitSelection(unit: unit)
                         }
                     }
                 }
@@ -47,14 +86,14 @@ struct IntervalPicker<Header: View>: View {
             
             if unitChoice == .weekly {
                 Section {
-                    WeekPicker(selection: $weekdayChoices)
+                    WeekPicker(selection: weekdayChoicesBinding())
                         .frame(maxWidth: .infinity)
                 }
             }
             
             if unitChoice == .monthly {
                 Section(footer: Text(monthlyFooter)) {
-                    DatePicker("Starting", selection: $startDayChoice, in: startDate...endDate, displayedComponents: .date)
+                    DatePicker("Starting", selection: dayOfMonthBinding(), in: startDate...endDate, displayedComponents: .date)
                 }
             }
         }
@@ -66,24 +105,24 @@ struct IntervalPicker<Header: View>: View {
     
     // MARK: Computed Properties
     private var monthlyFooter: String {
-        let component = Calendar.current.component(.day, from: startDayChoice)
-        let dayOfMonth = Formatters.ordinalNumberFormatter.string(for: component) ?? "nil"
-        return "This task will repeat on the \(dayOfMonth) day of every month."
+        let dayOfMonth = Formatters.ordinalNumberFormatter.string(for: selection.interval)
+        return "This task will repeat" + (dayOfMonth != nil ? "on the \(dayOfMonth!) on every month" : "every month")
     }
 }
 
 extension IntervalPicker where Header == EmptyView {
-    init(onSave: @escaping (CareInterval) -> Void) {
-        self.init(header: EmptyView(), onSave: onSave)
+    init(selection: Binding<CareInterval>) {
+        self.init(header: EmptyView(), selection: selection)
     }
 }
 
 struct IntervalPicker_Previews: PreviewProvider {
     static var previews: some View {
-        List {
-            IntervalPicker  { interval in
-                print(interval)
-            }
-        }.listStyle(GroupedListStyle())
+        StatefulPreviewWrapper(CareInterval()) { interval in
+            List {
+                Text(interval.wrappedValue.description)
+                IntervalPicker(selection: interval)
+            }.listStyle(GroupedListStyle())
+        }
     }
 }
