@@ -43,9 +43,9 @@ extension GrowModel {
         }
     }
     
-    func addCareActivity(_ care: CareActivity , to plant: Plant) {
+    func addCareTask(_ task: CareTask , to plant: Plant) {
         if let plantIndex = plants.firstIndex(of: plant) {
-            plants[plantIndex].addCareActivity(care)
+            plants[plantIndex].addCareTask(task)
         }
     }
 }

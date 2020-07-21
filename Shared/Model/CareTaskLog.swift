@@ -9,34 +9,21 @@
 import Foundation
 
 struct CareTaskLog: Identifiable, Hashable {
-    enum CareType {
-        case water, prune, fertilize
-        
-        var description: String {
-            switch self {
-            case .water: return "Watering"
-            case .prune: return "Pruning"
-            case .fertilize: return "Fertilizing"
-            }
-        }
-    }
-    
     var id: UUID
-    var type: CareType
     var date: Date
-    
+    var note: String
     
     init() {
-        self.init(id: UUID(), type: .water, date: Date())
+        self.init(id: UUID(), date: Date(), note: "")
     }
     
-    init(type: CareType, date: Date) {
-        self.init(id: UUID(), type: type, date: date)
+    init(date: Date, note: String) {
+        self.init(id: UUID(), date: date, note: note)
     }
     
-    init(id: UUID, type: CareType, date: Date) {
+    init(id: UUID, date: Date, note: String) {
         self.id = id
-        self.type = type
         self.date = date
+        self.note = note
     }
 }
