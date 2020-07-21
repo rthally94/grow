@@ -75,7 +75,7 @@ struct CareInterval: Hashable, CustomStringConvertible {
     /// A user friendly description of the current interval
     var description: String {
         switch unit {
-        case .never: return "none"
+        case .never: fallthrough
         case .daily: return unit.description
         case .weekly:
             guard let dayOfWeek = Formatters.fullDayOfWeek(for: interval) else { return unit.description }
