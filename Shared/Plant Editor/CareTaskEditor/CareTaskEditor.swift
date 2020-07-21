@@ -12,6 +12,7 @@ struct CareTaskEditorConfig {
     var presentedTaskId: UUID? = UUID()
     
     var name = ""
+    var interval = CareInterval()
     var note = ""
     
     
@@ -19,6 +20,7 @@ struct CareTaskEditorConfig {
         presentedTaskId = task.id
         
         name = task.name
+        interval = task.interval
         note = task.notes
     }
 }
@@ -33,17 +35,15 @@ struct CareTaskEditor: View {
                 UITextFieldWrapper("Name", text: $editorConfig.name)
             }
             
-            IntervalPicker(header: Text("Repeats").font(.headline), onSave: onSave)
+            IntervalPicker(header: Text("Repeats").font(.headline), selection: $editorConfig.interval)
             
             Section {
                 UITextFieldWrapper("Notes", text: $editorConfig.note)
             }
         }
         .listStyle(GroupedListStyle())
-    }
-    
-    func onSave(interval: CareInterval) {
-        print(interval)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: Button("Details", action: onSave))
     }
 }
 
@@ -52,7 +52,9 @@ struct CareTaskEditor_Previews: PreviewProvider {
     
     static var previews: some View {
         StatefulPreviewWrapper(config) { config in
-            CareTaskEditor(editorConfig: config)
+            CareTaskEditor(editorConfig: config) {
+                print(config.wrappedValue)
+            }
         }
     }
 }
