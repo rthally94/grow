@@ -132,8 +132,9 @@ extension PlantDetailView {
     
     // Growing Conditions
     var ageValue: String {
-        if let potted = plant.pottingDate, let ageString = Formatters.dateComponentsFormatter.string(from: potted, to: Date()) {
-            return "Potted \(ageString) ago"
+        if let potted = plant.pottingDate {
+            let ageString = Formatters.relativeDateFormatter.string(for: potted)
+            return "Planted \(ageString)"
         } else {
             return "Not Potted Yet"
         }
