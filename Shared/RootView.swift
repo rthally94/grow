@@ -13,21 +13,21 @@ struct RootView: View {
         TabView {
             NavigationView {
                 PlantsTaskList()
-                    .tabItem {
-                        VStack {
-                            Image(systemName: "heart.fill")
-                            Text("Tasks")
-                        }
+            }
+            .tabItem {
+                VStack {
+                    Image(systemName: "heart.fill")
+                    Text("Tasks")
                 }
             }
             
             NavigationView {
                 AllPlantsView()
-                    .tabItem {
-                        VStack {
-                            Image(systemName: "list.dash")
-                            Text("Plants")
-                        }
+            }
+            .tabItem {
+                VStack {
+                    Image(systemName: "list.dash")
+                    Text("Plants")
                 }
             }
         }
