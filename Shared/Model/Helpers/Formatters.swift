@@ -33,6 +33,7 @@ struct Formatters{
     }
     
     static func shortDayOfWeek(for day: Int) -> String? {
+    static func veryShortDayOfWeek(for day: Int) -> String? {
         let cal = Calendar.current
         if day < cal.veryShortStandaloneWeekdaySymbols.count {
             return cal.veryShortStandaloneWeekdaySymbols[day]
