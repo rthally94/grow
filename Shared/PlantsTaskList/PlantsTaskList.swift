@@ -12,17 +12,30 @@ struct PlantsTaskList: View {
     @EnvironmentObject var model: GrowModel
     @State var selectedDate = Date()
     
-    var plantsNeedingCare: [content] {
-        return Array(0..<7).map { content(section: .weekPicker, item: $0) }
+    var plantsNeedingCare: [Section: [content]] {
+        var data: [Section: [content]] = [:]
+        for section in Section.allCases {
+            switch section {
+            case .weekPicker:
+                data[section] = Array(0..<8).map { content(section: section, value: $0)}
+            case .needsCare:
+                data[section] = Array(0..<8).map { content(section: section, value: $0*2)}
+            }
+        }
+        return data
     }
     
-    enum Section: CaseIterable, CustomStringConvertible {
+    enum Section: Int, CaseIterable, Comparable, CustomStringConvertible {
+        static func < (lhs: PlantsTaskList.Section, rhs: PlantsTaskList.Section) -> Bool {
+            return lhs.rawValue < rhs.rawValue
+        }
+        
         case weekPicker
         case needsCare
         
         var description: String {
             switch self {
-            case .weekPicker: return ""
+            case .weekPicker: return "Week Picker"
             case .needsCare: return "Needs Care"
             }
         }
@@ -30,36 +43,30 @@ struct PlantsTaskList: View {
     
     struct content: Hashable {
         var section: Section
-        var item: Int
+        var value: Int
     }
     
     var body: some View {
-        UICollectionViewWrapper(sections: Section.allCases, items: plantsNeedingCare, sectionHeader: collectionViewSectionHeader, content: collectionViewContent)
+        UICollectionViewWrapper(data: plantsNeedingCare, boundarySupplementaryItem: collectionViewSectionHeader, content: collectionViewContent)
             .edgesIgnoringSafeArea(.all)
             .navigationBarTitle("Care Tasks")
     }
     
-    @ViewBuilder func collectionViewSectionHeader(_ section: Section) -> some View {
+    @ViewBuilder func collectionViewSectionHeader(_ section: Section, _ kind: String) -> some View {
         HStack {
-            Text("Header").font(.title)
+            Text("\(section.description)").font(.title)
             Spacer()
         }
     }
     
-    @ViewBuilder func collectionViewContent(_ indexPath: IndexPath) -> some View {
+    @ViewBuilder func collectionViewContent(_ item: content) -> some View {
         HStack(alignment: .lastTextBaseline) {
             Image(systemName: "person.crop.circle").imageScale(.large)
-            Text("User Name")
+            Text("\(item.value)")
             Spacer()
         }
         .padding()
         .background(RoundedRectangle(cornerRadius: 15).stroke())
-        
-        //        switch indexPath.section {
-        //        case 0: return Text("1")
-        //        case 1: return Text("2")
-        //        default: return Text("def")
-        //        }
     }
 }
 

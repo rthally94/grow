@@ -8,14 +8,13 @@
 
 import SwiftUI
 
-struct UICollectionViewWrapper<Section: Hashable, ItemIdentifier: Hashable, Header: View, Content: View>: UIViewRepresentable {
+struct UICollectionViewWrapper<Section, ItemIdentifier: Hashable, Header: View, Content: View>: UIViewRepresentable where Section: Hashable, Section: Comparable {
     let cellReuseIdentifier = "CollectionViewCell"
     let headerReuseIdentifier = "CollectionViewHeader"
     
-    var sections: [Section]
-    var items: [ItemIdentifier]
-    var sectionHeader: (Section) -> Header
-    var content: (IndexPath) -> Content
+    var data: [Section: [ItemIdentifier] ]
+    var boundarySupplementaryItem: (_ section: Section, _ kind: String) -> Header
+    var content: (ItemIdentifier) -> Content
     
     func makeUIView(context: Context) -> UICollectionView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: context.coordinator.configureLayout())
@@ -46,8 +45,12 @@ struct UICollectionViewWrapper<Section: Hashable, ItemIdentifier: Hashable, Head
     
     func updateDataSource(_ dataSource: UICollectionViewDiffableDataSource<Section, ItemIdentifier>) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, ItemIdentifier>()
-        snapshot.appendSections(sections)
-        snapshot.appendItems(items)
+        snapshot.appendSections(Array(data.keys).sorted())
+        for key in data.keys {
+            if let values = data[key] {
+                snapshot.appendItems(values, toSection: key)
+            }
+        }
         
         dataSource.apply(snapshot)
     }
@@ -58,24 +61,30 @@ struct UICollectionViewWrapper<Section: Hashable, ItemIdentifier: Hashable, Head
     
     class Coordinator: NSObject, UICollectionViewDelegate, UICollectionViewDataSource {
         func numberOfSections(in collectionView: UICollectionView) -> Int {
-            parent.sections.count
+            parent.data.keys.count
         }
         
         func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            10
+            let sectionKey = Array(parent.data.keys)[section]
+            return parent.data[sectionKey]?.count ?? 0
         }
         
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: parent.cellReuseIdentifier, for: indexPath) as? CollectionViewCell<Content> else { fatalError() }
-            cell.configure(with: { parent.content(indexPath) })
+            let section = Array(parent.data.keys).sorted()[indexPath.section]
+            guard let item = parent.data[section]?[indexPath.row] else { fatalError("No item for IndexPath") }
+            cell.configure(with: { parent.content(item) })
             return cell
         }
         
         func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+            let section = Array(parent.data.keys)[indexPath.section]
+            
             switch kind {
             case UICollectionView.elementKindSectionHeader:
                 guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: parent.headerReuseIdentifier, for: indexPath) as? CollectionViewSectionHeaderFooter<Header> else { fatalError("Invalid view type") }
-                header.configure(with: parent.sectionHeader(parent.sections[indexPath.section]))
+                let headerView = parent.boundarySupplementaryItem(section, kind)
+                header.configure(with: headerView)
                 return header
             default:
                 assert(false, "Invalid element type")
