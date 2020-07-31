@@ -108,7 +108,7 @@ struct CareInterval: Hashable, CustomStringConvertible {
             return cal.startOfDay(for: next)
             
         case .monthly:
-            let next = cal.nextDate(after: date, matching: .init(day: interval), matchingPolicy: .previousTimePreservingSmallerComponents) ?? date
+            let next = cal.nextDate(after: date, matching: .init(day: interval.first ?? 1), matchingPolicy: .previousTimePreservingSmallerComponents) ?? date
             return cal.startOfDay(for: next)
         }
     }
