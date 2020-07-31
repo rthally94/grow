@@ -30,45 +30,44 @@ class GrowModelTest: XCTestCase {
         let sut = GrowModel()
         
         for tag in 0..<4 {
-            let name = "My Plant \(tag)"
-            sut.addPlant(name: name)
+            let plant = Plant(name: "My Plant \(tag)")
+            sut.addPlant(plant)
         
-            XCTAssertEqual(sut.plants[tag].name, name)
+            XCTAssertEqual(sut.plants[tag], plant)
         }
     }
     
     func testPlantStore_WhenPlantIsDeleted_PlantIsRemovedFromCollection() {
         let sut = GrowModel()
-        let plantName = "My Plant"
-        sut.addPlant(name: plantName)
-        let plant = sut.plants[0]
+        let plant = Plant(name: "My Plant")
         
+        sut.addPlant(plant)
         sut.deletePlant(plant: plant)
         XCTAssertFalse(sut.plants.contains(plant))
     }
     
     func testPlantStore_WhenPlantIsUpdated_PlantIsUpdatedInCollection() {
         let sut = GrowModel()
-        let name = "My Plant"
-        sut.addPlant(name: name)
-        
-        let plant = sut.plants[0]
+        let plant = Plant(name: "My Plant")
+        sut.addPlant(plant)
         
         let newName = "Your Plant"
-        sut.updatePlant(plant, name: newName)
-        XCTAssertEqual(sut.plants[0].name, newName)
+        
+        guard let index = sut.plants.firstIndex(of: plant) else {return XCTFail() }
+        sut.plants[index].name = newName
+        
+        XCTAssertEqual(sut.plants[index].name, newName)
     }
     
     func testPlantStore_WhenCareLogIsAdded_PlantIsUpdatedInCollection() {
         let sut = GrowModel()
         sut.addPlant()
             
-        XCTAssertEqual(sut.plants[0].getActivity().count, 0)
+        XCTAssertEqual(sut.plants[0].careTasks.count, 0)
         
-        let careActivity = CareTaskLog()
-        sut.addCareActivity(careActivity, to: sut.plants[0])
+        let task = CareTask()
+        sut.addCareTask(task, to: sut.plants[0])
         
-        XCTAssertEqual(sut.plants[0].getActivity().count, 1)
-        print(sut.plants[0].getActivity())
+        XCTAssertEqual(sut.plants[0].careTasks.count, 1)
     }
 }
