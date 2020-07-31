@@ -28,14 +28,20 @@ struct UITextFieldWrapper: UIViewRepresentable {
     
     func updateUIView(_ uiView: UITextField, context: Context) {
         uiView.text = text
+        
+        if isFirstResponder {
+            uiView.becomeFirstResponder()
+        }
     }
     
     var placeholder: String
     @Binding var text: String
+    @Binding var isFirstResponder: Bool
     
-    init(_ placeHolder: String, text: Binding<String>) {
+    init(_ placeHolder: String, text: Binding<String>, isFirstResponder: Binding<Bool> = State(initialValue: false).projectedValue) {
         self.placeholder = placeHolder
         self._text = text
+        self._isFirstResponder = isFirstResponder
     }
     
     func makeCoordinator() -> Coordinator {
