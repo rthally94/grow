@@ -18,8 +18,7 @@ struct StatCell<Content: View>: View {
                 .opacity(0.8)
             HStack {
                 content()
-            }
-            .font(.title)
+            }.font(.headline)
         }
     }
     
