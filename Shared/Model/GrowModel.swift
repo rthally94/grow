@@ -48,4 +48,20 @@ extension GrowModel {
             plants[plantIndex].addCareTask(task)
         }
     }
+    
+    func addCareTaskLog(_ log: CareTaskLog, to task: CareTask, for plant: Plant) {
+        if let plantIndex = plants.firstIndex(of: plant), let careTaskIndex = plants[plantIndex].careTasks.firstIndex(of: task) {
+            plants[plantIndex].careTasks[careTaskIndex].addLog(CareTaskLog())
+        }
+    }
+    
+    func deleteCareTaskLog(_ log: CareTaskLog? = nil, from task: CareTask, for plant: Plant) {
+        if let plantIndex = plants.firstIndex(of: plant), let careTaskIndex = plants[plantIndex].careTasks.firstIndex(of: task) {
+            if let log = log, let logIndex = plants[plantIndex].careTasks[careTaskIndex].logs.firstIndex(of: log) {
+                plants[plantIndex].careTasks[careTaskIndex].logs.remove(at: logIndex)
+            } else {
+                plants[plantIndex].careTasks[careTaskIndex].logs.removeFirst()
+            }
+        }
+    }
 }
