@@ -26,49 +26,21 @@ struct PlantDetailView: View {
                 HStack {
                     Text(ageValue)
                     Spacer()
-                }
-//                InsetGroupedSection( header: {
-//                    HStack {
-//                        Group {
-//                            Image(systemName: "heart.fill")
-//                            Text("Care Activity")
-//                        }
-//                        .font(.headline)
-//
-//                        Spacer()
-//                        Group {
-//                            Text(self.careTaskLogCount)
-//                            Button(action: {}, label: {Image(systemName: "chevron.right")})
-//                        }
-//                        .foregroundColor(.gray)
-//                        .font(.caption)
-//                    }
-//                }) {
-//                    HStack(alignment: .bottom) {
-//                        StatCell(title: Text(self.plantWateringTitle)) { Text(self.plantWateringValue) }
-//                        Spacer()
-//                    }
-//                    .animation(.none)
-//                }
+                }.padding(.bottom)
                 
-                if editorConfig.careTasks.count > 0 {
-                    InsetGroupedSection(header: {
-                        HStack {
-                            Group {
-                                Image(systemName: "scissors")
-                                Text("Growing Conditions")
-                            }
-                            .font(.headline)
-                            
-                            Spacer()
-                        }
-                    }) {
+                if plant.careTasks.count > 0 {
+                    Section(header:
+                        Text("Care Tasks")
+                        .font(.headline)
+                    ) {
                         VStack(spacing: 20) {
-                            ForEach(self.editorConfig.careTasks) { task in
+                            ForEach(self.plant.careTasks) { task in
                                 StatCell(title: Text(task.name)) {
                                     Text(task.interval.description)
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding()
+                                .background(RoundedRectangle(cornerRadius: 15).foregroundColor(.systemGroupedBackground))
                             }
                         }
                     }
