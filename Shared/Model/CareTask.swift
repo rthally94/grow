@@ -16,6 +16,17 @@ struct CareTask: Identifiable, Hashable, Equatable {
     
     var logs: [CareTaskLog]
     
+    var needsCare: Bool {
+        // If task does not have an interval, care reminder is not required
+        if interval.unit == .never { return false }
+        
+        // A log is required to calculate next event, If no logs if present a reminder is required
+        guard let lastLog = logs.first else { return true }
+        let next = interval.next(from: lastLog.date)
+        
+        // Check if next is <= today
+        return Calendar.current.compare(next, to: Date(), toGranularity: .day) != .orderedDescending
+    }
     // MARK: Initializers
     
     init() {
