@@ -53,7 +53,7 @@ struct PlantEditorForm: View {
                         selection: self.customBinding()) {
                             HStack {
                                 Text(task.name)
-                                Spacer()
+                                Spacer(minLength: 16)
                                 Text(task.interval.description.capitalized).foregroundColor(.gray)
                             }
                         }
