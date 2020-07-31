@@ -25,17 +25,7 @@ struct CareInterval: Hashable, CustomStringConvertible {
     }
     
     let unit: Unit
-    
-    private var _interval: Int = 0
-    var interval: Int {
-        get {
-            return max(_interval, 0)
-        }
-        
-        set {
-            _interval = newValue
-        }
-    }
+    var interval: Set<Int> = [0]
     
     // MARK: Initializers
     
@@ -43,11 +33,15 @@ struct CareInterval: Hashable, CustomStringConvertible {
     /// - Parameters:
     ///   - unit: The desired unit for the interval
     ///   - interval: The associated value for the interval
-    init(unit: Unit, interval: Int) {
+    init(unit: Unit, interval: Set<Int>) {
         switch unit {
         case .never:
             self.unit = unit
-            self.interval = 0
+            self.interval = []
+            
+        case .daily:
+            self.unit = unit
+            self.interval = [interval.first ?? 1]
             
         default:
             self.unit = unit
@@ -57,29 +51,36 @@ struct CareInterval: Hashable, CustomStringConvertible {
     
     /// Initializer - Creates an instance with no interval
     init() {
-        self.init(unit: .never, interval: 0)
+        self.init(unit: .never, interval: [])
     }
     
     /// Initializer - Creates an instance for a weekly repeat interval on the desired weekday ordinal
     /// - Parameter weekdayOrdinal: The desired weekday ordinal based on the user's current calendar locale
     init(weekdayOrdinal: Int) {
-        self.init(unit: .weekly, interval: weekdayOrdinal)
+        self.init(unit: .weekly, interval: [weekdayOrdinal])
+    }
+    
+    /// Initializer - Creates an instance for a weekly repeat interval on the desired weekday ordinal
+    /// - Parameter weekdayOrdinals: The desired weekday ordinals based on the user's current calendar locale
+    init(weekdayOrdinals: Set<Int>) {
+        self.init(unit: .weekly, interval: weekdayOrdinals)
     }
     
     /// Initializer - Creates an instance for a monthly repeat interval on a specific day of the month
     /// - Parameter dayOfMonth: The desired day of the month to repeat on
     init(dayOfMonth: Int) {
-        self.init(unit: .monthly, interval: dayOfMonth)
+        self.init(unit: .monthly, interval: [dayOfMonth])
     }
     
     /// A user friendly description of the current interval
     var description: String {
         switch unit {
         case .never: fallthrough
-        case .daily: return unit.description
+        case .daily: return unit.description.capitalized
         case .weekly:
-            guard let dayOfWeek = Formatters.fullDayOfWeek(for: interval) else { return unit.description }
-            return "\(unit.description) on \(dayOfWeek)"
+            let daysOfWeek = interval.sorted().compactMap { interval.count > 1 ? Formatters.shortDayOfWeek(for: $0) : Formatters.fullDayOfWeek(for: $0) }
+            guard let combinedDaysOfWeek = Formatters.listFormatter.string(from: daysOfWeek) else { return unit.description }
+            return "\(unit.description.capitalized) on \(combinedDaysOfWeek)"
         case .monthly:
             guard let dayOfMonth = Formatters.ordinalNumberFormatter.string(for: interval) else { return unit.description }
             return "on the \(dayOfMonth)"
@@ -95,11 +96,15 @@ struct CareInterval: Hashable, CustomStringConvertible {
         switch unit {
         case .never: return Date()
         case .daily:
-            let next = cal.date(byAdding: .day, value: interval, to: date) ?? date
+            let next = cal.date(byAdding: .day, value: interval.first ?? 1, to: date) ?? date
             return cal.startOfDay(for: next)
             
         case .weekly:
-            let next = cal.nextDate(after: date, matching: .init(weekdayOrdinal: interval), matchingPolicy: .nextTime) ?? date
+            let first = interval.min() ?? 0
+            let today = cal.component(.weekdayOrdinal, from: Date())
+            let nextOrdinal = interval.first(where: { $0 > today}) ?? first
+            
+            let next = cal.nextDate(after: date, matching: .init(weekdayOrdinal: nextOrdinal), matchingPolicy: .nextTime) ?? date
             return cal.startOfDay(for: next)
             
         case .monthly:
