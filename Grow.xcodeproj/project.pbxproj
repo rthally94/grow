@@ -32,8 +32,12 @@
 		21BFB3FB24B678DC00B94A72 /* Plant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3F724B678DC00B94A72 /* Plant.swift */; };
 		21BFB41524B67A5D00B94A72 /* CareIntervalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3FF24B6793500B94A72 /* CareIntervalTest.swift */; };
 		21BFB41724B67A5D00B94A72 /* GrowModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3FD24B6793500B94A72 /* GrowModelTest.swift */; };
+		21C0C95324D0A39B0062BEA8 /* PlantsTaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C0C95224D0A39B0062BEA8 /* PlantsTaskList.swift */; };
+		21C0C95524D1C8240062BEA8 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C0C95424D1C8240062BEA8 /* Date+Extension.swift */; };
+		21C0C95724D1F6880062BEA8 /* UICollectionViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C0C95624D1F6880062BEA8 /* UICollectionViewWrapper.swift */; };
 		21DC516D24C506A1007372B1 /* CareTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DC516C24C506A1007372B1 /* CareTask.swift */; };
 		21DC517024C50AF2007372B1 /* CareTaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DC516F24C50AF2007372B1 /* CareTaskEditor.swift */; };
+		21F49F7424CF809E00ECC828 /* PlantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F49F7324CF809E00ECC828 /* PlantCell.swift */; };
 		21F4C23224BF0E2300EB73E0 /* WeekPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23124BF0E2300EB73E0 /* WeekPicker.swift */; };
 		21F4C23424BF15A900EB73E0 /* StatefulPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */; };
 		21F4C23624BF267A00EB73E0 /* PlantEditorForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */; };
@@ -92,8 +96,12 @@
 		21BFB3FF24B6793500B94A72 /* CareIntervalTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareIntervalTest.swift; sourceTree = "<group>"; };
 		21BFB40B24B67A2400B94A72 /* GrowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		21BFB40F24B67A2400B94A72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		21C0C95224D0A39B0062BEA8 /* PlantsTaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantsTaskList.swift; sourceTree = "<group>"; };
+		21C0C95424D1C8240062BEA8 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		21C0C95624D1F6880062BEA8 /* UICollectionViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewWrapper.swift; sourceTree = "<group>"; };
 		21DC516C24C506A1007372B1 /* CareTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTask.swift; sourceTree = "<group>"; };
 		21DC516F24C50AF2007372B1 /* CareTaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskEditor.swift; sourceTree = "<group>"; };
+		21F49F7324CF809E00ECC828 /* PlantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantCell.swift; sourceTree = "<group>"; };
 		21F4C23124BF0E2300EB73E0 /* WeekPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekPicker.swift; sourceTree = "<group>"; };
 		21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewWrapper.swift; sourceTree = "<group>"; };
 		21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantEditorForm.swift; sourceTree = "<group>"; };
@@ -134,6 +142,8 @@
 				212A1E9B24BE1137002C147F /* StatCell.swift */,
 				21F4C23124BF0E2300EB73E0 /* WeekPicker.swift */,
 				21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */,
+				21F49F7324CF809E00ECC828 /* PlantCell.swift */,
+				21C0C95624D1F6880062BEA8 /* UICollectionViewWrapper.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -169,6 +179,7 @@
 		21BFB3B024B66E0800B94A72 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				21C0C95124D0A3840062BEA8 /* PlantsTaskList */,
 				212A1E9624BE0EE3002C147F /* Views */,
 				212A1E8D24BB192C002C147F /* Plant Detail */,
 				212A1E9D24BE2768002C147F /* Plant Editor */,
@@ -214,6 +225,7 @@
 			children = (
 				21BFB3F524B678DC00B94A72 /* RelativeDateFormatter.swift */,
 				21BFB3F624B678DC00B94A72 /* Formatters.swift */,
+				21C0C95424D1C8240062BEA8 /* Date+Extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -226,6 +238,14 @@
 				21BFB40F24B67A2400B94A72 /* Info.plist */,
 			);
 			path = GrowTests;
+			sourceTree = "<group>";
+		};
+		21C0C95124D0A3840062BEA8 /* PlantsTaskList */ = {
+			isa = PBXGroup;
+			children = (
+				21C0C95224D0A39B0062BEA8 /* PlantsTaskList.swift */,
+			);
+			path = PlantsTaskList;
 			sourceTree = "<group>";
 		};
 		21DC516E24C50AD9007372B1 /* CareTaskEditor */ = {
@@ -340,12 +360,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				21BFB3B224B66E0800B94A72 /* AppDelegate.swift in Sources */,
+				21C0C95724D1F6880062BEA8 /* UICollectionViewWrapper.swift in Sources */,
+				21F49F7424CF809E00ECC828 /* PlantCell.swift in Sources */,
 				212A1E9124BD2143002C147F /* CareActivityList.swift in Sources */,
 				2193552824BF2C1900F38392 /* UITextFieldWrapper.swift in Sources */,
 				21BFB3B424B66E0800B94A72 /* SceneDelegate.swift in Sources */,
 				21BFB3F824B678DC00B94A72 /* GrowModel.swift in Sources */,
 				2193552C24C1217E00F38392 /* CareInterval.swift in Sources */,
 				212A1E9524BD4EA5002C147F /* Color+SystemColor.swift in Sources */,
+				21C0C95324D0A39B0062BEA8 /* PlantsTaskList.swift in Sources */,
 				212A1E9824BE0F05002C147F /* InsetGroupedSection.swift in Sources */,
 				21BFB3B924B66E0800B94A72 /* AllPlantsView.swift in Sources */,
 				212A1EAD24BE694B002C147F /* SunTolerance.swift in Sources */,
@@ -362,6 +385,7 @@
 				212A1E9C24BE1137002C147F /* StatCell.swift in Sources */,
 				212A1E8C24B893F7002C147F /* CareTaskLog.swift in Sources */,
 				21BFB3B724B66E0800B94A72 /* Grow.xcdatamodeld in Sources */,
+				21C0C95524D1C8240062BEA8 /* Date+Extension.swift in Sources */,
 				21BFB3FA24B678DC00B94A72 /* Formatters.swift in Sources */,
 				21DC516D24C506A1007372B1 /* CareTask.swift in Sources */,
 			);
