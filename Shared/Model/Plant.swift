@@ -14,6 +14,8 @@ struct Plant: Identifiable, Hashable, Equatable {
     var name: String
     var pottingDate: Date?
     
+    var isFavorite: Bool = false
+    
     // Care Info
     var careTasks: [CareTask]
     
