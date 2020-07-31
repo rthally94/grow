@@ -18,6 +18,9 @@ struct Plant: Identifiable, Hashable, Equatable {
     
     // Care Info
     var careTasks: [CareTask]
+    var tasksNeedingCare: [CareTask] {
+        careTasks.filter { $0.needsCare }
+    }
     
     // Care Activity
 //    private(set) var careActivity = [CareTaskLog]()
