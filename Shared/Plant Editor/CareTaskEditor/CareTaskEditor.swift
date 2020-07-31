@@ -27,6 +27,8 @@ struct CareTaskEditorConfig {
 
 
 struct CareTaskEditor: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     @Binding var editorConfig: CareTaskEditorConfig
     var onSave: () -> Void
     
@@ -44,7 +46,17 @@ struct CareTaskEditor: View {
         }
         .listStyle(GroupedListStyle())
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Button("Details", action: onSave))
+        .navigationBarItems(leading: Button(action: goBack, label: {
+            HStack {
+                Image(systemName: "chevron.left")
+                Text("Details")
+            }
+        }))
+    }
+    
+    func goBack() {
+        onSave()
+        presentationMode.wrappedValue.dismiss()
     }
 }
 
