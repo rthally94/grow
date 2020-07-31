@@ -22,6 +22,7 @@ struct UITextFieldWrapper: UIViewRepresentable {
         textField.returnKeyType = .done
         
         textField.delegate = context.coordinator
+        textField.addTarget(context.coordinator, action: #selector(context.coordinator.textFieldDidChange(_:)), for: .editingChanged)
         
         return textField
     }
@@ -57,9 +58,8 @@ struct UITextFieldWrapper: UIViewRepresentable {
             self._text = text
         }
         
-        func textFieldDidEndEditing(_ textField: UITextField) {
-            print("Did End")
-            text = textField.text ?? ""
+        @objc func textFieldDidChange(_ textField: UITextField) {
+            parent.text = textField.text ?? ""
         }
         
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
