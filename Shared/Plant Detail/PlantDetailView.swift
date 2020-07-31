@@ -138,9 +138,9 @@ extension PlantDetailView {
         }
     }
     
-//    var wateringIntervalValue: String {
-//        plant.wateringInterval.unit == .none ? "Watered" : "Watering"
-//    }
+    //    var wateringIntervalValue: String {
+    //        plant.wateringInterval.unit == .none ? "Watered" : "Watering"
+    //    }
 }
 
 struct PlantDetailView_Previews: PreviewProvider {
