@@ -46,16 +46,14 @@ struct UITextFieldWrapper: UIViewRepresentable {
     }
     
     func makeCoordinator() -> Coordinator {
-        Coordinator($text)
+        Coordinator(self)
     }
     
-    
-    
     class Coordinator: NSObject, UITextFieldDelegate {
-        @Binding var text: String
+        var parent: UITextFieldWrapper
         
-        init(_ text: Binding<String>) {
-            self._text = text
+        init(_ parent: UITextFieldWrapper) {
+            self.parent = parent
         }
         
         @objc func textFieldDidChange(_ textField: UITextField) {
