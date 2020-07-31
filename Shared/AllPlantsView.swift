@@ -63,6 +63,8 @@ struct AllPlantsView: View {
 
 struct AllPlantsView_Previews: PreviewProvider {
     static var previews: some View {
-        AllPlantsView().environmentObject(GrowModel())
+        NavigationView {
+            AllPlantsView().environmentObject(GrowModel())
+        }
     }
 }
