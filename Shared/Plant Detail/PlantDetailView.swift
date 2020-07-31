@@ -136,7 +136,7 @@ extension PlantDetailView {
             let ageString = Formatters.relativeDateFormatter.string(for: potted)
             return "Planted \(ageString)"
         } else {
-            return "Not Potted Yet"
+            return "Not Planted"
         }
     }
     
