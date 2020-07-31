@@ -51,6 +51,7 @@ struct PlantDetailView: View {
         .navigationBarTitle(plant.name)
         .navigationBarItems(trailing: Button(action: showActionSheet) {
             Image(systemName: "ellipsis.circle")
+                .imageScale(.large)
         })
             .actionSheet(isPresented: $plantActionSheetIsPresented) {
                 ActionSheet(title: Text("Options"), buttons: [
