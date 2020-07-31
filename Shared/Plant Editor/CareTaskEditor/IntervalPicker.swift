@@ -20,7 +20,7 @@ struct IntervalPicker<Header: View>: View {
     
     private func updateUnitSelection(unit: CareInterval.Unit) {
         switch unit {
-        case .daily: selection = CareInterval(unit: .daily, interval: 1)
+        case .daily: selection = CareInterval(unit: .daily, interval: [1])
         case .weekly: selection = CareInterval(weekdayOrdinal: 0)
         case .monthly: selection = CareInterval(dayOfMonth: Calendar.current.component(.day, from: Date()))
         case .never: selection = CareInterval()
@@ -32,12 +32,12 @@ struct IntervalPicker<Header: View>: View {
     }
     
     private var weekdaySelection: Set<Int> {
-        return Set(arrayLiteral: selection.interval)
+        return selection.interval
     }
     
     private func updateWeekdaySelection(daysOfWeek: Set<Int>) {
         if selection.unit == .weekly {
-            selection.interval = daysOfWeek.first ?? 0
+            selection.interval = daysOfWeek
         }
     }
     
@@ -46,12 +46,12 @@ struct IntervalPicker<Header: View>: View {
     }
     
     private var dateForSelectedDayOfMonth: Date {
-        return Calendar.current.date(bySetting: .day, value: selection.interval, of: Date()) ?? Date()
+        return Calendar.current.date(bySetting: .day, value: selection.interval.first ?? 1, of: Date()) ?? Date()
     }
     
     private func updateDayOfMonth(date: Date) {
         if selection.unit == .monthly {
-            selection.interval = Calendar.current.component(.day, from: date)
+            selection.interval = [Calendar.current.component(.day, from: date)]
         }
     }
     
@@ -86,7 +86,7 @@ struct IntervalPicker<Header: View>: View {
             
             if unitChoice == .weekly {
                 Section {
-                    WeekPicker(selection: weekdayChoicesBinding())
+                    WeekPicker(selection: weekdayChoicesBinding(), selectionMode: .multiple)
                         .frame(maxWidth: .infinity)
                 }
             }
