@@ -64,4 +64,10 @@ extension GrowModel {
             }
         }
     }
+    
+    func setPlantFavorite(_ state: Bool, for plant: Plant) {
+        if let plantIndex = plants.firstIndex(of: plant) {
+            plants[plantIndex].isFavorite = state
+        }
+    }
 }
