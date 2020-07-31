@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct UITextFieldWrapper: UIViewRepresentable {
+    typealias UIViewType = UITextField
+    
     func makeUIView(context: Context) -> UITextField {
         let textField = UITextField()
         
@@ -27,8 +29,6 @@ struct UITextFieldWrapper: UIViewRepresentable {
     func updateUIView(_ uiView: UITextField, context: Context) {
         uiView.text = text
     }
-    
-    typealias UIViewType = UITextField
     
     var placeholder: String
     @Binding var text: String
