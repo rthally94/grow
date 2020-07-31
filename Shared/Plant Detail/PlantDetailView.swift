@@ -88,7 +88,6 @@ struct PlantDetailView: View {
     private func saveChanges() {
         let name = editorConfig.name
         let pottingDate = editorConfig.isPlanted ? editorConfig.plantedDate : nil
-        
         let careTasks = editorConfig.careTasks
         
         let updatedPlant = Plant(id: plant.id, name: name, pottingDate: pottingDate, careTasks: careTasks)
@@ -105,30 +104,30 @@ extension PlantDetailView {
         return plantIndex
     }
     
-//    var careTaskLogCount: String {
-//        "\(plant.careTaskLogs.count)"
-//    }
-//
-//    var plantWateringTitle: String {
-//        plant.wateringInterval.unit == .none ? "Watered" : "Watering"
-//    }
-//
-//    var plantWateringValue: String {
-//        // Check if plant has a care interval
-//        if plant.wateringInterval.unit == .none {
-//            // Format for next care activity
-//            let next = plant.wateringInterval.next(from: plant.careActivity.first?.date ?? Date())
-//            return Formatters.relativeDateFormatter.string(for: next)
-//        } else {
-//            // Check if a log has been recorded
-//            if let lastLogDate = plant.careActivity.first?.date {
-//                // Display the date of the last log
-//                return Formatters.relativeDateFormatter.string(for: lastLogDate)
-//            } else {
-//                return "Never"
-//            }
-//        }
-//    }
+    //    var careTaskLogCount: String {
+    //        "\(plant.careTaskLogs.count)"
+    //    }
+    //
+    //    var plantWateringTitle: String {
+    //        plant.wateringInterval.unit == .none ? "Watered" : "Watering"
+    //    }
+    //
+    //    var plantWateringValue: String {
+    //        // Check if plant has a care interval
+    //        if plant.wateringInterval.unit == .none {
+    //            // Format for next care activity
+    //            let next = plant.wateringInterval.next(from: plant.careActivity.first?.date ?? Date())
+    //            return Formatters.relativeDateFormatter.string(for: next)
+    //        } else {
+    //            // Check if a log has been recorded
+    //            if let lastLogDate = plant.careActivity.first?.date {
+    //                // Display the date of the last log
+    //                return Formatters.relativeDateFormatter.string(for: lastLogDate)
+    //            } else {
+    //                return "Never"
+    //            }
+    //        }
+    //    }
     
     // Growing Conditions
     var ageValue: String {
