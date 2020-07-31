@@ -19,12 +19,12 @@ struct EditorConfig {
     var careTasks = [CareTask]()
     
     mutating func presentForEditing(plant: Plant) {
-        isPresented = true
-        
         name = plant.name
         isPlanted = plant.pottingDate != nil
         plantedDate = plant.pottingDate ?? Date()
         careTasks = plant.careTasks
+        
+        isPresented = true
     }
 }
 
