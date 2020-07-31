@@ -88,6 +88,8 @@ struct PlantEditorForm: View {
         var task = CareTask()
         task.name = ""
         editorConfig.careTasks.append(task)
+        
+        taskEditorConfig.present(task: task)
     }
     
     private func saveTask() {
