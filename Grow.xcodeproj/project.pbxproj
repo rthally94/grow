@@ -34,6 +34,7 @@
 		21BFB41724B67A5D00B94A72 /* GrowModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3FD24B6793500B94A72 /* GrowModelTest.swift */; };
 		21C0C95324D0A39B0062BEA8 /* PlantsTaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C0C95224D0A39B0062BEA8 /* PlantsTaskList.swift */; };
 		21C0C95524D1C8240062BEA8 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C0C95424D1C8240062BEA8 /* Date+Extension.swift */; };
+		21DBE11724D5B6FB00D8CC9C /* Grow-TaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DBE11624D5B6FB00D8CC9C /* Grow-TaskCard.swift */; };
 		21DC516D24C506A1007372B1 /* CareTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DC516C24C506A1007372B1 /* CareTask.swift */; };
 		21DC517024C50AF2007372B1 /* CareTaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DC516F24C50AF2007372B1 /* CareTaskEditor.swift */; };
 		21F49F7424CF809E00ECC828 /* PlantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F49F7324CF809E00ECC828 /* PlantCell.swift */; };
@@ -97,6 +98,7 @@
 		21BFB40F24B67A2400B94A72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21C0C95224D0A39B0062BEA8 /* PlantsTaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantsTaskList.swift; sourceTree = "<group>"; };
 		21C0C95424D1C8240062BEA8 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		21DBE11624D5B6FB00D8CC9C /* Grow-TaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grow-TaskCard.swift"; sourceTree = "<group>"; };
 		21DC516C24C506A1007372B1 /* CareTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTask.swift; sourceTree = "<group>"; };
 		21DC516F24C50AF2007372B1 /* CareTaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskEditor.swift; sourceTree = "<group>"; };
 		21F49F7324CF809E00ECC828 /* PlantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantCell.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				21C0C95224D0A39B0062BEA8 /* PlantsTaskList.swift */,
+				21DBE11624D5B6FB00D8CC9C /* Grow-TaskCard.swift */,
 			);
 			path = PlantsTaskList;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				21F4C23224BF0E2300EB73E0 /* WeekPicker.swift in Sources */,
 				2193552A24C07CC600F38392 /* IntervalPicker.swift in Sources */,
 				212A1E8A24B7664C002C147F /* PlantDetailView.swift in Sources */,
+				21DBE11724D5B6FB00D8CC9C /* Grow-TaskCard.swift in Sources */,
 				21F4C23624BF267A00EB73E0 /* PlantEditorForm.swift in Sources */,
 				21BFB3F924B678DC00B94A72 /* RelativeDateFormatter.swift in Sources */,
 				21BFB3FB24B678DC00B94A72 /* Plant.swift in Sources */,
