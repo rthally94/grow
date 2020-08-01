@@ -36,7 +36,7 @@ struct Grow_TaskCard: View {
     }
     
     @ViewBuilder func background() -> some View {
-        RoundedRectangle(cornerRadius: 15)
+        RoundedRectangle(cornerRadius: 25)
     }
     
     
