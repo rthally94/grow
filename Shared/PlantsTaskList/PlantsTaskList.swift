@@ -12,61 +12,119 @@ struct PlantsTaskList: View {
     @EnvironmentObject var model: GrowModel
     @State var selectedDate = Date()
     
-    var plantsNeedingCare: [Section: [content]] {
-        var data: [Section: [content]] = [:]
-        for section in Section.allCases {
-            switch section {
-            case .weekPicker:
-                data[section] = Array(0..<8).map { content(section: section, value: $0)}
-            case .needsCare:
-                data[section] = Array(0..<8).map { content(section: section, value: $0*2)}
-            }
-        }
-        return data
+    var selectedMultipler: Int {
+        let cal = Calendar.current
+        return cal.component(.weekday, from: selectedDate)
     }
     
-    enum Section: Int, CaseIterable, Comparable, CustomStringConvertible {
-        static func < (lhs: PlantsTaskList.Section, rhs: PlantsTaskList.Section) -> Bool {
-            return lhs.rawValue < rhs.rawValue
-        }
-        
-        case weekPicker
-        case needsCare
-        
-        var description: String {
-            switch self {
-            case .weekPicker: return "Week Picker"
-            case .needsCare: return "Needs Care"
-            }
-        }
+    struct Section<Value: Hashable>: Hashable {
+        let id = UUID()
+        var values: [Value]
     }
     
-    struct content: Hashable {
-        var section: Section
-        var value: Int
+    var data: [CompositionalCollectionSection<Int>] {
+        return [
+            .init(items: [-1], layout: listLayout),
+            .init(items: Array(10..<12).map{$0+selectedMultipler}, layout: twoWideGrid),
+            .init(items: [20, 21, 22], layout: threeWideGrid),
+            .init(items: [30, 31, 32], layout: gridCenterHeavy),
+            .init(items: [40, 41, 42], layout: girdLeftHeavy),
+        ]
     }
     
     var body: some View {
-        UICollectionViewWrapper(data: plantsNeedingCare, boundarySupplementaryItem: collectionViewSectionHeader, content: collectionViewContent)
-            .edgesIgnoringSafeArea(.all)
-            .navigationBarTitle("Care Tasks")
+        CompositionalCollection(sections: data, content: cellContent)
+//            .edgesIgnoringSafeArea(.all)
+//            .navigationBarTitle("CCV! :)")
     }
     
-    @ViewBuilder func collectionViewSectionHeader(_ section: Section, _ kind: String) -> some View {
-        HStack {
-            Text("\(section.description)").font(.title)
-            Spacer()
-        }
+    func listLayout() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 6, bottom: 6, trailing: 6)
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(80)), subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
+        
+        return section
     }
     
-    @ViewBuilder func collectionViewContent(_ item: content) -> some View {
-        HStack(alignment: .lastTextBaseline) {
-            Image(systemName: "person.crop.circle").imageScale(.large)
-            Text("\(item.value)")
-            Spacer()
+    func twoWideGrid() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1)))
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 3, bottom: 6, trailing: 3)
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)), subitems: [item])
+        
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 3, bottom: 0, trailing: 3)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+        return section
+    }
+    
+    func threeWideGrid() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1/3), heightDimension: .fractionalHeight(1)))
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 3, bottom: 6, trailing: 3)
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)), subitems: [item])
+        
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 3, bottom: 0, trailing: 3)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+        return section
+    }
+    
+    func girdLeftHeavy() -> NSCollectionLayoutSection {
+        let itemSmall = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(2/7), heightDimension: .fractionalHeight(1)))
+        itemSmall.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 3, bottom: 6, trailing: 3)
+        
+        let itemLarge = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(3/7), heightDimension: .fractionalHeight(1)))
+        itemLarge.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 3, bottom: 6, trailing: 3)
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)), subitems: [itemLarge, itemSmall, itemSmall])
+        
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 3, bottom: 0, trailing: 3)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+        return section
+    }
+    
+    func gridCenterHeavy() -> NSCollectionLayoutSection {
+        let itemSmall = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(2/7), heightDimension: .fractionalHeight(1)))
+        itemSmall.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 3, bottom: 6, trailing: 3)
+        
+        let itemLarge = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(3/7), heightDimension: .fractionalHeight(1)))
+        itemLarge.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 3, bottom: 6, trailing: 3)
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44)), subitems: [itemSmall, itemLarge])
+        
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 3, bottom: 0, trailing: 3)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+        return section
+    }
+    
+    @ViewBuilder func cellContent(indexPath: IndexPath, item: Int) -> some View {
+        Group {
+            if indexPath.section == 0 {
+                WeekCalendarPicker(selectedDate: $selectedDate) { date in
+                    VStack {
+                        Text("\(Calendar.current.component(.weekday, from: date))")
+                        Spacer()
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+            } else {
+                Text("\(indexPath.section):\(indexPath.row) - \(item)")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Rectangle().stroke())
+            }
         }
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 15).stroke())
     }
 }
 
@@ -123,6 +181,7 @@ struct WeekCalendarPicker<Content: View>: View {
                                 .transition(.identity)
                         }
                     }
+                    .padding(.top)
                     .foregroundColor(self.cellColor(for: self.nextDate(offset: index)))
                     
                     Spacer()
@@ -138,6 +197,5 @@ struct WeekCalendarPicker<Content: View>: View {
             }
             Spacer()
         }
-        .padding(.vertical)
     }
 }
