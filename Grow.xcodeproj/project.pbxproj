@@ -34,7 +34,6 @@
 		21BFB41724B67A5D00B94A72 /* GrowModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3FD24B6793500B94A72 /* GrowModelTest.swift */; };
 		21C0C95324D0A39B0062BEA8 /* PlantsTaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C0C95224D0A39B0062BEA8 /* PlantsTaskList.swift */; };
 		21C0C95524D1C8240062BEA8 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C0C95424D1C8240062BEA8 /* Date+Extension.swift */; };
-		21C0C95724D1F6880062BEA8 /* UICollectionViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C0C95624D1F6880062BEA8 /* UICollectionViewWrapper.swift */; };
 		21DC516D24C506A1007372B1 /* CareTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DC516C24C506A1007372B1 /* CareTask.swift */; };
 		21DC517024C50AF2007372B1 /* CareTaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DC516F24C50AF2007372B1 /* CareTaskEditor.swift */; };
 		21F49F7424CF809E00ECC828 /* PlantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F49F7324CF809E00ECC828 /* PlantCell.swift */; };
@@ -98,7 +97,6 @@
 		21BFB40F24B67A2400B94A72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21C0C95224D0A39B0062BEA8 /* PlantsTaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantsTaskList.swift; sourceTree = "<group>"; };
 		21C0C95424D1C8240062BEA8 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
-		21C0C95624D1F6880062BEA8 /* UICollectionViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewWrapper.swift; sourceTree = "<group>"; };
 		21DC516C24C506A1007372B1 /* CareTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTask.swift; sourceTree = "<group>"; };
 		21DC516F24C50AF2007372B1 /* CareTaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskEditor.swift; sourceTree = "<group>"; };
 		21F49F7324CF809E00ECC828 /* PlantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantCell.swift; sourceTree = "<group>"; };
@@ -143,7 +141,6 @@
 				21F4C23124BF0E2300EB73E0 /* WeekPicker.swift */,
 				21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */,
 				21F49F7324CF809E00ECC828 /* PlantCell.swift */,
-				21C0C95624D1F6880062BEA8 /* UICollectionViewWrapper.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -360,7 +357,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				21BFB3B224B66E0800B94A72 /* AppDelegate.swift in Sources */,
-				21C0C95724D1F6880062BEA8 /* UICollectionViewWrapper.swift in Sources */,
 				21F49F7424CF809E00ECC828 /* PlantCell.swift in Sources */,
 				212A1E9124BD2143002C147F /* CareActivityList.swift in Sources */,
 				2193552824BF2C1900F38392 /* UITextFieldWrapper.swift in Sources */,
