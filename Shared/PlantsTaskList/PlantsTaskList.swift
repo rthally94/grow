@@ -12,20 +12,23 @@ struct PlantsTaskList: View {
     @EnvironmentObject var model: GrowModel
     @State var selectedDate = Date()
     
-    var selectedMultipler: Int {
-        let cal = Calendar.current
-        return cal.component(.weekday, from: selectedDate)
-    }
-    
-    struct Section<Value: Hashable>: Hashable {
-        let id = UUID()
-        var values: [Value]
-    }
-    
-    
-    
     var body: some View {
-        Text("Hello World!")
+        ScrollView {
+            VStack {
+                WeekCalendarPicker(selectedDate: $selectedDate) { date in
+                    Text("\(Calendar.current.component(.weekday, from: date))")
+                }
+                
+                Divider()
+              
+                Grow_TaskCard()
+                Grow_TaskCard()
+                Grow_TaskCard()
+                
+            }
+            .padding()
+        }
+    .navigationBarTitle("Tasks")
     }
 }
 
