@@ -8,14 +8,35 @@
 
 import SwiftUI
 
-struct HPicker: View {
+struct
+edPicker<Label, SelectionValue, Content>: View where Label: View, SelectionValue: Hashable, Content: View {
+    @Binding var selection: SelectionValue
+    var label: Label
+    var content: () -> Content
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Group {
+                content()
+            }
+            .padding()
+            .background(Color.red)
+        }
     }
 }
 
 struct HPicker_Previews: PreviewProvider {
     static var previews: some View {
-        HPicker()
+        StatefulPreviewWrapper(0) { state in
+            VStack {
+                Text("\(state.wrappedValue)")
+                Divider()
+                SegmentedPicker(selection: state, label: Text("Picker")) {
+                    ForEach(0..<5) { index in
+                        Text("\(index)")
+                    }
+                }
+            }
+        }
     }
 }
