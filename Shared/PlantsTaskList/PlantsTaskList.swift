@@ -67,7 +67,9 @@ struct WeekCalendarPicker<Content: View>: View {
     var body: some View {
         HStack {
             ForEach(0..<count) { index in
-                Spacer()
+                if index > 0 {
+                    Spacer()
+                }
                 
                 VStack {
                     Group {
@@ -82,7 +84,6 @@ struct WeekCalendarPicker<Content: View>: View {
                                 .transition(.identity)
                         }
                     }
-                    .padding(.top)
                     .foregroundColor(self.cellColor(for: self.nextDate(offset: index)))
                     
                     Spacer()
@@ -96,7 +97,6 @@ struct WeekCalendarPicker<Content: View>: View {
                 }
                 
             }
-            Spacer()
         }
     }
 }
