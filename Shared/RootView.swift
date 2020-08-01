@@ -11,12 +11,24 @@ import SwiftUI
 struct RootView: View {
     var body: some View {
         TabView {
-            AllPlantsView()
-                .tabItem {
-                    VStack {
-                        Image(systemName: "list.dash")
-                        Text("Plants")
-                    }
+            NavigationView {
+                PlantsTaskList()
+            }
+            .tabItem {
+                VStack {
+                    Image(systemName: "heart.fill")
+                    Text("Tasks")
+                }
+            }
+            
+            NavigationView {
+                AllPlantsView()
+            }
+            .tabItem {
+                VStack {
+                    Image(systemName: "list.dash")
+                    Text("Plants")
+                }
             }
         }
     }

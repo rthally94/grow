@@ -20,24 +20,18 @@ extension GrowModel {
             plant.name.hasPrefix("New Plant") ? count + 1 : count
         }
         let newPlantName = "New Plant \(newPlantCount + 1)"
-        addPlant(name: newPlantName)
+        
+        addPlant(Plant(name: newPlantName))
     }
     
     /// Adds a parameterized plant to the dataset
     /// - Parameter name: The name of the plant
-    func addPlant(name: String) {
-        let newPlant = Plant(id: UUID(), name: name)
-        plants.append(newPlant)
-    }
-    
-    /// Updates a plant model in the dataset with the specified parameters
-    /// - Parameters:
-    ///   - oldPlant: The plant to update
-    ///   - name: The new name of the plant
-    func updatePlant(_ oldPlant: Plant, name: String? = nil) {
-        if let oldIndex = plants.firstIndex(of: oldPlant) {
-            let updatedPlant = plants[oldIndex]
-            updatedPlant.name = name ?? oldPlant.name
+    func addPlant(_ plant: Plant) {
+        if let oldPlantIndex = plants.firstIndex(where: { $0.id == plant.id }) {
+            plants[oldPlantIndex] = plant
+            print(plants[0])
+        } else {
+            plants.append(plant)
         }
     }
     
@@ -49,9 +43,31 @@ extension GrowModel {
         }
     }
     
-    func addCareActivity(_ care: CareActivity , to plant: Plant) {
+    func addCareTask(_ task: CareTask , to plant: Plant) {
         if let plantIndex = plants.firstIndex(of: plant) {
-            plants[plantIndex].addCareActivity(care)
+            plants[plantIndex].addCareTask(task)
+        }
+    }
+    
+    func addCareTaskLog(_ log: CareTaskLog, to task: CareTask, for plant: Plant) {
+        if let plantIndex = plants.firstIndex(of: plant), let careTaskIndex = plants[plantIndex].careTasks.firstIndex(of: task) {
+            plants[plantIndex].careTasks[careTaskIndex].addLog(CareTaskLog())
+        }
+    }
+    
+    func deleteCareTaskLog(_ log: CareTaskLog? = nil, from task: CareTask, for plant: Plant) {
+        if let plantIndex = plants.firstIndex(of: plant), let careTaskIndex = plants[plantIndex].careTasks.firstIndex(of: task) {
+            if let log = log, let logIndex = plants[plantIndex].careTasks[careTaskIndex].logs.firstIndex(of: log) {
+                plants[plantIndex].careTasks[careTaskIndex].logs.remove(at: logIndex)
+            } else {
+                plants[plantIndex].careTasks[careTaskIndex].logs.removeFirst()
+            }
+        }
+    }
+    
+    func setPlantFavorite(_ state: Bool, for plant: Plant) {
+        if let plantIndex = plants.firstIndex(of: plant) {
+            plants[plantIndex].isFavorite = state
         }
     }
 }

@@ -9,30 +9,30 @@
 import Foundation
 import XCTest
 
-@testable import Grow_iOS
+@testable import Grow_
 
 class CareIntervalTest: XCTestCase {
     let cal = Calendar.current
     
     // MARK: Interval
-    func testCareInterval_WhenIntervalIsGreatorThanZero_IntervalIsGreatorThanZero() {
+    func testCareInterval_WhenUnitIsDaily_IntervalOnlyContainsOneValue() {
         let interval = 5
-        let sut = CareInterval(unit: .daily, interval: interval)
-        XCTAssertEqual(sut.interval, interval)
-    }
-    
-    func testCareInterval_WhenIntervalIsZero_IntervalIsZero() {
-        let interval = 0
-        let sut = CareInterval(unit: .daily, interval: interval)
-        XCTAssertEqual(sut.interval, interval)
-    }
-    
-    func testCareInterval_WhenIntervalIsLessThanZero_IntervalIsZero() {
-        let sut = CareInterval(unit: .daily, interval: -5)
-        XCTAssertEqual(sut.interval, 0)
+        let sut = CareInterval(unit: .daily, interval: [interval, interval+1])
+        XCTAssertEqual(sut.interval.count, 1)
     }
     
     // MARK: Unit Interval Boundary
+    func testCareInterval_WhenUnitIsNone_IntervalIsZero() {
+        let unit: CareInterval.Unit = .never
+        let interval = 0
+        XCTAssertTrue(CareInterval.isValid(interval: interval, for: unit))
+    }
+    
+    func test_CareInterval_WhenUnitIsNone_IntervalIsZero() {
+        let sut = CareInterval(unit: .never, interval: [4])
+        XCTAssertTrue(sut.interval.isEmpty)
+    }
+    
     func testCareInterval_WhenUnitIsDaily_IntervalIsOne() {
         let unit: CareInterval.Unit = .daily
         let interval = 2
@@ -76,7 +76,7 @@ class CareIntervalTest: XCTestCase {
     
     // MARK: Next Date
     func testCareInterval_WhenUnitIsDaily_NextDateIsTomorrow() {
-        let sut = CareInterval()
+        let sut = CareInterval(unit: .daily, interval: [1])
 
         let today = Date()
         let next = sut.next(from: today)

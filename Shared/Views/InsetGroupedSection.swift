@@ -14,8 +14,7 @@ struct InsetGroupedSection<Header: View, Content: View>: View {
     
     var body: some View {
         VStack {
-            header()
-                .padding(.bottom)
+            header().padding(.bottom)
             content()
         }
         .padding()
@@ -23,6 +22,19 @@ struct InsetGroupedSection<Header: View, Content: View>: View {
             RoundedRectangle(cornerRadius: 20)
                 .foregroundColor(.systemGroupedBackground)
         )
+    }
+    
+    init(header: @escaping () -> Header, @ViewBuilder content: @escaping () -> Content) {
+        self.header = header
+        self.content = content
+    }
+}
+
+extension InsetGroupedSection where Header == EmptyView {
+    init(@ViewBuilder content: @escaping () -> Content) {
+        self.init(
+            header: {EmptyView()},
+            content: content)
     }
 }
 

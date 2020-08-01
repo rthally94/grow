@@ -12,19 +12,46 @@ struct AllPlantsView: View {
     @EnvironmentObject var model: GrowModel
     
     var body: some View {
-        NavigationView {
-            List(model.plants) { plant in
-                NavigationLink(plant.name, destination: PlantDetailView(viewModel: .init(model: self.model, plant: plant)))
+        ScrollView {
+            VStack(alignment: .leading) {
+                ForEach(model.plants) { plant in
+                    NavigationLink(destination: PlantDetailView(plant: plant)) {
+                        PlantCell(plant: plant)
+                            .padding()
+                            .background(RoundedRectangle(cornerRadius: 15).fill(Color.systemGroupedBackground))
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    
+                }
+            
+                Button(action: addPlant) {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Image(systemName: "plus.circle.fill").imageScale(.large)
+                            Spacer()
+                        }
+                        
+                        Text("Add New")
+                    }
+                    .padding()
+                    .background(RoundedRectangle(cornerRadius: 15).fill(Color.systemGroupedBackground))
+                }.buttonStyle(PlainButtonStyle())
+                
+                HStack {
+                    Spacer()
+                }
             }
-            .listStyle(GroupedListStyle())
-            .navigationBarTitle("Plants")
-            .navigationBarItems(trailing: Button(
-                action: addPlant,
-                label: {
-                    Image(systemName: "plus.circle")
-                })
-            )
+            .padding()
         }
+        .listStyle(GroupedListStyle())
+        .navigationBarTitle("Plants")
+        .navigationBarItems(trailing: Button(
+            action: addPlant,
+            label: {
+                Image(systemName: "plus.circle.fill")
+                    .imageScale(.large)
+        })
+        )
     }
     
     private func addPlant() {
@@ -36,6 +63,8 @@ struct AllPlantsView: View {
 
 struct AllPlantsView_Previews: PreviewProvider {
     static var previews: some View {
-        AllPlantsView().environmentObject(GrowModel())
+        NavigationView {
+            AllPlantsView().environmentObject(GrowModel())
+        }
     }
 }
