@@ -38,14 +38,32 @@ struct SegmentedPicker: View {
     
     
     var body: some View {
-        HStack {
-            ForEach(0..<items.count) { index in
-                self.getSegmentView(for: index)
+        ZStack(alignment: .leading) {
+            activeSegmentView
+            
+            HStack {
+                ForEach(0..<items.count, id: \.self) { index in
+                    self.getSegmentView(for: index)
+                }
             }
         }
     }
     
     @ViewBuilder private func getSegmentView(for index: Int) -> some View {
+    private func computeActiveSegmentHorizontalOffset() -> CGFloat {
+        CGFloat(selection) * (segmentSize.width + SegmentedPicker.SegmentXPadding)
+    }
+    
+    private var activeSegmentView: AnyView {
+        let isInitialized: Bool = segmentSize != .zero
+        if !isInitialized { return EmptyView().eraseToAnyView() }
+        
+        return Circle()
+            .foregroundColor(SegmentedPicker.ActiveSegmentColor)
+            .frame(width: segmentSize.width, height: segmentSize.height)
+            .offset(x: computeActiveSegmentHorizontalOffset(), y: 0)
+            .eraseToAnyView()
+    }
         let isSelected = selection == index
         
         return
@@ -85,5 +103,35 @@ struct HPicker_Previews: PreviewProvider {
                 SegmentedPicker(items: items, selection: state)
             }
         }
+    }
+}
+struct SizePreferenceKey: PreferenceKey {
+    typealias Value = CGSize
+    static var defaultValue: CGSize = .zero
+    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        value = nextValue()
+    }
+}
+
+struct BackgroundGeometryReader: View {
+    var body: some View {
+        GeometryReader { geometry in
+            Color.clear
+                .preference(key: SizePreferenceKey.self, value: geometry.size)
+        }
+    }
+}
+
+struct SizeAwareViewModifier: ViewModifier {
+    @Binding private var viewSize: CGSize
+    
+    init(viewSize: Binding<CGSize>) {
+        _viewSize = viewSize
+    }
+    
+    func body(content: Content) -> some View {
+        content
+            .background(BackgroundGeometryReader())
+            .onPreferenceChange(SizePreferenceKey.self, perform: { if self.viewSize != $0 { self.viewSize = $0 }})
     }
 }
