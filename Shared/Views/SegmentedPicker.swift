@@ -137,3 +137,9 @@ struct SizeAwareViewModifier: ViewModifier {
             .onPreferenceChange(SizePreferenceKey.self, perform: { if self.viewSize != $0 { self.viewSize = $0 }})
     }
 }
+
+extension View {
+    func eraseToAnyView() -> AnyView {
+        AnyView(self)
+    }
+}
