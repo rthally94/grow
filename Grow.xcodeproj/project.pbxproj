@@ -15,7 +15,6 @@
 		212A1E9824BE0F05002C147F /* InsetGroupedSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9724BE0F05002C147F /* InsetGroupedSection.swift */; };
 		212A1E9A24BE0FAF002C147F /* ListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9924BE0FAF002C147F /* ListRow.swift */; };
 		212A1E9C24BE1137002C147F /* StatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9B24BE1137002C147F /* StatCell.swift */; };
-		212A1EAD24BE694B002C147F /* SunTolerance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1EAB24BE694B002C147F /* SunTolerance.swift */; };
 		2193552824BF2C1900F38392 /* UITextFieldWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2193552724BF2C1900F38392 /* UITextFieldWrapper.swift */; };
 		2193552A24C07CC600F38392 /* IntervalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2193552924C07CC600F38392 /* IntervalPicker.swift */; };
 		2193552C24C1217E00F38392 /* CareInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2193552B24C1217E00F38392 /* CareInterval.swift */; };
@@ -42,6 +41,7 @@
 		21F4C23224BF0E2300EB73E0 /* WeekPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23124BF0E2300EB73E0 /* WeekPicker.swift */; };
 		21F4C23424BF15A900EB73E0 /* StatefulPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */; };
 		21F4C23624BF267A00EB73E0 /* PlantEditorForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */; };
+		FB54CAC424D84C17006BB3C5 /* Color+GrowColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB54CAC324D84C17006BB3C5 /* Color+GrowColors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,7 +76,6 @@
 		212A1E9724BE0F05002C147F /* InsetGroupedSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetGroupedSection.swift; sourceTree = "<group>"; };
 		212A1E9924BE0FAF002C147F /* ListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRow.swift; sourceTree = "<group>"; };
 		212A1E9B24BE1137002C147F /* StatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCell.swift; sourceTree = "<group>"; };
-		212A1EAB24BE694B002C147F /* SunTolerance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SunTolerance.swift; path = ../../../../Agronomist/Agronomist/Model/SunTolerance.swift; sourceTree = "<group>"; };
 		2193552724BF2C1900F38392 /* UITextFieldWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldWrapper.swift; sourceTree = "<group>"; };
 		2193552924C07CC600F38392 /* IntervalPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalPicker.swift; sourceTree = "<group>"; };
 		2193552B24C1217E00F38392 /* CareInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareInterval.swift; sourceTree = "<group>"; };
@@ -107,6 +106,7 @@
 		21F4C23124BF0E2300EB73E0 /* WeekPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekPicker.swift; sourceTree = "<group>"; };
 		21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewWrapper.swift; sourceTree = "<group>"; };
 		21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantEditorForm.swift; sourceTree = "<group>"; };
+		FB54CAC324D84C17006BB3C5 /* Color+GrowColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+GrowColors.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,7 +195,6 @@
 				21BFB3BC24B66E0A00B94A72 /* Preview Content */,
 				21BFB3B824B66E0800B94A72 /* AllPlantsView.swift */,
 				212A1E9224BD4BC7002C147F /* RootView.swift */,
-				212A1E9424BD4EA5002C147F /* Color+SystemColor.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -211,7 +210,6 @@
 		21BFB3E924B678A100B94A72 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				212A1EAB24BE694B002C147F /* SunTolerance.swift */,
 				21BFB3F324B678DB00B94A72 /* GrowModel.swift */,
 				21BFB3F424B678DC00B94A72 /* Helpers */,
 				21BFB3F724B678DC00B94A72 /* Plant.swift */,
@@ -225,6 +223,8 @@
 		21BFB3F424B678DC00B94A72 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				212A1E9424BD4EA5002C147F /* Color+SystemColor.swift */,
+				FB54CAC324D84C17006BB3C5 /* Color+GrowColors.swift */,
 				21BFB3F524B678DC00B94A72 /* RelativeDateFormatter.swift */,
 				21BFB3F624B678DC00B94A72 /* Formatters.swift */,
 				21C0C95424D1C8240062BEA8 /* Date+Extension.swift */,
@@ -373,7 +373,6 @@
 				21C0C95324D0A39B0062BEA8 /* PlantsTaskList.swift in Sources */,
 				212A1E9824BE0F05002C147F /* InsetGroupedSection.swift in Sources */,
 				21BFB3B924B66E0800B94A72 /* AllPlantsView.swift in Sources */,
-				212A1EAD24BE694B002C147F /* SunTolerance.swift in Sources */,
 				21F4C23224BF0E2300EB73E0 /* WeekPicker.swift in Sources */,
 				2193552A24C07CC600F38392 /* IntervalPicker.swift in Sources */,
 				212A1E8A24B7664C002C147F /* PlantDetailView.swift in Sources */,
@@ -383,6 +382,7 @@
 				21BFB3FB24B678DC00B94A72 /* Plant.swift in Sources */,
 				21F4C23424BF15A900EB73E0 /* StatefulPreviewWrapper.swift in Sources */,
 				212A1E9324BD4BC8002C147F /* RootView.swift in Sources */,
+				FB54CAC424D84C17006BB3C5 /* Color+GrowColors.swift in Sources */,
 				212A1E9A24BE0FAF002C147F /* ListRow.swift in Sources */,
 				21DC517024C50AF2007372B1 /* CareTaskEditor.swift in Sources */,
 				212A1E9C24BE1137002C147F /* StatCell.swift in Sources */,
