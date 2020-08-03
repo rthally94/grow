@@ -47,6 +47,8 @@ struct SegmentedPicker: View {
                 }
             }
         }
+        .padding(SegmentedPicker.PickerPadding)
+        .clipShape(RoundedRectangle(cornerRadius: SegmentedPicker.SegmentCornerRadius))
     }
     
     @ViewBuilder private func getSegmentView(for index: Int) -> some View {
