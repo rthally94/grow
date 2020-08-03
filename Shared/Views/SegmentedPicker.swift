@@ -10,21 +10,25 @@ import SwiftUI
 
 struct SegmentedPicker: View {
     //MARK: Drawing Constants
-    private static let ActiveSegmentColor = Color(.tertiarySystemBackground)
-    private static let BackgroundColor = Color(.secondarySystemBackground)
-    private static let ShadowColor = Color.black.opacity(0.2)
-    private static let TextColor = Color(.secondaryLabel)
-    private static let SelectedTextColor = Color(.label)
+    private static let ActiveSegmentColor = Color.GrowGreen2
+    private static let BackgroundColor = Color(.systemBackground)
+    private static let SelectedTextColor = Color.black
+    private static let TextColor = Color(.label).opacity(0.2)
+    
     
     private static let TextFont: Font = .system(size: 12)
     
+    private static let ActiveSegmentLineWidth: CGFloat = 4
     private static let SegmentCornerRadius: CGFloat = 15
-    private static let ShadowRadius: CGFloat = 4
-    private static let SegmentXPadding: CGFloat = 16
+    private static let SegmentXPadding: CGFloat = 8
     private static let SegmentYPadding: CGFloat = 8
     private static let PickerPadding: CGFloat = 4
     
+    private static let AnimationDuration: Double = 0.2
+    
+    @State private var segmentSize: CGSize = .zero
     @Binding private var selection: Int
+    
     private let items: [String]
     
     init(items: [String], selection: Binding<Int>) {
