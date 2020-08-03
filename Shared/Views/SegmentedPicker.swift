@@ -93,22 +93,20 @@ struct SegmentedPicker: View {
 
 struct HPicker_Previews: PreviewProvider {
     static var previews: some View {
-        let items = [
-            "a",
-            "b",
-            "c",
-            "d"
-        ]
-        
         return StatefulPreviewWrapper(0) { state in
             VStack {
                 Text("\(state.wrappedValue)")
                 Divider()
-                SegmentedPicker(items: items, selection: state)
+                SegmentedPicker(items: Calendar.current.veryShortStandaloneWeekdaySymbols, selection: state)
             }
         }
     }
 }
+
+
+
+
+
 struct SizePreferenceKey: PreferenceKey {
     typealias Value = CGSize
     static var defaultValue: CGSize = .zero
