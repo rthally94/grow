@@ -51,7 +51,6 @@ struct SegmentedPicker: View {
         .clipShape(RoundedRectangle(cornerRadius: SegmentedPicker.SegmentCornerRadius))
     }
     
-    @ViewBuilder private func getSegmentView(for index: Int) -> some View {
     private func computeActiveSegmentHorizontalOffset() -> CGFloat {
         CGFloat(selection) * (segmentSize.width + SegmentedPicker.SegmentXPadding)
     }
@@ -66,26 +65,29 @@ struct SegmentedPicker: View {
             .offset(x: computeActiveSegmentHorizontalOffset(), y: 0)
             .eraseToAnyView()
     }
+    
+    private func getSegmentView(for index: Int) -> AnyView {
+        guard index < items.count else { return EmptyView().eraseToAnyView() }
         let isSelected = selection == index
         
         return
-        if index < items.count {
             Text(items[index])
                 .foregroundColor(isSelected ? SegmentedPicker.SelectedTextColor : SegmentedPicker.TextColor)
                 .lineLimit(1)
                 .padding(.vertical, SegmentedPicker.SegmentYPadding)
                 .padding(.horizontal, SegmentedPicker.SegmentXPadding)
                 .frame(minWidth: 0, maxWidth: .infinity)
+                .modifier(SizeAwareViewModifier(viewSize: $segmentSize))
                 .onTapGesture { self.onItemTap(index: index) }
-        } else {
-            Text("1 ")
-            //                EmptyView()
-        }
+                .eraseToAnyView()
     }
+    
     
     private func onItemTap(index: Int) {
         guard index < items.count else { return }
-        self.selection = index
+        withAnimation {
+            self.selection = index
+        }
     }
 }
 
