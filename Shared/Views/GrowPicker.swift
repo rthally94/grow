@@ -59,7 +59,7 @@ struct GrowWeekdaySegmentedPickerStyle: GrowPickerStyle {
 }
 
 struct GrowPicker<Data: RandomAccessCollection, Content: View>: View where Data.Element: Hashable {
-    let style: GrowPickerStyle = GrowWeekdaySegmentedPickerStyle()
+    var style: GrowPickerStyle = GrowWeekdaySegmentedPickerStyle()
     
     enum SelectionMode: Int {
         case single
