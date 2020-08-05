@@ -42,6 +42,7 @@
 		21F4C23424BF15A900EB73E0 /* StatefulPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */; };
 		21F4C23624BF267A00EB73E0 /* PlantEditorForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */; };
 		FB54CAC424D84C17006BB3C5 /* Color+GrowColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB54CAC324D84C17006BB3C5 /* Color+GrowColors.swift */; };
+		FB54CAC624D886F3006BB3C5 /* GrowPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB54CAC524D886F3006BB3C5 /* GrowPicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +108,7 @@
 		21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewWrapper.swift; sourceTree = "<group>"; };
 		21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantEditorForm.swift; sourceTree = "<group>"; };
 		FB54CAC324D84C17006BB3C5 /* Color+GrowColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+GrowColors.swift"; sourceTree = "<group>"; };
+		FB54CAC524D886F3006BB3C5 /* GrowPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowPicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */,
 				21F49F7324CF809E00ECC828 /* PlantCell.swift */,
 				21E8883324D60EB300BC0EAC /* SegmentedPicker.swift */,
+				FB54CAC524D886F3006BB3C5 /* GrowPicker.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 			files = (
 				21BFB3B224B66E0800B94A72 /* AppDelegate.swift in Sources */,
 				21F49F7424CF809E00ECC828 /* PlantCell.swift in Sources */,
+				FB54CAC624D886F3006BB3C5 /* GrowPicker.swift in Sources */,
 				212A1E9124BD2143002C147F /* CareActivityList.swift in Sources */,
 				2193552824BF2C1900F38392 /* UITextFieldWrapper.swift in Sources */,
 				21BFB3B424B66E0800B94A72 /* SceneDelegate.swift in Sources */,
