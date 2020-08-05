@@ -86,7 +86,7 @@ struct IntervalPicker<Header: View>: View {
             
             if unitChoice == .weekly {
                 Section {
-                    WeekPicker(selection: weekdayChoicesBinding(), selectionMode: .multiple)
+                    WeekPicker(selection: weekdayChoicesBinding())
                         .frame(maxWidth: .infinity)
                 }
             }
