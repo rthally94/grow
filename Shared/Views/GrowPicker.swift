@@ -18,8 +18,6 @@ protocol GrowPickerStyle {
     
     var ActiveSegmentLineWidth: CGFloat { get }
     var SegmentCornerRadius: CGFloat { get }
-    var SegmentXPadding: CGFloat { get }
-    var SegmentYPadding: CGFloat { get }
     var PickerPadding: CGFloat { get }
     
     var AnimationDuration: Double { get }
@@ -55,8 +53,6 @@ struct GrowWeekdaySegmentedPickerStyle: GrowPickerStyle {
     }
     
     let SegmentCornerRadius: CGFloat = 15
-    let SegmentXPadding: CGFloat = 8
-    let SegmentYPadding: CGFloat = 8
     let PickerPadding: CGFloat = 4
     
     let AnimationDuration: Double = 0.2
