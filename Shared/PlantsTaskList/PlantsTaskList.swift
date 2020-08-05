@@ -10,13 +10,16 @@ import SwiftUI
 
 struct PlantsTaskList: View {
     @EnvironmentObject var model: GrowModel
-    @State var selectedIndex: Int = Calendar.current.component(.weekday, from: Date()) - 1
+    @State var selectedIndex = Set(arrayLiteral: "")
     
     var body: some View {
         ScrollView {
             VStack {
-                SegmentedPicker(items: Calendar.current.veryShortStandaloneWeekdaySymbols, selection: $selectedIndex)
-                
+                GrowPicker(Calendar.current.veryShortStandaloneWeekdaySymbols, selection: $selectedIndex) { symbol, isSelected in
+                    Text(symbol)
+                        .padding()
+                        .background(Circle().stroke().scale(isSelected ? 1 : 0))
+                }
                 Divider()
               
                 Grow_TaskCard()
