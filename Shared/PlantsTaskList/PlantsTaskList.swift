@@ -24,9 +24,9 @@ struct PlantsTaskList: View {
                 
                 Divider()
               
-                Grow_TaskCard()
-                Grow_TaskCard()
-                Grow_TaskCard()
+                GrowTaskCard()
+                GrowTaskCard()
+                GrowTaskCard()
                 
             }
             .padding()

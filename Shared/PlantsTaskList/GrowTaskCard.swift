@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct Grow_TaskCard: View {
+struct GrowTaskCard: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -44,7 +44,7 @@ struct Grow_TaskCard: View {
 
 struct Grow_TaskCard_Previews: PreviewProvider {
     static var previews: some View {
-        Grow_TaskCard()
+        GrowTaskCard()
             .previewLayout(.sizeThatFits)
     }
 }
