@@ -10,16 +10,18 @@ import SwiftUI
 
 struct PlantsTaskList: View {
     @EnvironmentObject var model: GrowModel
-    @State var selectedIndex = Set(arrayLiteral: "")
+    @State var selectedDay: Int = Calendar.current.component(.weekday, from: Date())-1
+    
+    var navigationBarTitle: String {
+        let date = Calendar.current.date(bySetting: .weekday, value: selectedDay+1, of: Date()) ?? Date()
+        return Formatters.relativeDateFormatter.string(for: date)
+    }
     
     var body: some View {
         ScrollView {
             VStack {
-                GrowPicker(Calendar.current.veryShortStandaloneWeekdaySymbols, selection: $selectedIndex) { symbol, isSelected in
-                    Text(symbol)
-                        .padding()
-                        .background(Circle().stroke().scale(isSelected ? 1 : 0))
-                }
+                WeekPicker(selection: $selectedDay)
+                
                 Divider()
               
                 Grow_TaskCard()
@@ -29,7 +31,7 @@ struct PlantsTaskList: View {
             }
             .padding()
         }
-    .navigationBarTitle("Tasks")
+    .navigationBarTitle(navigationBarTitle)
     }
 }
 
