@@ -68,7 +68,7 @@ struct GrowPicker<Data: RandomAccessCollection, Content: View>: View where Data.
     
     private let data: Data
     private let selectionMode: SelectionMode
-    private var singleSelection: Binding<Data.Element?>?
+    private var singleSelection: Binding<Data.Element>?
     private var multiSelection: Binding<Set<Data.Element>>?
     private let content: (Data.Element, Bool) -> Content
     
@@ -100,7 +100,7 @@ struct GrowPicker<Data: RandomAccessCollection, Content: View>: View where Data.
         self.content = content
     }
     
-    init(_ data: Data, selection: Binding<Data.Element?>?, @ViewBuilder content: @escaping (Data.Element, Bool) -> Content) {
+    init(_ data: Data, selection: Binding<Data.Element>?, @ViewBuilder content: @escaping (Data.Element, Bool) -> Content) {
         self.data = data
         self.selectionMode = .single
         self.singleSelection = selection
@@ -202,8 +202,9 @@ struct GrowPicker_Previews: PreviewProvider {
                                 .padding()
                                 .background(Circle().stroke().scale(isSelected ? 1 : 0))
                         }
+                        
                         Divider()
-                        Text(state.wrappedValue ?? "")
+                        Text(state.wrappedValue)
                     }
                 }
                 .previewDisplayName("Single Selection")

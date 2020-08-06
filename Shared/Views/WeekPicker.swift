@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct WeekPicker: View {
-    var singleSelection: Binding<Int?>?
+    var singleSelection: Binding<Int>?
     var multiSelection: Binding<Set<Int>>?
     let pickerIsMulti: Bool
     
     private let symbols = Calendar.current.veryShortStandaloneWeekdaySymbols
     
-    init(selection: Binding<Int?>?) {
+    init(selection: Binding<Int>?) {
         singleSelection = selection
         pickerIsMulti = false
     }
@@ -39,7 +39,9 @@ struct WeekPicker: View {
     
     private func pickerContent(item: Int, isSelected: Bool) -> some View {
         Text(self.symbols[item])
-            .padding()
+            .foregroundColor(isSelected ? .white : nil)
+            .padding(.vertical, 6)
+            .frame(minWidth: .zero, maxWidth: .infinity)
             .background(Circle().scale(isSelected ? 1 : 0))
     }
 }
@@ -50,7 +52,7 @@ struct WeekPicker_Previews: PreviewProvider {
             StatefulPreviewWrapper(0) { value in
                 VStack {
                     WeekPicker(selection: value)
-                    Text(value.wrappedValue?.description ?? "")
+                    Text(value.wrappedValue.description)
                 }
             }
             .previewDisplayName("Single Selection")
