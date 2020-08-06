@@ -26,6 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
         let model = GrowModel()
         let contentView = RootView()
+            .accentColor(Color.GrowGreen2)
             .environmentObject(model)
             .environment(\.managedObjectContext, context)            
 

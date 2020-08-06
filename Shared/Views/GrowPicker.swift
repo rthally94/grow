@@ -24,7 +24,8 @@ protocol GrowPickerStyle {
 }
 
 struct GrowWeekdaySegmentedPickerStyle: GrowPickerStyle {
-    var primaryColor: Color = Color.GrowGreen2
+    
+    var primaryColor: Color = Color.accentColor
     var secondaryColor: Color = Color.gray
     var fontSize: CGFloat = 18
     
@@ -59,12 +60,12 @@ struct GrowWeekdaySegmentedPickerStyle: GrowPickerStyle {
 }
 
 struct GrowPicker<Data: RandomAccessCollection, Content: View>: View where Data.Element: Hashable {
-    var style: GrowPickerStyle = GrowWeekdaySegmentedPickerStyle()
-    
     enum SelectionMode: Int {
         case single
         case multiple
     }
+    
+    var style: GrowPickerStyle = GrowWeekdaySegmentedPickerStyle()
     
     private let data: Data
     private let selectionMode: SelectionMode
@@ -147,14 +148,14 @@ struct GrowPicker<Data: RandomAccessCollection, Content: View>: View where Data.
         let isDefault = false
         
         return
-            content(data[_index], isSelected)
+            Button(action: {self.onItemTap(index: index)}) {
+                content(data[_index], isSelected)
                 .font(style.TextFont)
-                .foregroundColor(Color.white)
-                .colorMultiply(getSegmentColor(isSelected: isSelected, isDefault: isDefault))
                 .lineLimit(1)
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .onTapGesture { self.onItemTap(index: index) }
-                .eraseToAnyView()
+            }
+            .foregroundColor(getSegmentColor(isSelected: isSelected, isDefault: isDefault))
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .eraseToAnyView()
     }
     
     private func getSegmentColor(isSelected: Bool, isDefault: Bool) -> Color {
