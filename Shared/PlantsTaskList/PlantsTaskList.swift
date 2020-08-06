@@ -17,17 +17,24 @@ struct PlantsTaskList: View {
         return Formatters.relativeDateFormatter.string(for: date)
     }
     
+    var careTasks: [CareTask] {
+        return [
+            CareTask(),
+            CareTask()
+        ]
+    }
+    
     var body: some View {
         ScrollView {
             VStack {
                 WeekPicker(selection: $selectedDay)
                 
                 Divider()
-              
-                GrowTaskCard()
-                GrowTaskCard()
-                GrowTaskCard()
                 
+                ForEach(careTasks, id: \.self) { careTask in
+                    GrowTaskCard(careTask: careTask)
+                        .padding(.vertical)
+                }
             }
             .padding()
         }
