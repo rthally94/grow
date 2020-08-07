@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct IconImage: View {
     var icon: Image
@@ -28,9 +29,9 @@ struct IconImage: View {
 }
 
 struct PlantCell: View {
-    @Environment(\.managedObjectContext) var moc
+    @Environment(\.managedObjectContext) var context
     
-    var plant: Plant
+    @ObservedObject var plant: Plant
     
     var body: some View {
         HStack(alignment: .top) {
@@ -50,14 +51,18 @@ struct PlantCell: View {
     
     func toggleFavorite() {
         plant.isFavorite.toggle()
-        try? moc.save()
+        try? context.save()
     }
 }
 
 struct PlantCell_Previews: PreviewProvider {
     static var previews: some View {
-        PlantCell(plant: Plant())
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        let plant = Plant.create(context: context)
+        
+        return PlantCell(plant: plant)
             .padding()
             .background(RoundedRectangle(cornerRadius: 15).fill(Color.systemGroupedBackground))
+            .environment(\.managedObjectContext, context)
     }
 }
