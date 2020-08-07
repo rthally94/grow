@@ -9,7 +9,8 @@
 
 import Foundation
 import CoreData
-
+import UIKit.UIImage
+import UIKit.UIColor
 
 extension CareTaskType {
 
