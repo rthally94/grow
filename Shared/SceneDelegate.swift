@@ -23,11 +23,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
         // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
-        // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-        let model = GrowModel()
+        // Add `@Environment(\.managedObjectContext)` in the views that will need the context.s
         let contentView = RootView()
             .accentColor(Color.GrowGreen2)
-            .environmentObject(model)
             .environment(\.managedObjectContext, context)            
 
         // Use a UIHostingController as window root view controller.
