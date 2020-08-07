@@ -7,3 +7,17 @@
 //
 
 import Foundation
+import UIKit
+
+extension CareTaskType {
+    var name: String {
+        get { name_ ?? "" }
+        set { name_ = newValue }
+    }
+}
+
+extension CareTaskType: Comparable {
+    public static func < (lhs: CareTaskType, rhs: CareTaskType) -> Bool {
+        lhs.name < rhs.name
+    }
+}
