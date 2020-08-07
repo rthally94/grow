@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct PlantsTaskList: View {
-    @EnvironmentObject var model: GrowModel
     @State var selectedDay: Int = Calendar.current.component(.weekday, from: Date())-1
     
     var navigationBarTitle: String {
@@ -18,10 +17,7 @@ struct PlantsTaskList: View {
     }
     
     var careTasks: [CareTask] {
-        return [
-            CareTask(),
-            CareTask()
-        ]
+        []
     }
     
     var body: some View {

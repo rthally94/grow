@@ -16,12 +16,12 @@ struct EditorConfig {
     var isPlanted = false
     var plantedDate = Date()
     
-    var careTasks = [CareTask]()
+    var careTasks = Set<CareTask>()
     
     mutating func presentForEditing(plant: Plant) {
         name = plant.name
-        isPlanted = plant.pottingDate != nil
-        plantedDate = plant.pottingDate ?? Date()
+        isPlanted = plant.plantingDate != nil
+        plantedDate = plant.plantingDate ?? Date()
         careTasks = plant.careTasks
         
         isPresented = true
@@ -46,13 +46,13 @@ struct PlantEditorForm: View {
             }
             
             Section (header: Text("Plant Care")){
-                ForEach(editorConfig.careTasks) { task in
+                ForEach(editorConfig.careTasks.sorted(), id: \.id) { task in
                     NavigationLink(
                         destination: CareTaskEditor(editorConfig: self.$taskEditorConfig, onSave: self.saveTask),
                         tag: task.id,
                         selection: self.customBinding()) {
                             HStack {
-                                Text(task.name)
+                                Text(task.type.name)
                                 Spacer(minLength: 16)
                                 Text(task.interval.description.capitalized).foregroundColor(.gray)
                             }
@@ -85,16 +85,16 @@ struct PlantEditorForm: View {
     }
     
     private func addTask() {
-        var task = CareTask()
-        task.name = ""
-        editorConfig.careTasks.append(task)
+        let task = CareTask()
+        task.type.name = ""
+        editorConfig.careTasks.insert(task)
         
         taskEditorConfig.present(task: task)
     }
     
     private func saveTask() {
         if let index = editorConfig.careTasks.firstIndex(where: { $0.id == taskEditorConfig.presentedTaskId} ) {
-            editorConfig.careTasks[index].name = taskEditorConfig.name
+            editorConfig.careTasks[index].type.name = taskEditorConfig.name
             editorConfig.careTasks[index].interval = taskEditorConfig.interval
             editorConfig.careTasks[index].notes = taskEditorConfig.note
         }
@@ -118,7 +118,6 @@ struct PlantEditorForm_Previews: PreviewProvider {
                     PlantEditorForm(editorConfig: config) {
                         print(config)
                     }
-                    .environmentObject(GrowModel())
                 }
             }.previewDisplayName("New Plant")
         }

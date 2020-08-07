@@ -12,15 +12,16 @@ struct CareTaskEditorConfig {
     var presentedTaskId: UUID? = UUID()
     
     var name = ""
-    var interval = CareInterval()
-    var note = ""
     
+    @ObservedObject var interval = CareTaskInterval()
+    
+    var note = ""
     
     mutating func present(task: CareTask) {
         presentedTaskId = task.id
         
-        name = task.name
         interval = task.interval
+        
         note = task.notes
     }
 }
@@ -38,7 +39,7 @@ struct CareTaskEditor: View {
                 UITextFieldWrapper("Name", text: $editorConfig.name)
             }
             
-            IntervalPicker(header: Text("Repeats").font(.headline), selection: $editorConfig.interval)
+            IntervalPicker(header: Text("Repeats").font(.headline), selection: editorConfig.interval)
             
             Section {
                 UITextFieldWrapper("Notes", text: $editorConfig.note)

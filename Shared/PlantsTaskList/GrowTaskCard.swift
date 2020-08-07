@@ -7,26 +7,27 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct GrowTaskCard: View {
-    let careTask: CareTask
+    @ObservedObject var careTask: CareTask
     
-    var firstFourPlants: [CareTaskLog] {
-        return Array(careTask.logs.prefix(4))
+    var firstFourPlants: [Plant] {
+        Array(careTask.plants.prefix(4))
     }
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 VStack(alignment: .leading) {
-                    Text(careTask.name).font(.headline)
+                    Text("\(careTask.type.name)").font(.headline)
                     Text("\(careTask.logs.count)").font(.subheadline)
                 }
                 Spacer()
             }
             .padding()
             VStack {
-                ForEach(firstFourPlants, id: \.self) { plant in
+                ForEach(firstFourPlants, id: \.id) { plant in
                     HStack {
                         Image(systemName: "square")
                         Text("f")
@@ -48,7 +49,11 @@ struct GrowTaskCard: View {
 
 struct Grow_TaskCard_Previews: PreviewProvider {
     static var previews: some View {
-        GrowTaskCard(careTask: CareTask())
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        let task = CareTask(context: context)
+        
+        return GrowTaskCard(careTask: task)
+            .environment(\.managedObjectContext, context)
             .previewLayout(.sizeThatFits)
     }
 }

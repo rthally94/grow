@@ -28,7 +28,8 @@ struct IconImage: View {
 }
 
 struct PlantCell: View {
-    @EnvironmentObject var model: GrowModel
+    @Environment(\.managedObjectContext) var moc
+    
     var plant: Plant
     
     var body: some View {
@@ -48,13 +49,14 @@ struct PlantCell: View {
     }
     
     func toggleFavorite() {
-        model.setPlantFavorite(!plant.isFavorite, for: plant)
+        plant.isFavorite.toggle()
+        try? moc.save()
     }
 }
 
 struct PlantCell_Previews: PreviewProvider {
     static var previews: some View {
-        PlantCell(plant: Plant()).environmentObject(GrowModel())
+        PlantCell(plant: Plant())
             .padding()
             .background(RoundedRectangle(cornerRadius: 15).fill(Color.systemGroupedBackground))
     }

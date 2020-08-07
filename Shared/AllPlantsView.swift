@@ -7,14 +7,16 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct AllPlantsView: View {
-    @EnvironmentObject var model: GrowModel
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(entity: Plant.entity(), sortDescriptors: []) var plants: FetchedResults<Plant>
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                ForEach(model.plants) { plant in
+                ForEach(plants, id: \.id) { plant in
                     NavigationLink(destination: PlantDetailView(plant: plant)) {
                         PlantCell(plant: plant)
                             .padding()
@@ -56,15 +58,18 @@ struct AllPlantsView: View {
     
     private func addPlant() {
         withAnimation {
-            self.model.addPlant()
+            let _ = Plant.create(context: context)
+            try? context.save()
         }
     }
 }
 
 struct AllPlantsView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            AllPlantsView().environmentObject(GrowModel())
-        }
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        
+        return NavigationView {
+            AllPlantsView()
+        }.environment(\.managedObjectContext, context)
     }
 }

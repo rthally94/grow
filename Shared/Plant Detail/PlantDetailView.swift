@@ -7,12 +7,11 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct PlantDetailView: View {
+    @ObservedObject var plant: Plant
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var model: GrowModel
-    
-    var plant: Plant
     
     // Model State
     @State private var editorConfig = EditorConfig()
@@ -34,8 +33,8 @@ struct PlantDetailView: View {
                         .font(.headline)
                     ) {
                         VStack(spacing: 20) {
-                            ForEach(self.plant.careTasks) { task in
-                                StatCell(title: Text(task.name)) {
+                            ForEach(Array(plant.careTasks), id: \.id) { task in
+                                StatCell(title: Text(task.type.name)) {
                                     Text(task.interval.description)
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -82,7 +81,7 @@ struct PlantDetailView: View {
     private func deletePlant() {
         withAnimation {
             self.presentationMode.wrappedValue.dismiss()
-            self.model.deletePlant(plant: plant)
+//            self.model.deletePlant(plant: plant)
         }
     }
     
@@ -91,19 +90,19 @@ struct PlantDetailView: View {
         let pottingDate = editorConfig.isPlanted ? editorConfig.plantedDate : nil
         let careTasks = editorConfig.careTasks
         
-        let updatedPlant = Plant(id: plant.id, name: name, pottingDate: pottingDate, careTasks: careTasks)
+//        let updatedPlant = Plant(id: plant.id, name: name, pottingDate: pottingDate, careTasks: careTasks)
         
-        print(updatedPlant)
-        model.addPlant(updatedPlant)
+//        print(updatedPlant)
+//        model.addPlant(updatedPlant)
     }
 }
 
 // MARK: Computed Properties
 extension PlantDetailView {
-    var plantIndex: Int {
-        guard let plantIndex =  model.plants.firstIndex(of: plant) else { fatalError("Plant must be in model to be in detail view.") }
-        return plantIndex
-    }
+//    var plantIndex: Int {
+//        guard let plantIndex =  model.plants.firstIndex(of: plant) else { fatalError("Plant must be in model to be in detail view.") }
+//        return plantIndex
+//    }
     
     //    var careTaskLogCount: String {
     //        "\(plant.careTaskLogs.count)"
@@ -132,7 +131,7 @@ extension PlantDetailView {
     
     // Growing Conditions
     var ageValue: String {
-        if let potted = plant.pottingDate {
+        if let potted = plant.plantingDate {
             let ageString = Formatters.relativeDateFormatter.string(for: potted)
             return "Planted \(ageString)"
         } else {
@@ -147,12 +146,12 @@ extension PlantDetailView {
 
 struct PlantDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        let model = GrowModel()
-        model.addPlant()
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        let plant = Plant.create(context: context)
         
         let view = NavigationView {
-            PlantDetailView(plant: model.plants[0])
-        }
+            PlantDetailView(plant: plant)
+        }.environment(\.managedObjectContext, context)
         
         return Group {
             view
