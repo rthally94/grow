@@ -86,14 +86,11 @@ struct PlantDetailView: View {
     }
     
     private func saveChanges() {
-        let name = editorConfig.name
-        let pottingDate = editorConfig.isPlanted ? editorConfig.plantedDate : nil
-        let careTasks = editorConfig.careTasks
+        plant.name = editorConfig.name
+        plant.plantingDate = editorConfig.isPlanted ? editorConfig.plantedDate : nil
+        plant.careTasks = editorConfig.careTasks
         
-//        let updatedPlant = Plant(id: plant.id, name: name, pottingDate: pottingDate, careTasks: careTasks)
-        
-//        print(updatedPlant)
-//        model.addPlant(updatedPlant)
+        try? context.save()
     }
 }
 
