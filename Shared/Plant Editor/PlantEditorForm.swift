@@ -29,6 +29,7 @@ struct EditorConfig {
 }
 
 struct PlantEditorForm: View {
+    @Environment(\.managedObjectContext) var context
     @Binding var editorConfig: EditorConfig
     @State private var taskEditorConfig = CareTaskEditorConfig()
     
@@ -85,10 +86,8 @@ struct PlantEditorForm: View {
     }
     
     private func addTask() {
-        let task = CareTask()
-        task.type.name = ""
+        let task = CareTask(context: context)
         editorConfig.careTasks.insert(task)
-        
         taskEditorConfig.present(task: task)
     }
     
