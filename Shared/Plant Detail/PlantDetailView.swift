@@ -11,6 +11,7 @@ import CoreData
 
 struct PlantDetailView: View {
     @ObservedObject var plant: Plant
+    @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
     
     // Model State
@@ -65,6 +66,7 @@ struct PlantDetailView: View {
                 NavigationView {
                     PlantEditorForm(editorConfig: self.$editorConfig, onSave: self.saveChanges)
                 }
+                .environment(\.managedObjectContext, self.context)
         })
     }
     

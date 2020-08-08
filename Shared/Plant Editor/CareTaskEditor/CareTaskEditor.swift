@@ -7,19 +7,28 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct CareTaskEditorConfig {
     var presentedTaskId: UUID? = UUID()
     
     var name = ""
     
-    @ObservedObject var interval = CareTaskInterval()
+    @ObservedObject var type: CareTaskType
+    @ObservedObject var interval: CareTaskInterval
     
     var note = ""
+    
+    init() {
+        type = CareTaskType(context: .init(concurrencyType: .mainQueueConcurrencyType))
+        interval = CareTaskInterval(context: .init(concurrencyType: .mainQueueConcurrencyType))
+    }
     
     mutating func present(task: CareTask) {
         presentedTaskId = task.id
         
+        name = task.type.name
+        type = task.type
         interval = task.interval
         
         note = task.notes
@@ -30,13 +39,22 @@ struct CareTaskEditorConfig {
 struct CareTaskEditor: View {
     @Environment(\.presentationMode) var presentationMode
     
+    @FetchRequest(entity: CareTaskType.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CareTaskType.name_, ascending: true)]) var taskTypes: FetchedResults<CareTaskType>
+    
     @Binding var editorConfig: CareTaskEditorConfig
     var onSave: () -> Void
     
     var body: some View {
         List {
             Section(header: Text("What").font(.headline)) {
-                UITextFieldWrapper("Name", text: $editorConfig.name)
+                Picker("Task Type", selection: $editorConfig.name) {
+                    ForEach(taskTypes, id: \.id) { type in
+                        Text(type.name).tag(type.name)
+                    }
+                    
+                    UITextFieldWrapper("New", text: $editorConfig.name)
+                }
+
             }
             
             IntervalPicker(header: Text("Repeats").font(.headline), selection: editorConfig.interval)
@@ -62,7 +80,7 @@ struct CareTaskEditor: View {
 }
 
 struct CareTaskEditor_Previews: PreviewProvider {
-    static let config = CareTaskEditorConfig(presentedTaskId: UUID(), name: "Task Name")
+    static let config = CareTaskEditorConfig()
     
     static var previews: some View {
         StatefulPreviewWrapper(config) { config in
