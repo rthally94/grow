@@ -7,31 +7,40 @@
 //
 
 import SwiftUI
+import CoreData
 
-struct EditorConfig {
-    var isPresented = false
+class PlantEditorConfig: ObservableObject {
+    // View Properties
+    @Published var isPresented: Bool = false
     
-    var name = ""
+    // CoreData
+    private(set) var context: NSManagedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+    @ObservedObject var plant: Plant = Plant()
     
-    var isPlanted = false
-    var plantedDate = Date()
+    // Plant Properties
+    lazy var plantingdDate = Binding<Date>(get: { self.plant.plantingDate ?? Date() }, set: { self.plant.plantingDate = $0 })
+    lazy var isPlanted = Binding<Bool>(get: { self.plant.plantingDate != nil }, set: { self.plant.plantingDate = $0 ? Date() : nil })
     
-    var careTasks = Set<CareTask>()
-    
-    mutating func presentForEditing(plant: Plant) {
-        name = plant.name
-        isPlanted = plant.plantingDate != nil
-        plantedDate = plant.plantingDate ?? Date()
-        careTasks = plant.careTasks
+    func presentForEditing(plant: Plant) {
+        context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        context.parent = plant.managedObjectContext
+        
+        guard let entityName = plant.entity.name else { return }
+        let copy = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context)
+        let attributes = plant.entity.attributesByName
+        for (attrKey, _) in attributes {
+            copy.setValue( plant.value(forKey: attrKey), forKey: attrKey)
+        }
+        
+        self.plant = copy as! Plant
         
         isPresented = true
     }
 }
 
 struct PlantEditorForm: View {
-    @Environment(\.managedObjectContext) var context
-    @Binding var editorConfig: EditorConfig
-    @State private var taskEditorConfig = CareTaskEditorConfig()
+    @ObservedObject var editorConfig: PlantEditorConfig
+    @ObservedObject private var careTaskEditorConfig = CareTaskEditorConfig()
     
     // Save Callback
     var onSave: () -> Void
@@ -39,26 +48,27 @@ struct PlantEditorForm: View {
     var body: some View {
         Form {
             Section {
-                UITextFieldWrapper("Plant Name", text: $editorConfig.name)
-                Toggle(isOn: $editorConfig.isPlanted.animation(.easeInOut), label: {Text("Planted")})
-                if editorConfig.isPlanted {
-                    DatePicker("Planting Date", selection: $editorConfig.plantedDate, in: ...Date(), displayedComponents: [.date])
+                UITextFieldWrapper("Plant Name", text: $editorConfig.plant.name)
+                Toggle(isOn: editorConfig.isPlanted, label: { Text("Planted") })
+                if editorConfig.isPlanted.wrappedValue {
+                    DatePicker("Planting Date", selection: editorConfig.plantingdDate, in: ...Date(), displayedComponents: [.date])
                 }
             }
             
             Section (header: Text("Plant Care")){
-                ForEach(editorConfig.careTasks.sorted(), id: \.id) { task in
+                ForEach(editorConfig.plant.careTasks.sorted(), id: \.id) { task in
                     NavigationLink(
-                        destination: CareTaskEditor(editorConfig: self.$taskEditorConfig, onSave: self.saveTask),
+                        destination: CareTaskEditor(editorConfig: self.careTaskEditorConfig, onSave: self.saveTask),
                         tag: task.id,
                         selection: self.customBinding()) {
                             HStack {
-                                Text(task.type.name)
+                                Text(task.type?.name ?? "")
                                 Spacer(minLength: 16)
                                 Text(task.interval.description.capitalized).foregroundColor(.gray)
                             }
-                        }
+                    }
                 }
+                .onDelete(perform: deleteTask(indices:))
                 
                 Button(action: addTask, label: {
                     HStack {
@@ -75,10 +85,10 @@ struct PlantEditorForm: View {
     // MARK: Actions
     private func customBinding() -> Binding<UUID?> {
         let binding = Binding<UUID?>(get: {
-            self.taskEditorConfig.presentedTaskId
+            self.careTaskEditorConfig.selectedTaskId
         } , set: { newID in
-            if let task = self.editorConfig.careTasks.first(where: {$0.id == newID}) {
-                self.taskEditorConfig.present(task: task)
+            if let task = self.editorConfig.plant.careTasks.first(where: {$0.id == newID}) {
+                self.careTaskEditorConfig.present(task: task)
             }
         })
         
@@ -86,16 +96,23 @@ struct PlantEditorForm: View {
     }
     
     private func addTask() {
-        let task = CareTask(context: context)
-        editorConfig.careTasks.insert(task)
-        taskEditorConfig.present(task: task)
+        let task = CareTask(context: editorConfig.context)
+        editorConfig.plant.careTasks.insert(task)
+        careTaskEditorConfig.present(task: task)
+    }
+    
+    private func deleteTask(indices: IndexSet) {
+        for index in indices {
+            let taskIndex = editorConfig.plant.careTasks.index(editorConfig.plant.careTasks.startIndex, offsetBy: index)
+            editorConfig.plant.careTasks.remove(at: taskIndex)
+        }
     }
     
     private func saveTask() {
-        if let index = editorConfig.careTasks.firstIndex(where: { $0.id == taskEditorConfig.presentedTaskId} ) {
-            editorConfig.careTasks[index].type.name = taskEditorConfig.name
-            editorConfig.careTasks[index].interval = taskEditorConfig.interval
-            editorConfig.careTasks[index].notes = taskEditorConfig.note
+        if let index = editorConfig.plant.careTasks.firstIndex(where: { $0.id == careTaskEditorConfig.selectedTaskId} ) {
+            editorConfig.plant.careTasks[index].type = careTaskEditorConfig.type
+            editorConfig.plant.careTasks[index].interval = careTaskEditorConfig.interval
+            editorConfig.plant.careTasks[index].notes = careTaskEditorConfig.note
         }
     }
     
@@ -113,10 +130,7 @@ struct PlantEditorForm_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NavigationView {
-                StatefulPreviewWrapper(EditorConfig()) { config in
-                    PlantEditorForm(editorConfig: config) {
-                        print(config)
-                    }
+                PlantEditorForm(editorConfig: PlantEditorConfig()) {
                 }
             }.previewDisplayName("New Plant")
         }
