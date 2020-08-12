@@ -43,7 +43,7 @@ struct CareTaskEditor: View {
     
     @ObservedObject var editorConfig: CareTaskEditorConfig
     
-    var onSave: () -> Void
+//    var onSave: () -> Void
     
     var body: some View {
         List {
@@ -58,25 +58,24 @@ struct CareTaskEditor: View {
             }
         }
         .listStyle(GroupedListStyle())
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Button(action: goBack, label: {
-            HStack {
-                Image(systemName: "chevron.left")
-                Text("Details")
-            }
-        }))
+//        .navigationBarBackButtonHidden(true)
+//        .navigationBarItems(leading: Button(action: goBack, label: {
+//            HStack {
+//                Image(systemName: "chevron.left")
+//                Text("Details")
+//            }
+//        }))
     }
     
-    func goBack() {
-        onSave()
-        editorConfig.selectedTaskId = nil
-    }
+//    func goBack() {
+//        onSave()
+//    }
 }
 
 struct CareTaskEditor_Previews: PreviewProvider {
     static let config = CareTaskEditorConfig()
     
     static var previews: some View {
-        CareTaskEditor(editorConfig: CareTaskEditorConfig()) { }
+        CareTaskEditor(editorConfig: CareTaskEditorConfig())
     }
 }

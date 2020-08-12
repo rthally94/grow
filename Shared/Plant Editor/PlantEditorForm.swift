@@ -58,7 +58,7 @@ struct PlantEditorForm: View {
             Section (header: Text("Plant Care")){
                 ForEach(editorConfig.plant.careTasks.sorted(), id: \.id) { task in
                     NavigationLink(
-                        destination: CareTaskEditor(editorConfig: self.careTaskEditorConfig, onSave: self.saveTask),
+                        destination: CareTaskEditor(editorConfig: self.careTaskEditorConfig),
                         tag: task.id,
                         selection: self.customBinding()) {
                             HStack {
@@ -105,14 +105,6 @@ struct PlantEditorForm: View {
         for index in indices {
             let taskIndex = editorConfig.plant.careTasks.index(editorConfig.plant.careTasks.startIndex, offsetBy: index)
             editorConfig.plant.careTasks.remove(at: taskIndex)
-        }
-    }
-    
-    private func saveTask() {
-        if let index = editorConfig.plant.careTasks.firstIndex(where: { $0.id == careTaskEditorConfig.selectedTaskId} ) {
-            editorConfig.plant.careTasks[index].type = careTaskEditorConfig.type
-            editorConfig.plant.careTasks[index].interval = careTaskEditorConfig.interval
-            editorConfig.plant.careTasks[index].notes = careTaskEditorConfig.note
         }
     }
     
