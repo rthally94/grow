@@ -88,11 +88,7 @@ struct PlantDetailView: View {
     }
     
     private func saveChanges() {
-        plant.name = editorConfig.name
-        plant.plantingDate = editorConfig.isPlanted ? editorConfig.plantedDate : nil
-        plant.careTasks = editorConfig.careTasks
-        
-        try? context.save()
+        try? editorConfig.context.save()
     }
 }
 
