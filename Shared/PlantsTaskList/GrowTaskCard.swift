@@ -20,7 +20,7 @@ struct GrowTaskCard: View {
         VStack(alignment: .leading) {
             HStack {
                 VStack(alignment: .leading) {
-                    Text("\(careTask.type.name)").font(.headline)
+                    Text(careTask.type?.name ?? "").font(.headline)
                     Text("\(careTask.logs.count)").font(.subheadline)
                 }
                 Spacer()
