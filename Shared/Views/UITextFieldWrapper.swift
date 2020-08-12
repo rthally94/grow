@@ -39,10 +39,13 @@ struct UITextFieldWrapper: UIViewRepresentable {
     @Binding var text: String
     @Binding var isFirstResponder: Bool
     
-    init(_ placeHolder: String, text: Binding<String>, isFirstResponder: Binding<Bool> = State(initialValue: false).projectedValue) {
+    var onCommit: ( () -> Void )?
+    
+    init(_ placeHolder: String, text: Binding<String>, isFirstResponder: Binding<Bool> = State(initialValue: false).projectedValue, onCommit: ( () -> Void )? = nil) {
         self.placeholder = placeHolder
         self._text = text
         self._isFirstResponder = isFirstResponder
+        self.onCommit = onCommit
     }
     
     func makeCoordinator() -> Coordinator {
@@ -64,6 +67,10 @@ struct UITextFieldWrapper: UIViewRepresentable {
             textField.resignFirstResponder()
             
             return true
+        }
+        
+        func textFieldDidEndEditing(_ textField: UITextField) {
+            parent.onCommit?()
         }
     }
     
