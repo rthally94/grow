@@ -21,45 +21,21 @@ extension CareTask {
         }
     }
     
+    var plants: Set<Plant> {
+        get { (plants_ as? Set<Plant>) ?? []}
+        set { plants_ = newValue as NSSet }
+    }
+    
     var interval: CareTaskInterval {
         get {
             if let interval = interval_ {
                 return interval
             } else {
                 guard let context = managedObjectContext else { fatalError("Unable to unwrap context!") }
-                let interval = CareTaskInterval.create(context: context)
-                interval_ = interval
-                try? context.save()
-                return interval
+                return CareTaskInterval(context: context)
             }
         }
-        
-        set {
-            interval_ = newValue
-        }
-    }
-    
-    var type: CareTaskType {
-        get {
-            if let type = type_ {
-                return type
-            } else {
-                guard let context = managedObjectContext else { fatalError("Unable to unwrap context!") }
-                let type = CareTaskType(context: context)
-                type.name = "Unknown"
-                try? context.save()
-                return type
-            }
-        }
-        
-        set {
-            type_ = newValue
-        }
-    }
-    
-    var plants: Set<Plant> {
-        get { (plants_ as? Set<Plant>) ?? []}
-        set { plants_ = newValue as NSSet }
+        set { interval_ = newValue }
     }
     
     var notes: String {
@@ -75,7 +51,8 @@ extension CareTask {
 
 extension CareTask: Comparable {
     public static func < (lhs: CareTask, rhs: CareTask) -> Bool {
-        lhs.type < rhs.type
+        guard let left = lhs.type, let right = rhs.type else { return false }
+        return left < right
     }
 }
 
