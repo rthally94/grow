@@ -15,7 +15,7 @@ struct PlantDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     
     // Model State
-    @State private var editorConfig = EditorConfig()
+    @ObservedObject private var editorConfig = PlantEditorConfig()
     
     // View State
     @State private var plantActionSheetIsPresented = false
@@ -64,9 +64,9 @@ struct PlantDetailView: View {
             isPresented: $editorConfig.isPresented,
             content: {
                 NavigationView {
-                    PlantEditorForm(editorConfig: self.$editorConfig, onSave: self.saveChanges)
+                    PlantEditorForm(editorConfig: self.editorConfig, onSave: self.saveChanges)
+                    .environment(\.managedObjectContext, self.context)
                 }
-                .environment(\.managedObjectContext, self.context)
         })
     }
     
