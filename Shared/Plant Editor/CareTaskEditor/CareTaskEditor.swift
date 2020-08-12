@@ -9,52 +9,46 @@
 import SwiftUI
 import CoreData
 
-struct CareTaskEditorConfig {
-    var presentedTaskId: UUID? = UUID()
+class CareTaskEditorConfig: ObservableObject {
+    @Published var selectedTaskId: UUID? = nil
     
-    var name = ""
+    // View Parameters
+    @Published var editMode: EditMode = .inactive
     
-    @ObservedObject var type: CareTaskType
-    @ObservedObject var interval: CareTaskInterval
-    
-    var note = ""
+    // New task parameters
+    @Published var name = ""
+    @Published var type: CareTaskType
+    @Published var interval: CareTaskInterval
+    @Published var note = ""
     
     init() {
-        type = CareTaskType(context: .init(concurrencyType: .mainQueueConcurrencyType))
-        interval = CareTaskInterval(context: .init(concurrencyType: .mainQueueConcurrencyType))
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        type = CareTaskType(context: context)
+        interval = CareTaskInterval(context: context)
     }
     
-    mutating func present(task: CareTask) {
-        presentedTaskId = task.id
-        
-        name = task.type.name
-        type = task.type
+    func present(task: CareTask) {
+        selectedTaskId = task.id
+        name = task.type?.name ?? name
+        type = task.type ?? type
         interval = task.interval
-        
         note = task.notes
     }
 }
 
 
 struct CareTaskEditor: View {
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.managedObjectContext) var context
+    @FetchRequest(fetchRequest: CareTaskType.AllTaskTypesFetchRequest) var taskTypes: FetchedResults<CareTaskType>
     
-    @FetchRequest(entity: CareTaskType.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CareTaskType.name_, ascending: true)]) var taskTypes: FetchedResults<CareTaskType>
+    @ObservedObject var editorConfig: CareTaskEditorConfig
     
-    @Binding var editorConfig: CareTaskEditorConfig
     var onSave: () -> Void
     
     var body: some View {
         List {
             Section(header: Text("What").font(.headline)) {
-                Picker("Task Type", selection: $editorConfig.name) {
-                    ForEach(taskTypes, id: \.id) { type in
-                        Text(type.name).tag(type.name)
-                    }
-                    
-                    UITextFieldWrapper("New", text: $editorConfig.name)
-                }
-
+                CareTaskTypePicker(selection: $editorConfig.type)
             }
             
             IntervalPicker(header: Text("Repeats").font(.headline), selection: editorConfig.interval)
@@ -75,7 +69,7 @@ struct CareTaskEditor: View {
     
     func goBack() {
         onSave()
-        presentationMode.wrappedValue.dismiss()
+        editorConfig.selectedTaskId = nil
     }
 }
 
@@ -83,10 +77,6 @@ struct CareTaskEditor_Previews: PreviewProvider {
     static let config = CareTaskEditorConfig()
     
     static var previews: some View {
-        StatefulPreviewWrapper(config) { config in
-            CareTaskEditor(editorConfig: config) {
-                print(config.wrappedValue)
-            }
-        }
+        CareTaskEditor(editorConfig: CareTaskEditorConfig()) { }
     }
 }
