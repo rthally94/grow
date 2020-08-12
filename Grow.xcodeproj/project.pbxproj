@@ -46,6 +46,7 @@
 		FB081BAD24DCA4BA00FB0835 /* CareTaskType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB081BAB24DCA4BA00FB0835 /* CareTaskType+CoreDataProperties.swift */; };
 		FB54CAC424D84C17006BB3C5 /* Color+GrowColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB54CAC324D84C17006BB3C5 /* Color+GrowColors.swift */; };
 		FB54CAC624D886F3006BB3C5 /* GrowPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB54CAC524D886F3006BB3C5 /* GrowPicker.swift */; };
+		FB969D1F24E1FAAF008B3CF9 /* CareTaskTypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB969D1E24E1FAAF008B3CF9 /* CareTaskTypePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +116,7 @@
 		FB081BAB24DCA4BA00FB0835 /* CareTaskType+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CareTaskType+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FB54CAC324D84C17006BB3C5 /* Color+GrowColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+GrowColors.swift"; sourceTree = "<group>"; };
 		FB54CAC524D886F3006BB3C5 /* GrowPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowPicker.swift; sourceTree = "<group>"; };
+		FB969D1E24E1FAAF008B3CF9 /* CareTaskTypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskTypePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 		212A1E9624BE0EE3002C147F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2193552724BF2C1900F38392 /* UITextFieldWrapper.swift */,
 				212A1E9724BE0F05002C147F /* InsetGroupedSection.swift */,
 				212A1E9924BE0FAF002C147F /* ListRow.swift */,
 				212A1E9B24BE1137002C147F /* StatCell.swift */,
@@ -164,7 +167,6 @@
 			children = (
 				21DC516E24C50AD9007372B1 /* CareTaskEditor */,
 				21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */,
-				2193552724BF2C1900F38392 /* UITextFieldWrapper.swift */,
 			);
 			path = "Plant Editor";
 			sourceTree = "<group>";
@@ -267,6 +269,7 @@
 			children = (
 				2193552924C07CC600F38392 /* IntervalPicker.swift */,
 				21DC516F24C50AF2007372B1 /* CareTaskEditor.swift */,
+				FB969D1E24E1FAAF008B3CF9 /* CareTaskTypePicker.swift */,
 			);
 			path = CareTaskEditor;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				21BFB3B724B66E0800B94A72 /* Grow.xcdatamodeld in Sources */,
 				21C0C95524D1C8240062BEA8 /* Date+Extension.swift in Sources */,
 				21BFB3FA24B678DC00B94A72 /* Formatters.swift in Sources */,
+				FB969D1F24E1FAAF008B3CF9 /* CareTaskTypePicker.swift in Sources */,
 				21DC516D24C506A1007372B1 /* CareTask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
