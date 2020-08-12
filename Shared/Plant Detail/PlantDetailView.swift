@@ -35,7 +35,7 @@ struct PlantDetailView: View {
                     ) {
                         VStack(spacing: 20) {
                             ForEach(Array(plant.careTasks), id: \.id) { task in
-                                StatCell(title: Text(task.type.name)) {
+                                StatCell(title: Text(task.type?.name ?? "")) {
                                     Text(task.interval.description)
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
