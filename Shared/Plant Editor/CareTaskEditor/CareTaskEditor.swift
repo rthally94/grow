@@ -11,28 +11,14 @@ import CoreData
 
 class CareTaskEditorConfig: ObservableObject {
     @Published var selectedTaskId: UUID? = nil
+    @ObservedObject var task: CareTask = CareTask()
     
     // View Parameters
     @Published var editMode: EditMode = .inactive
     
-    // New task parameters
-    @Published var name = ""
-    @Published var type: CareTaskType
-    @Published var interval: CareTaskInterval
-    @Published var note = ""
-    
-    init() {
-        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        type = CareTaskType(context: context)
-        interval = CareTaskInterval(context: context)
-    }
-    
     func present(task: CareTask) {
+        self.task = task
         selectedTaskId = task.id
-        name = task.type?.name ?? name
-        type = task.type ?? type
-        interval = task.interval
-        note = task.notes
     }
 }
 
@@ -48,14 +34,14 @@ struct CareTaskEditor: View {
     var body: some View {
         List {
             Section(header: Text("What").font(.headline)) {
-                CareTaskTypePicker(selection: $editorConfig.type)
+                CareTaskTypePicker(selection: $editorConfig.task.type)
             }
             
-            IntervalPicker(header: Text("Repeats").font(.headline), selection: editorConfig.interval)
-            
-            Section {
-                UITextFieldWrapper("Notes", text: $editorConfig.note)
-            }
+//            IntervalPicker(header: Text("Repeats").font(.headline), selection: editorConfig.task.interval)
+//
+//            Section {
+//                UITextFieldWrapper("Notes", text: $editorConfig.task.note)
+//            }
         }
         .listStyle(GroupedListStyle())
 //        .navigationBarBackButtonHidden(true)

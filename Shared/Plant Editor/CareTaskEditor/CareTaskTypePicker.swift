@@ -14,7 +14,7 @@ struct CareTaskTypePicker: View {
     @FetchRequest(fetchRequest: CareTaskType.AllTaskTypesFetchRequest) var taskTypes: FetchedResults<CareTaskType>
     
     @State var editMode: EditMode = .inactive
-    @Binding var selection: CareTaskType
+    @Binding var selection: CareTaskType?
     
     @State var newTypeName: String = ""
     @State var textFieldIsFirstResponder: Bool = true
@@ -26,7 +26,7 @@ struct CareTaskTypePicker: View {
     var body: some View {
         NavigationLink(destination: child, label: {
             HStack {
-                Text(selection.name)
+                Text(selection?.name ?? "Select Task Type")
             }
         })
     }
