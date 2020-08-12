@@ -85,7 +85,7 @@ struct PlantEditorForm: View {
     // MARK: Actions
     private func customBinding() -> Binding<UUID?> {
         let binding = Binding<UUID?>(get: {
-            self.careTaskEditorConfig.selectedTaskId
+            self.careTaskEditorConfig.task.id
         } , set: { newID in
             if let task = self.editorConfig.plant.careTasks.first(where: {$0.id == newID}) {
                 self.careTaskEditorConfig.present(task: task)
