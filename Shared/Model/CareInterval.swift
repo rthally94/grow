@@ -47,6 +47,21 @@ extension CareTaskInterval {
     }
 }
 
+extension CareTaskInterval {
+    public override var description: String {
+        switch unit {
+        case .never: fallthrough
+        case .daily: return unit.description.capitalized
+        case .weekly:
+            let daysOfWeek = values.sorted().compactMap { values.count > 1 ? Formatters.shortDayOfWeek(for: $0) : Formatters.fullDayOfWeek(for: $0) }
+            guard let combinedDaysOfWeek = Formatters.listFormatter.string(from: daysOfWeek) else { return unit.description }
+            return "\(unit.description.capitalized) on \(combinedDaysOfWeek)"
+        case .monthly:
+            guard let dayOfMonth = Formatters.ordinalNumberFormatter.string(for: values) else { return unit.description }
+            return "on the \(dayOfMonth)"
+        }    }
+}
+
 //struct CareInterval: Hashable, CustomStringConvertible {
 //    enum Unit: Int, CaseIterable, CustomStringConvertible, Hashable {
 //        case daily
