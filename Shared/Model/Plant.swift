@@ -39,6 +39,16 @@ extension Plant {
         get { name_ ?? "" }
         set { name_ = newValue }
     }
+    
+    var isPlanted: Bool {
+        get { plantingDate_ != nil }
+        set { plantingDate_ = newValue ? Date() : nil }
+    }
+    
+    var plantingDate: Date {
+        get { plantingDate_ ?? Date() }
+        set { plantingDate_ = newValue }
+    }
 }
 
 //struct Plant: Identifiable, Hashable, Equatable {
