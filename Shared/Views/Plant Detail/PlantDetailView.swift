@@ -16,6 +16,7 @@ struct PlantDetailView: View {
     
     // View State
     @State private var plantActionSheetIsPresented = false
+    @State private var plantEditorSheetIsPresented = false
     @State private var plantEditorConfig = PlantEditorConfig()
     
     var body: some View {
@@ -59,12 +60,12 @@ struct PlantDetailView: View {
                 ])
         }
         .sheet(
-            isPresented: $plantEditorConfig.isPresented,
+            isPresented: $plantEditorSheetIsPresented,
             content: {
                 NavigationView {
-                    PlantEditorForm(plantEditorConfig: self.$plantEditorConfig)
-                        .environment(\.managedObjectContext, self.context.childContext)
+                    PlantEditorForm(isPresented: self.$plantEditorSheetIsPresented, plantEditorConfig: self.plantEditorConfig)
                 }
+                .environment(\.managedObjectContext, self.context)
         })
     }
     
@@ -75,6 +76,7 @@ struct PlantDetailView: View {
     
     private func presentEditor() {
         plantEditorConfig.present(plant: plant)
+        plantEditorSheetIsPresented.toggle()
     }
     
     // MARK: Intents
