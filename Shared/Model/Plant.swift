@@ -22,6 +22,13 @@ extension Plant {
         
         return plant
     }
+    
+    static func getPlantFetchRequest(with id: UUID) -> NSFetchRequest<Plant> {
+        let request = NSFetchRequest<Plant>(entityName: "Plant")
+        request.predicate = NSPredicate(format: "id_ == %@", id as CVarArg)
+        
+        return request
+    }
 }
 
 extension Plant {
