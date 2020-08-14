@@ -59,7 +59,6 @@ struct AllPlantsView: View {
     private func addPlant() {
         withAnimation {
             let _ = Plant.create(context: context)
-            try? context.save()
         }
     }
 }
