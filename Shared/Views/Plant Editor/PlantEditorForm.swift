@@ -8,41 +8,43 @@
 
 import SwiftUI
 import CoreData
+import Combine
 
-struct PlantEditorConfig {
-    var isPresented: Bool = false
-    @ObservedObject var plant = Plant(context: .init(concurrencyType: .privateQueueConcurrencyType))
+class PlantEditorConfig: ObservableObject {
+    @Published var plant: Plant = Plant(context: .init(concurrencyType: .privateQueueConcurrencyType))
+    let editingContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
     
-    /// Coppies the current plant instance to a new context.
-    /// - Parameter context: The context to copy to
-    mutating func moveToContext(context: NSManagedObjectContext) {
-        // Do not copy if plant is already in context
-        guard context != plant.managedObjectContext else { return }
-        guard context.parent == plant.managedObjectContext else { return }
-        
-        self.plant = context.object(with: plant.objectID) as! Plant
+    var anyCancellable: AnyCancellable? = nil
+    
+    init() {
+        anyCancellable = plant.objectWillChange.sink { _ in
+            self.objectWillChange.send()
+        }
     }
     
-    mutating func present(plant: Plant? = nil) {
-        if let _plant = plant {
-            self.plant = _plant
-        }
+    func present(plant: Plant) {
+        guard let parentContext = plant.managedObjectContext else { fatalError("Plant not configured with managed object context!") }
+        editingContext.parent = parentContext
         
-        isPresented = true
+        let plants = try? editingContext.fetch(Plant.getPlantFetchRequest(with: plant.id))
+        let plant = plants?.first
+        self.plant = plant ?? Plant(context: editingContext)
     }
 }
 
 struct PlantEditorForm: View {
     // CoreData
     @Environment(\.managedObjectContext) var context
-    @Binding var plantEditorConfig: PlantEditorConfig
+    
+    @Binding var isPresented: Bool
+    @ObservedObject var plantEditorConfig: PlantEditorConfig
     @State private var careTaskEditorConfig = CareTaskEditorConfig()
     
     var body: some View {
         Form {
             Section {
                 UITextFieldWrapper("Plant Name", text: $plantEditorConfig.plant.name)
-                Toggle(isOn: plantEditorConfig.$plant.isPlanted, label: { Text("Planted") })
+                Toggle(isOn: $plantEditorConfig.plant.isPlanted, label: { Text("Planted") })
                 if plantEditorConfig.plant.isPlanted {
                     DatePicker("Planting Date", selection: $plantEditorConfig.plant.plantingDate, in: ...Date(), displayedComponents: [.date])
                 }
@@ -73,11 +75,6 @@ struct PlantEditorForm: View {
         }
         .navigationBarTitle("Details", displayMode: .inline)
         .navigationBarItems(leading: Button("Cancel", action: dismiss), trailing: Button("Save", action: save))
-        .onAppear(perform: moveToChildContext)
-    }
-    
-    private func moveToChildContext() {
-        plantEditorConfig.moveToContext(context: context)
     }
     
     // MARK: Actions
@@ -107,17 +104,13 @@ struct PlantEditorForm: View {
     }
     
     private func save() {
-        do {
-            try context.save()
-        } catch {
-            print("Unable to save child context!")
-        }
+        try? plantEditorConfig.editingContext.save()
         
         dismiss()
     }
     
     private func dismiss() {
-        plantEditorConfig.isPresented = false
+        isPresented = false
     }
 }
 
@@ -129,13 +122,13 @@ struct PlantEditorForm_Previews: PreviewProvider {
         return Group {
             StatefulPreviewWrapper(PlantEditorConfig()) { state in
                 NavigationView {
-                    PlantEditorForm(plantEditorConfig: state)
-                        .environment(\.managedObjectContext, context.childContext)
-                }
-                .onAppear {
-                    state.wrappedValue.present(plant: plant)
+                    PlantEditorForm(isPresented: .constant(true), plantEditorConfig: state.wrappedValue)
+                        .onAppear {
+                            state.wrappedValue.present(plant: plant)
+                    }
                 }
             }
+            .environment(\.managedObjectContext, context)
             .previewDisplayName("New Plant")
         }.environment(\.managedObjectContext, context)
     }
