@@ -14,11 +14,9 @@ struct PlantDetailView: View {
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
     
-    // Model State
-    @ObservedObject private var editorConfig = PlantEditorConfig()
-    
     // View State
     @State private var plantActionSheetIsPresented = false
+    @State private var plantEditorConfig = PlantEditorConfig()
     
     var body: some View {
         ScrollView {
@@ -61,11 +59,11 @@ struct PlantDetailView: View {
                 ])
         }
         .sheet(
-            isPresented: $editorConfig.isPresented,
+            isPresented: $plantEditorConfig.isPresented,
             content: {
                 NavigationView {
-                    PlantEditorForm(editorConfig: self.editorConfig, onSave: self.saveChanges)
-                    .environment(\.managedObjectContext, self.context)
+                    PlantEditorForm(editorConfig: self.plantEditorConfig)
+                        .environment(\.managedObjectContext, self.context.childContext)
                 }
         })
     }
@@ -76,7 +74,7 @@ struct PlantDetailView: View {
     }
     
     private func presentEditor() {
-        editorConfig.presentForEditing(plant: plant)
+        plantEditorConfig.present(plant: plant)
     }
     
     // MARK: Intents
@@ -85,10 +83,6 @@ struct PlantDetailView: View {
             self.presentationMode.wrappedValue.dismiss()
 //            self.model.deletePlant(plant: plant)
         }
-    }
-    
-    private func saveChanges() {
-        try? editorConfig.context.save()
     }
 }
 
