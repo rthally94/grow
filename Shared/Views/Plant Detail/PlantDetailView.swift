@@ -62,7 +62,7 @@ struct PlantDetailView: View {
             isPresented: $plantEditorConfig.isPresented,
             content: {
                 NavigationView {
-                    PlantEditorForm(editorConfig: self.plantEditorConfig)
+                    PlantEditorForm(plantEditorConfig: self.$plantEditorConfig)
                         .environment(\.managedObjectContext, self.context.childContext)
                 }
         })

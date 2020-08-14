@@ -9,17 +9,13 @@
 import SwiftUI
 import CoreData
 
-class PlantEditorConfig: ObservableObject {
-    @Published var isPresented: Bool = false
-    @ObservedObject var plant = Plant()
-    
-    // Plant Properties
-    lazy var plantingdDate: Binding<Date> = Binding<Date>(get: { self.plant.plantingDate ?? Date() }, set: { self.plant.plantingDate = $0 })
-    lazy var isPlanted: Binding<Bool> = Binding<Bool>(get: { self.plant.plantingDate != nil }, set: { self.plant.plantingDate = $0 ? Date() : nil })
+struct PlantEditorConfig {
+    var isPresented: Bool = false
+    @ObservedObject var plant = Plant(context: .init(concurrencyType: .privateQueueConcurrencyType))
     
     /// Coppies the current plant instance to a new context.
     /// - Parameter context: The context to copy to
-    func moveToContext(context: NSManagedObjectContext) {
+    mutating func moveToContext(context: NSManagedObjectContext) {
         // Do not copy if plant is already in context
         guard context != plant.managedObjectContext else { return }
         guard context.parent == plant.managedObjectContext else { return }
@@ -27,7 +23,7 @@ class PlantEditorConfig: ObservableObject {
         self.plant = context.object(with: plant.objectID) as! Plant
     }
     
-    func present(plant: Plant? = nil) {
+    mutating func present(plant: Plant? = nil) {
         if let _plant = plant {
             self.plant = _plant
         }
@@ -39,20 +35,16 @@ class PlantEditorConfig: ObservableObject {
 struct PlantEditorForm: View {
     // CoreData
     @Environment(\.managedObjectContext) var context
-    @ObservedObject private var plantEditorConfig: PlantEditorConfig
+    @Binding var plantEditorConfig: PlantEditorConfig
     @State private var careTaskEditorConfig = CareTaskEditorConfig()
-    
-    init(editorConfig: PlantEditorConfig) {
-        plantEditorConfig = editorConfig
-    }
     
     var body: some View {
         Form {
             Section {
                 UITextFieldWrapper("Plant Name", text: $plantEditorConfig.plant.name)
-                Toggle(isOn: plantEditorConfig.isPlanted, label: { Text("Planted") })
-                if plantEditorConfig.isPlanted.wrappedValue {
-                    DatePicker("Planting Date", selection: plantEditorConfig.plantingdDate, in: ...Date(), displayedComponents: [.date])
+                Toggle(isOn: plantEditorConfig.$plant.isPlanted, label: { Text("Planted") })
+                if plantEditorConfig.plant.isPlanted {
+                    DatePicker("Planting Date", selection: $plantEditorConfig.plant.plantingDate, in: ...Date(), displayedComponents: [.date])
                 }
             }
             
@@ -137,7 +129,7 @@ struct PlantEditorForm_Previews: PreviewProvider {
         return Group {
             StatefulPreviewWrapper(PlantEditorConfig()) { state in
                 NavigationView {
-                    PlantEditorForm(editorConfig: state.wrappedValue)
+                    PlantEditorForm(plantEditorConfig: state)
                         .environment(\.managedObjectContext, context.childContext)
                 }
                 .onAppear {
