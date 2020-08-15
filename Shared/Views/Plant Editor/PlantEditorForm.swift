@@ -8,54 +8,58 @@
 
 import SwiftUI
 import CoreData
-import Combine
 
-class PlantEditorConfig: ObservableObject {
-    @Published var plant: Plant = Plant(context: .init(concurrencyType: .privateQueueConcurrencyType))
-    let editingContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+struct PlantEditorConfig {
+    var isPresented: Bool = false
     
-    var anyCancellable: AnyCancellable? = nil
+    var plantName: String = "My New Plant"
+    var plantIsFavorite: Bool = false
+    var plantIsPlanted: Bool = false
+    var plantPlantingDate: Date = Date()
+    var plantCareTasks: Set<CareTask> = []
     
-    init() {
-        anyCancellable = plant.objectWillChange.sink { _ in
-            self.objectWillChange.send()
+    mutating func present(plant: Plant) {
+        if let name = plant.name_ {
+            plantName = name
         }
-    }
-    
-    func present(plant: Plant) {
-        guard let parentContext = plant.managedObjectContext else { fatalError("Plant not configured with managed object context!") }
-        editingContext.parent = parentContext
         
-        let plants = try? editingContext.fetch(Plant.getPlantFetchRequest(with: plant.id))
-        let plant = plants?.first
-        self.plant = plant ?? Plant(context: editingContext)
+        plantIsFavorite = plant.isFavorite
+        plantIsPlanted = plant.isPlanted
+        
+        if let plantingDate = plant.plantingDate_ {
+            plantPlantingDate = plantingDate
+        }
+        
+        plantCareTasks = plant.careTasks
+        
+        isPresented = true
     }
 }
 
 struct PlantEditorForm: View {
     // CoreData
     @Environment(\.managedObjectContext) var context
+    @Binding var editorConfig: PlantEditorConfig
+    var onSave: () -> Void
     
-    @Binding var isPresented: Bool
-    @ObservedObject var plantEditorConfig: PlantEditorConfig
-    @State private var careTaskEditorConfig = CareTaskEditorConfig()
+    @State var selectedCareTaskID: UUID? = nil
     
     var body: some View {
         Form {
             Section {
-                UITextFieldWrapper("Plant Name", text: $plantEditorConfig.plant.name)
-                Toggle(isOn: $plantEditorConfig.plant.isPlanted, label: { Text("Planted") })
-                if plantEditorConfig.plant.isPlanted {
-                    DatePicker("Planting Date", selection: $plantEditorConfig.plant.plantingDate, in: ...Date(), displayedComponents: [.date])
+                UITextFieldWrapper("Plant Name", text: $editorConfig.plantName)
+                Toggle(isOn: $editorConfig.plantIsPlanted, label: { Text("Planted") })
+                if editorConfig.plantIsPlanted {
+                    DatePicker("Planting Date", selection: $editorConfig.plantPlantingDate, in: ...Date(), displayedComponents: [.date])
                 }
             }
             
             Section (header: Text("Plant Care")){
-                ForEach(plantEditorConfig.plant.careTasks.sorted(), id: \.id) { task in
+                ForEach(editorConfig.plantCareTasks.sorted(), id: \.id) { task in
                     NavigationLink(
-                        destination: CareTaskEditor(editorConfig: self.careTaskEditorConfig),
+                        destination: CareTaskEditor(selectedTaskID: self.$selectedCareTaskID, task: task),
                         tag: task.id,
-                        selection: self.customBinding()) {
+                        selection: self.$selectedCareTaskID) {
                             HStack {
                                 Text(task.type?.name ?? "")
                                 Spacer(minLength: 16)
@@ -78,39 +82,37 @@ struct PlantEditorForm: View {
     }
     
     // MARK: Actions
-    private func customBinding() -> Binding<UUID?> {
-        let binding = Binding<UUID?>(get: {
-            self.careTaskEditorConfig.task.id
-        } , set: { newID in
-            if let task = self.plantEditorConfig.plant.careTasks.first(where: {$0.id == newID}) {
-                self.careTaskEditorConfig.present(task: task)
-            }
-        })
-        
-        return binding
-    }
+//    private func customBinding() -> Binding<UUID?> {
+//        let binding = Binding<UUID?>(get: {
+//            self.selectedCareTaskID
+//        } , set: { newID in
+//            self.selectedCareTaskID = newID
+//        })
+//
+//        return binding
+//    }
     
     private func addTask() {
         let task = CareTask(context: context)
-        plantEditorConfig.plant.careTasks.insert(task)
-        careTaskEditorConfig.present(task: task)
+        editorConfig.plantCareTasks.insert(task)
+        
+        selectedCareTaskID = task.id
     }
     
     private func deleteTask(indices: IndexSet) {
         for index in indices {
-            let taskIndex = plantEditorConfig.plant.careTasks.index(plantEditorConfig.plant.careTasks.startIndex, offsetBy: index)
-            plantEditorConfig.plant.careTasks.remove(at: taskIndex)
+            let taskIndex = editorConfig.plantCareTasks.index(editorConfig.plantCareTasks.startIndex, offsetBy: index)
+            editorConfig.plantCareTasks.remove(at: taskIndex)
         }
     }
     
     private func save() {
-        try? plantEditorConfig.editingContext.save()
-        
+        onSave()
         dismiss()
     }
     
     private func dismiss() {
-        isPresented = false
+        editorConfig.isPresented = false
     }
 }
 
@@ -122,7 +124,9 @@ struct PlantEditorForm_Previews: PreviewProvider {
         return Group {
             StatefulPreviewWrapper(PlantEditorConfig()) { state in
                 NavigationView {
-                    PlantEditorForm(isPresented: .constant(true), plantEditorConfig: state.wrappedValue)
+                    PlantEditorForm(editorConfig: state) {
+                        print("Saved")
+                    }
                         .onAppear {
                             state.wrappedValue.present(plant: plant)
                     }

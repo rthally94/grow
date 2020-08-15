@@ -9,39 +9,26 @@
 import SwiftUI
 import CoreData
 
-class CareTaskEditorConfig: ObservableObject {
-    @Published var selectedTaskId: UUID? = nil
-    @ObservedObject var task: CareTask = CareTask()
-    
-    // View Parameters
-    @Published var editMode: EditMode = .inactive
-    
-    func present(task: CareTask) {
-        self.task = task
-        selectedTaskId = task.id
-    }
-}
-
-
 struct CareTaskEditor: View {
     @Environment(\.managedObjectContext) var context
     @FetchRequest(fetchRequest: CareTaskType.AllTaskTypesFetchRequest) var taskTypes: FetchedResults<CareTaskType>
     
-    @ObservedObject var editorConfig: CareTaskEditorConfig
+    @Binding var selectedTaskID: UUID?
+    @ObservedObject var task: CareTask
     
 //    var onSave: () -> Void
     
     var body: some View {
         List {
             Section(header: Text("What").font(.headline)) {
-                CareTaskTypePicker(selection: $editorConfig.task.type)
+                CareTaskTypePicker(selection: $task.type)
             }
             
-//            IntervalPicker(header: Text("Repeats").font(.headline), selection: editorConfig.task.interval)
-//
-//            Section {
-//                UITextFieldWrapper("Notes", text: $editorConfig.task.note)
-//            }
+            IntervalPicker(header: Text("Repeats").font(.headline), selection: task.interval)
+
+            Section {
+                UITextFieldWrapper("Notes", text: $task.notes)
+            }
         }
         .listStyle(GroupedListStyle())
 //        .navigationBarBackButtonHidden(true)
@@ -59,9 +46,10 @@ struct CareTaskEditor: View {
 }
 
 struct CareTaskEditor_Previews: PreviewProvider {
-    static let config = CareTaskEditorConfig()
-    
     static var previews: some View {
-        CareTaskEditor(editorConfig: CareTaskEditorConfig())
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        let task = CareTask(context: context)
+        
+        return CareTaskEditor(selectedTaskID: .constant(task.id), task: task)
     }
 }
