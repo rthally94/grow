@@ -127,8 +127,15 @@ extension PlantDetailView {
     
     // Growing Conditions
     var ageValue: String {
-        let ageString = Formatters.relativeDateFormatter.string(for: plant.plantingDate)
-        return "Planted \(ageString)"
+        let ageString: String
+        
+        if let plantingDate = plant.plantingDate_ {
+            ageString = "Planted " + Formatters.relativeDateFormatter.string(for: plantingDate)
+        } else {
+            ageString = "Not planted"
+        }
+        
+        return ageString
     }
     
     //    var wateringIntervalValue: String {
