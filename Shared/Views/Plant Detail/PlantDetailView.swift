@@ -78,6 +78,13 @@ struct PlantDetailView: View {
     }
     
     // MARK: Intents
+    private func onPlantEditorSave() {
+        plant.name = plantEditorConfig.plantName
+        plant.isFavorite = plantEditorConfig.plantIsFavorite
+        plant.plantingDate_ = plantEditorConfig.plantIsPlanted ? plantEditorConfig.plantPlantingDate : nil
+        plant.careTasks = plantEditorConfig.plantCareTasks
+    }
+    
     private func deletePlant() {
         withAnimation {
             self.presentationMode.wrappedValue.dismiss()
