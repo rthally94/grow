@@ -51,11 +51,6 @@ extension Plant {
         get { plantingDate_ != nil }
         set { plantingDate_ = newValue ? Date() : nil }
     }
-    
-    var plantingDate: Date {
-        get { plantingDate_ ?? Date() }
-        set { plantingDate_ = newValue }
-    }
 }
 
 //struct Plant: Identifiable, Hashable, Equatable {
