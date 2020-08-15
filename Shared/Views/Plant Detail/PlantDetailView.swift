@@ -88,7 +88,7 @@ struct PlantDetailView: View {
     private func deletePlant() {
         withAnimation {
             self.presentationMode.wrappedValue.dismiss()
-//            self.model.deletePlant(plant: plant)
+            self.context.delete(plant)
         }
     }
 }
