@@ -29,9 +29,7 @@ struct IconImage: View {
 }
 
 struct PlantCell: View {
-    @Environment(\.managedObjectContext) var context
-    
-    @ObservedObject var plant: Plant
+    var plant: Plant
     
     var body: some View {
         HStack(alignment: .top) {
@@ -44,25 +42,18 @@ struct PlantCell: View {
                 Text("\(plant.careTasks.count == 0 ? "No" : "\(plant.careTasks.count)") Task").opacity(0.8).font(.subheadline)
             }
             
-            Spacer(minLength: 16)
-            Button(action: toggleFavorite, label: {Image(systemName: plant.isFavorite ? "star.fill" : "star")})
+            Spacer()
         }
-    }
-    
-    func toggleFavorite() {
-        plant.isFavorite.toggle()
-        try? context.save()
+        .padding()
     }
 }
 
 struct PlantCell_Previews: PreviewProvider {
     static var previews: some View {
-        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        let plant = Plant.create(context: context)
-        
-        return PlantCell(plant: plant)
-            .padding()
-            .background(RoundedRectangle(cornerRadius: 15).fill(Color.systemGroupedBackground))
-            .environment(\.managedObjectContext, context)
+        let plant = Plant(name: "My Plant", careTasks: [])
+        return
+            PlantCell(plant: plant)
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 15).fill(Color.systemGroupedBackground))
     }
 }

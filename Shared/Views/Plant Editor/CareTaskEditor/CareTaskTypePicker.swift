@@ -10,11 +10,12 @@ import SwiftUI
 import CoreData
 
 struct CareTaskTypePicker: View {
-    @Environment(\.managedObjectContext) var context
-    @FetchRequest(fetchRequest: CareTaskType.AllTaskTypesFetchRequest) var taskTypes: FetchedResults<CareTaskType>
+    @EnvironmentObject var growModel: GrowModel
     
-    @State var editMode: EditMode = .inactive
+    var taskTypes: [CareTaskType] = []
+    
     @Binding var selection: CareTaskType?
+    @State var editMode: EditMode = .inactive
     
     @State var newTypeName: String = ""
     @State var textFieldIsFirstResponder: Bool = true
@@ -65,10 +66,7 @@ struct CareTaskTypePicker: View {
     
     func textFieldDidEndEditing() {
         if newTypeName != "" {
-            let type = CareTaskType(context: context)
-            type.name = newTypeName
-            
-            try? context.save()
+            // TODO: Implement new task type intent
         }
         
         editMode = .inactive
@@ -85,20 +83,14 @@ struct CareTaskTypePicker: View {
     func onTaskTypeDelete(indices: IndexSet) {
         let objects = indices.compactMap { taskTypes[$0] }
         for type in objects {
-            context.delete(type)
+            // TODO: Implement delete task type intent
         }
-        
-        try? context.save()
     }
 }
 
 struct CareTaskTypePicker_Previews: PreviewProvider {
     static var previews: some View {
-        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        let type = CareTaskType(context: context)
-        type.name = "Watering"
-        
-        return StatefulPreviewWrapper(type) { state in
+        return StatefulPreviewWrapper(CareTaskType(name: "Default")) { state in
             CareTaskTypePicker(selection: state)
         }
     }
