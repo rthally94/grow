@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CareTask" representedClassName="CareTaskMO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <relationship name="interval" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CareTaskInterval" inverseName="task" inverseEntity="CareTaskInterval"/>
+        <relationship name="logs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CareTaskLog" inverseName="task" inverseEntity="CareTaskLog"/>
+        <relationship name="plants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Plant" inverseName="careTasks" inverseEntity="Plant"/>
+        <relationship name="type" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="CareTaskType" inverseName="tasks" inverseEntity="CareTaskType"/>
+    </entity>
+    <entity name="CareTaskInterval" representedClassName="CareTaskIntervalMO" syncable="YES" codeGenerationType="class">
+        <attribute name="unit" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="values" optional="YES" attributeType="Transformable" customClassName="NSSet"/>
+        <relationship name="task" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CareTask" inverseName="interval" inverseEntity="CareTask"/>
+    </entity>
+    <entity name="CareTaskLog" representedClassName="CareTaskLogMO" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="task" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CareTask" inverseName="logs" inverseEntity="CareTask"/>
+    </entity>
+    <entity name="CareTaskType" representedClassName="CareTaskTypeMO" syncable="YES" codeGenerationType="class">
+        <attribute name="color" optional="YES" attributeType="String" customClassName="UIColor"/>
+        <attribute name="icon" optional="YES" attributeType="String" customClassName="UIImage"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="tasks" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="CareTask" inverseName="type" inverseEntity="CareTask"/>
+    </entity>
+    <entity name="Plant" representedClassName="PlantMO" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="plantingDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="careTasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CareTask" inverseName="plants" inverseEntity="CareTask"/>
+    </entity>
+    <elements>
+        <element name="CareTask" positionX="294.21484375" positionY="-279.07421875" width="128" height="133"/>
+        <element name="CareTaskInterval" positionX="546.89453125" positionY="-430.8671875" width="128" height="88"/>
+        <element name="CareTaskLog" positionX="558.48828125" positionY="-267.2421875" width="128" height="88"/>
+        <element name="CareTaskType" positionX="555.50390625" positionY="-136.5390625" width="128" height="118"/>
+        <element name="Plant" positionX="-15.7265625" positionY="-304.86328125" width="128" height="118"/>
+    </elements>
+</model>
