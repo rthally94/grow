@@ -10,13 +10,12 @@ import SwiftUI
 import CoreData
 
 struct PlantDetailView: View {
-    @ObservedObject var plant: Plant
-    @Environment(\.managedObjectContext) var context
-    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var growModel: GrowModel
+    var plant: Plant
     
     // View State
     @State private var plantActionSheetIsPresented = false
-    @State private var plantEditorConfig = PlantEditorConfig()
+    @State private var plantEditorSheetIsPresented = false
     
     var body: some View {
         ScrollView {
@@ -26,13 +25,21 @@ struct PlantDetailView: View {
                     Spacer()
                 }.padding(.bottom)
                 
+                Button(action: {
+                    var updated = self.plant
+                    updated.plantingDate = Date()
+                    self.growModel.updatePlant(updated)
+                }, label: {
+                    Text("Test")
+                })
+                
                 if plant.careTasks.count > 0 {
                     Section(header:
                         Text("Care Tasks")
                         .font(.headline)
                     ) {
                         VStack(spacing: 20) {
-                            ForEach(Array(plant.careTasks), id: \.id) { task in
+                            ForEach(Array(plant.careTasks), id: \.self) { task in
                                 StatCell(title: Text(task.type?.name ?? "")) {
                                     Text(task.interval.description)
                                 }
@@ -58,14 +65,12 @@ struct PlantDetailView: View {
                     ActionSheet.Button.cancel()
                 ])
         }
-        .sheet(
-            isPresented: $plantEditorConfig.isPresented,
-            content: {
-                NavigationView {
-                    PlantEditorForm(editorConfig: self.$plantEditorConfig, onSave: self.onPlantEditorSave)
-                }
-                .environment(\.managedObjectContext, self.context)
-        })
+        .sheet(isPresented: $plantEditorSheetIsPresented) {
+            NavigationView {
+                PlantEditorForm(isPresented: self.$plantEditorSheetIsPresented, plant: self.plant)
+            }
+            .environmentObject(self.growModel)
+        }
     }
     
     // MARK: Actions
@@ -74,21 +79,13 @@ struct PlantDetailView: View {
     }
     
     private func presentEditor() {
-        plantEditorConfig.present(plant: plant)
+        plantEditorSheetIsPresented.toggle()
     }
     
     // MARK: Intents
-    private func onPlantEditorSave() {
-        plant.name = plantEditorConfig.plantName
-        plant.isFavorite = plantEditorConfig.plantIsFavorite
-        plant.plantingDate_ = plantEditorConfig.plantIsPlanted ? plantEditorConfig.plantPlantingDate : nil
-        plant.careTasks = plantEditorConfig.plantCareTasks
-    }
-    
     private func deletePlant() {
         withAnimation {
-            self.presentationMode.wrappedValue.dismiss()
-            self.context.delete(plant)
+            growModel.removePlant(plant)
         }
     }
 }
@@ -129,7 +126,7 @@ extension PlantDetailView {
     var ageValue: String {
         let ageString: String
         
-        if let plantingDate = plant.plantingDate_ {
+        if let plantingDate = plant.plantingDate {
             ageString = "Planted " + Formatters.relativeDateFormatter.string(for: plantingDate)
         } else {
             ageString = "Not planted"
@@ -145,12 +142,11 @@ extension PlantDetailView {
 
 struct PlantDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        let plant = Plant.create(context: context)
+        let plant = Plant(name: "My New Plant")
         
         let view = NavigationView {
             PlantDetailView(plant: plant)
-        }.environment(\.managedObjectContext, context)
+        }
         
         return Group {
             view

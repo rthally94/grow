@@ -10,24 +10,18 @@ import SwiftUI
 import CoreData
 
 struct CareTaskEditor: View {
-    @Environment(\.managedObjectContext) var context
-    @FetchRequest(fetchRequest: CareTaskType.AllTaskTypesFetchRequest) var taskTypes: FetchedResults<CareTaskType>
-    
-    @Binding var selectedTaskID: UUID?
-    @ObservedObject var task: CareTask
-    
-//    var onSave: () -> Void
+    @Binding var careTask: CareTask
     
     var body: some View {
         List {
             Section(header: Text("What").font(.headline)) {
-                CareTaskTypePicker(selection: $task.type)
+                CareTaskTypePicker(selection: $careTask.type)
             }
-            
-            IntervalPicker(header: Text("Repeats").font(.headline), selection: task.interval)
+
+            IntervalPicker(header: Text("Repeats").font(.headline), selection: $careTask.interval)
 
             Section {
-                UITextFieldWrapper("Notes", text: $task.notes)
+                UITextFieldWrapper("Notes", text: $careTask.notes)
             }
         }
         .listStyle(GroupedListStyle())
@@ -47,9 +41,12 @@ struct CareTaskEditor: View {
 
 struct CareTaskEditor_Previews: PreviewProvider {
     static var previews: some View {
-        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        let task = CareTask(context: context)
+        let type = CareTaskType(name: "Default")
+        let interval = CareInterval()
+        let task = CareTask(type: type, interval: interval, notes: "", logs: [])
         
-        return CareTaskEditor(selectedTaskID: .constant(task.id), task: task)
+        return StatefulPreviewWrapper(task) { state in
+            CareTaskEditor(careTask: state)
+        }
     }
 }
