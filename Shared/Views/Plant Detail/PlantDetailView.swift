@@ -27,10 +27,18 @@ struct PlantDetailView: View {
                 
                 Button(action: {
                     var updated = self.plant
+                    updated.name += "1"
+                    self.growModel.updatePlant(updated)
+                }, label: {
+                    Text("Name")
+                })
+                
+                Button(action: {
+                    var updated = self.plant
                     updated.plantingDate = Date()
                     self.growModel.updatePlant(updated)
                 }, label: {
-                    Text("Test")
+                    Text("Date")
                 })
                 
                 if plant.careTasks.count > 0 {

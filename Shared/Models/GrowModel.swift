@@ -21,7 +21,7 @@ class GrowModel: ObservableObject {
     let context: NSManagedObjectContext
     var cancellables = [AnyCancellable]()
     
-    private var plantStorage: PlantStorage
+    var plantStorage: PlantStorage
     var plants: [Plant] {
         return plantStorage.plants
     }
