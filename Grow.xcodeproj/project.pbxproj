@@ -42,9 +42,10 @@
 		21F4C23424BF15A900EB73E0 /* StatefulPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */; };
 		21F4C23624BF267A00EB73E0 /* PlantEditorForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */; };
 		FB081BA824DCA1D700FB0835 /* CareTaskType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB081BA724DCA1D700FB0835 /* CareTaskType.swift */; };
-		FB081BAC24DCA4BA00FB0835 /* CareTaskType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB081BAA24DCA4BA00FB0835 /* CareTaskType+CoreDataClass.swift */; };
-		FB081BAD24DCA4BA00FB0835 /* CareTaskType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB081BAB24DCA4BA00FB0835 /* CareTaskType+CoreDataProperties.swift */; };
 		FB2DA7A224E47CB0001F1484 /* NSManagedObjectContext+ChildContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2DA7A124E47CB0001F1484 /* NSManagedObjectContext+ChildContext.swift */; };
+		FB355E5724EDE59000E6E94C /* PlantMO+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB355E5624EDE59000E6E94C /* PlantMO+Extensions.swift */; };
+		FB355E5924EE005F00E6E94C /* CareTaskMO+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB355E5824EE005F00E6E94C /* CareTaskMO+Extensions.swift */; };
+		FB355E5C24EEFE7100E6E94C /* PlantStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB355E5B24EEFE7100E6E94C /* PlantStorage.swift */; };
 		FB54CAC424D84C17006BB3C5 /* Color+GrowColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB54CAC324D84C17006BB3C5 /* Color+GrowColors.swift */; };
 		FB54CAC624D886F3006BB3C5 /* GrowPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB54CAC524D886F3006BB3C5 /* GrowPicker.swift */; };
 		FB969D1F24E1FAAF008B3CF9 /* CareTaskTypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB969D1E24E1FAAF008B3CF9 /* CareTaskTypePicker.swift */; };
@@ -113,9 +114,10 @@
 		21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewWrapper.swift; sourceTree = "<group>"; };
 		21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantEditorForm.swift; sourceTree = "<group>"; };
 		FB081BA724DCA1D700FB0835 /* CareTaskType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskType.swift; sourceTree = "<group>"; };
-		FB081BAA24DCA4BA00FB0835 /* CareTaskType+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CareTaskType+CoreDataClass.swift"; sourceTree = "<group>"; };
-		FB081BAB24DCA4BA00FB0835 /* CareTaskType+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CareTaskType+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FB2DA7A124E47CB0001F1484 /* NSManagedObjectContext+ChildContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+ChildContext.swift"; sourceTree = "<group>"; };
+		FB355E5624EDE59000E6E94C /* PlantMO+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlantMO+Extensions.swift"; sourceTree = "<group>"; };
+		FB355E5824EE005F00E6E94C /* CareTaskMO+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CareTaskMO+Extensions.swift"; sourceTree = "<group>"; };
+		FB355E5B24EEFE7100E6E94C /* PlantStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantStorage.swift; sourceTree = "<group>"; };
 		FB54CAC324D84C17006BB3C5 /* Color+GrowColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+GrowColors.swift"; sourceTree = "<group>"; };
 		FB54CAC524D886F3006BB3C5 /* GrowPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowPicker.swift; sourceTree = "<group>"; };
 		FB969D1E24E1FAAF008B3CF9 /* CareTaskTypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskTypePicker.swift; sourceTree = "<group>"; };
@@ -199,14 +201,14 @@
 		21BFB3B024B66E0800B94A72 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				FB7D159B24EC35C000248A52 /* Persistence */,
 				212A1E9624BE0EE3002C147F /* Views */,
-				21BFB3E924B678A100B94A72 /* Model */,
+				21BFB3E924B678A100B94A72 /* Models */,
 				21BFB3B124B66E0800B94A72 /* AppDelegate.swift */,
 				21BFB3B324B66E0800B94A72 /* SceneDelegate.swift */,
 				21BFB3BA24B66E0A00B94A72 /* Assets.xcassets */,
 				21BFB3BF24B66E0A00B94A72 /* LaunchScreen.storyboard */,
 				21BFB3C224B66E0A00B94A72 /* Info.plist */,
-				21BFB3B524B66E0800B94A72 /* Grow.xcdatamodeld */,
 				21BFB3BC24B66E0A00B94A72 /* Preview Content */,
 			);
 			path = Shared;
@@ -220,25 +222,20 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		21BFB3E924B678A100B94A72 /* Model */ = {
+		21BFB3E924B678A100B94A72 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FB081BA924DCA3EE00FB0835 /* CoreData */,
 				21BFB3F324B678DB00B94A72 /* GrowModel.swift */,
+				FB355E5B24EEFE7100E6E94C /* PlantStorage.swift */,
+				FB355E5A24EEFE5700E6E94C /* Base Models */,
 				21BFB3F424B678DC00B94A72 /* Helpers */,
-				21BFB3F724B678DC00B94A72 /* Plant.swift */,
-				212A1E8B24B893F7002C147F /* CareTaskLog.swift */,
-				2193552B24C1217E00F38392 /* CareInterval.swift */,
-				21DC516C24C506A1007372B1 /* CareTask.swift */,
-				FB081BA724DCA1D700FB0835 /* CareTaskType.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		21BFB3F424B678DC00B94A72 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				FB2DA7A124E47CB0001F1484 /* NSManagedObjectContext+ChildContext.swift */,
 				212A1E9424BD4EA5002C147F /* Color+SystemColor.swift */,
 				FB54CAC324D84C17006BB3C5 /* Color+GrowColors.swift */,
 				21BFB3F524B678DC00B94A72 /* RelativeDateFormatter.swift */,
@@ -277,13 +274,27 @@
 			path = CareTaskEditor;
 			sourceTree = "<group>";
 		};
-		FB081BA924DCA3EE00FB0835 /* CoreData */ = {
+		FB355E5A24EEFE5700E6E94C /* Base Models */ = {
 			isa = PBXGroup;
 			children = (
-				FB081BAA24DCA4BA00FB0835 /* CareTaskType+CoreDataClass.swift */,
-				FB081BAB24DCA4BA00FB0835 /* CareTaskType+CoreDataProperties.swift */,
+				21BFB3F724B678DC00B94A72 /* Plant.swift */,
+				212A1E8B24B893F7002C147F /* CareTaskLog.swift */,
+				2193552B24C1217E00F38392 /* CareInterval.swift */,
+				21DC516C24C506A1007372B1 /* CareTask.swift */,
+				FB081BA724DCA1D700FB0835 /* CareTaskType.swift */,
 			);
-			path = CoreData;
+			path = "Base Models";
+			sourceTree = "<group>";
+		};
+		FB7D159B24EC35C000248A52 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				21BFB3B524B66E0800B94A72 /* Grow.xcdatamodeld */,
+				FB2DA7A124E47CB0001F1484 /* NSManagedObjectContext+ChildContext.swift */,
+				FB355E5624EDE59000E6E94C /* PlantMO+Extensions.swift */,
+				FB355E5824EE005F00E6E94C /* CareTaskMO+Extensions.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -395,27 +406,28 @@
 				2193552824BF2C1900F38392 /* UITextFieldWrapper.swift in Sources */,
 				21BFB3B424B66E0800B94A72 /* SceneDelegate.swift in Sources */,
 				21BFB3F824B678DC00B94A72 /* GrowModel.swift in Sources */,
+				FB355E5924EE005F00E6E94C /* CareTaskMO+Extensions.swift in Sources */,
 				2193552C24C1217E00F38392 /* CareInterval.swift in Sources */,
 				212A1E9524BD4EA5002C147F /* Color+SystemColor.swift in Sources */,
 				21C0C95324D0A39B0062BEA8 /* PlantsTaskList.swift in Sources */,
 				FB2DA7A224E47CB0001F1484 /* NSManagedObjectContext+ChildContext.swift in Sources */,
 				FB081BA824DCA1D700FB0835 /* CareTaskType.swift in Sources */,
 				212A1E9824BE0F05002C147F /* InsetGroupedSection.swift in Sources */,
+				FB355E5724EDE59000E6E94C /* PlantMO+Extensions.swift in Sources */,
 				21BFB3B924B66E0800B94A72 /* AllPlantsView.swift in Sources */,
 				21F4C23224BF0E2300EB73E0 /* WeekPicker.swift in Sources */,
 				2193552A24C07CC600F38392 /* IntervalPicker.swift in Sources */,
 				212A1E8A24B7664C002C147F /* PlantDetailView.swift in Sources */,
+				FB355E5C24EEFE7100E6E94C /* PlantStorage.swift in Sources */,
 				21DBE11724D5B6FB00D8CC9C /* GrowTaskCard.swift in Sources */,
 				21F4C23624BF267A00EB73E0 /* PlantEditorForm.swift in Sources */,
 				21BFB3F924B678DC00B94A72 /* RelativeDateFormatter.swift in Sources */,
-				FB081BAC24DCA4BA00FB0835 /* CareTaskType+CoreDataClass.swift in Sources */,
 				21BFB3FB24B678DC00B94A72 /* Plant.swift in Sources */,
 				21F4C23424BF15A900EB73E0 /* StatefulPreviewWrapper.swift in Sources */,
 				212A1E9324BD4BC8002C147F /* RootView.swift in Sources */,
 				FB54CAC424D84C17006BB3C5 /* Color+GrowColors.swift in Sources */,
 				212A1E9A24BE0FAF002C147F /* ListRow.swift in Sources */,
 				21DC517024C50AF2007372B1 /* CareTaskEditor.swift in Sources */,
-				FB081BAD24DCA4BA00FB0835 /* CareTaskType+CoreDataProperties.swift in Sources */,
 				212A1E9C24BE1137002C147F /* StatCell.swift in Sources */,
 				21E8883424D60EB300BC0EAC /* SegmentedPicker.swift in Sources */,
 				212A1E8C24B893F7002C147F /* CareTaskLog.swift in Sources */,
