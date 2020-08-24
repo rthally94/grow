@@ -34,7 +34,7 @@ class PlantStorage: NSObject, ObservableObject {
 }
 
 extension PlantStorage: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         plants = allPlantsController.fetchedObjects?.compactMap(Plant.init) ?? []
     }
     
