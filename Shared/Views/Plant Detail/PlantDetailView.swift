@@ -9,23 +9,19 @@
 import SwiftUI
 import CoreData
 
-class PlantDetailViewModel: ObservableObject {
-    @Published var plant: Plant
-    @Published var plantActionSheetIsPresented = false
-    @Published var plantEditorSheetIsPresented = false
+struct PlantDetailConfig {
+    var plant: Plant
+    var plantActionSheetIsPresented = false
+    var plantEditorSheetIsPresented = false
     
     var careTasks: [CareTask] {
         plant.careTasks
-    }
-    
-    init(plant: Plant) {
-        self.plant = plant
     }
 }
 
 struct PlantDetailView: View {
     @EnvironmentObject var growModel: GrowModel
-    @ObservedObject var model: PlantDetailViewModel
+    @State var config: PlantDetailConfig
     
     var body: some View {
         ScrollView {
@@ -35,13 +31,13 @@ struct PlantDetailView: View {
                     Spacer()
                 }.padding(.bottom)
                 
-                if model.plant.careTasks.count > 0 {
+                if config.plant.careTasks.count > 0 {
                     Section(header:
                         Text("Care Tasks")
                         .font(.headline)
                     ) {
                         VStack(spacing: 20) {
-                            ForEach(Array(model.careTasks)) { task in
+                            ForEach(Array(config.careTasks)) { task in
                                 StatCell(title: Text(task.type?.name ?? "")) {
                                     Text(task.interval.description)
                                 }
@@ -55,21 +51,21 @@ struct PlantDetailView: View {
             }
             .padding(.horizontal)
         }
-        .navigationBarTitle(model.plant.name)
+        .navigationBarTitle(config.plant.name)
         .navigationBarItems(trailing: Button(action: showActionSheet) {
             Image(systemName: "ellipsis.circle")
                 .imageScale(.large)
         })
-            .actionSheet(isPresented: $model.plantActionSheetIsPresented) {
+            .actionSheet(isPresented: $config.plantActionSheetIsPresented) {
                 ActionSheet(title: Text("Options"), buttons: [
                     ActionSheet.Button.default(Text("Edit Plant"), action: presentEditor),
                     ActionSheet.Button.destructive(Text("Delete Plant"), action: deletePlant),
                     ActionSheet.Button.cancel()
                 ])
         }
-        .sheet(isPresented: $model.plantEditorSheetIsPresented) {
+        .sheet(isPresented: $config.plantEditorSheetIsPresented) {
             NavigationView {
-                PlantEditorForm(isPresented: self.$model.plantEditorSheetIsPresented, plant: self.model.plant)
+                PlantEditorForm(isPresented: self.$config.plantEditorSheetIsPresented, plant: self.config.plant)
             }
             .environmentObject(self.growModel)
         }
@@ -77,17 +73,17 @@ struct PlantDetailView: View {
     
     // MARK: Actions
     private func showActionSheet() {
-        model.plantActionSheetIsPresented.toggle()
+        config.plantActionSheetIsPresented.toggle()
     }
 
     private func presentEditor() {
-        model.plantEditorSheetIsPresented.toggle()
+        config.plantEditorSheetIsPresented.toggle()
     }
     
     // MARK: Intents
     private func deletePlant() {
         withAnimation {
-            growModel.removePlant(model.plant)
+            growModel.removePlant(config.plant)
         }
     }
 }
@@ -128,7 +124,7 @@ extension PlantDetailView {
     var ageValue: String {
         let ageString: String
         
-        if let plantingDate = model.plant.plantingDate {
+        if let plantingDate = config.plant.plantingDate {
             ageString = "Planted " + Formatters.relativeDateFormatter.string(for: plantingDate)
         } else {
             ageString = "Not planted"
@@ -150,7 +146,7 @@ struct PlantDetailView_Previews: PreviewProvider {
         model.addPlant(plant)
         
         let view = NavigationView {
-            PlantDetailView(model: .init(plant: plant))
+            PlantDetailView(config: .init(plant: plant))
         }
         
         return Group {

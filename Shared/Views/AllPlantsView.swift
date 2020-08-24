@@ -18,7 +18,7 @@ struct AllPlantsView: View {
                 if !growModel.plantStorage.plants.isEmpty {
                     ForEach(growModel.plantStorage.plants) { plant in
                         VStack {
-                            NavigationLink(destination: PlantDetailView(model: .init(plant: plant))) {
+                            NavigationLink(destination: PlantDetailView(config: .init(plant: plant))) {
                                 PlantCell(model: .init(plant: plant))
                                     .background(RoundedRectangle(cornerRadius: 15).fill(Color.systemGroupedBackground))
                             }
