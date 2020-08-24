@@ -17,6 +17,10 @@ class PlantDetailConfig: ObservableObject {
     var careTasks: [CareTask] {
         plant.careTasks
     }
+    
+    init(plant: Plant) {
+        self.plant = plant
+    }
 }
 
 struct PlantDetailView: View {
