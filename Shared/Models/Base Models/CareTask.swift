@@ -28,7 +28,8 @@ extension CareTaskType {
 }
 
 
-struct CareTask: Equatable, Hashable {
+struct CareTask: Identifiable, Equatable, Hashable {
+    var id = UUID()
     var type: CareTaskType?
     var interval: CareInterval
 

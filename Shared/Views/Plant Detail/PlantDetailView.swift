@@ -47,7 +47,7 @@ struct PlantDetailView: View {
                         .font(.headline)
                     ) {
                         VStack(spacing: 20) {
-                            ForEach(Array(plant.careTasks), id: \.self) { task in
+                            ForEach(Array(model.careTasks)) { task in
                                 StatCell(title: Text(task.type?.name ?? "")) {
                                     Text(task.interval.description)
                                 }
