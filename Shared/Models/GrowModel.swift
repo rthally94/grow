@@ -19,7 +19,7 @@ protocol StorageCRUD {
 
 class GrowModel: ObservableObject {
     let context: NSManagedObjectContext
-    var cancellables = [AnyCancellable]()
+    private var cancellables = Set<AnyCancellable>()
     
     var plantStorage: PlantStorage
     var plants: [Plant] {
@@ -30,10 +30,11 @@ class GrowModel: ObservableObject {
         self.context = context
         
         plantStorage = PlantStorage(context: context)
-        cancellables.append(plantStorage.$plants
-            .sink { _ in
-                self.objectWillChange.send()
-        })
+        
+        plantStorage.$plants
+            .map { _ in }
+            .sink(receiveValue: objectWillChange.send)
+            .store(in: &cancellables)
     }
     
     deinit {
