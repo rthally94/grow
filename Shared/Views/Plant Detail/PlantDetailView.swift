@@ -10,7 +10,7 @@ import SwiftUI
 import CoreData
 
 class PlantDetailConfig: ObservableObject {
-    @Publsihed var plant: Plant
+    @Published var plant: Plant
     @Published var plantActionSheetIsPresented = false
     @Published var plantEditorSheetIsPresented = false
     
