@@ -9,13 +9,23 @@
 import SwiftUI
 import CoreData
 
+class PlantDetailViewModel: ObservableObject {
+    @Published var plant: Plant
+    @Published var plantActionSheetIsPresented = false
+    @Published var plantEditorSheetIsPresented = false
+    
+    var careTasks: [CareTask] {
+        plant.careTasks
+    }
+    
+    init(plant: Plant) {
+        self.plant = plant
+    }
+}
+
 struct PlantDetailView: View {
     @EnvironmentObject var growModel: GrowModel
-    var plant: Plant
-    
-    // View State
-    @State private var plantActionSheetIsPresented = false
-    @State private var plantEditorSheetIsPresented = false
+    @ObservedObject var model: PlantDetailViewModel
     
     var body: some View {
         ScrollView {
@@ -25,23 +35,7 @@ struct PlantDetailView: View {
                     Spacer()
                 }.padding(.bottom)
                 
-                Button(action: {
-                    var updated = self.plant
-                    updated.name += "1"
-                    self.growModel.updatePlant(updated)
-                }, label: {
-                    Text("Name")
-                })
-                
-                Button(action: {
-                    var updated = self.plant
-                    updated.plantingDate = Date()
-                    self.growModel.updatePlant(updated)
-                }, label: {
-                    Text("Date")
-                })
-                
-                if plant.careTasks.count > 0 {
+                if model.plant.careTasks.count > 0 {
                     Section(header:
                         Text("Care Tasks")
                         .font(.headline)
@@ -61,21 +55,21 @@ struct PlantDetailView: View {
             }
             .padding(.horizontal)
         }
-        .navigationBarTitle(plant.name)
+        .navigationBarTitle(model.plant.name)
         .navigationBarItems(trailing: Button(action: showActionSheet) {
             Image(systemName: "ellipsis.circle")
                 .imageScale(.large)
         })
-            .actionSheet(isPresented: $plantActionSheetIsPresented) {
+            .actionSheet(isPresented: $model.plantActionSheetIsPresented) {
                 ActionSheet(title: Text("Options"), buttons: [
                     ActionSheet.Button.default(Text("Edit Plant"), action: presentEditor),
                     ActionSheet.Button.destructive(Text("Delete Plant"), action: deletePlant),
                     ActionSheet.Button.cancel()
                 ])
         }
-        .sheet(isPresented: $plantEditorSheetIsPresented) {
+        .sheet(isPresented: $model.plantEditorSheetIsPresented) {
             NavigationView {
-                PlantEditorForm(isPresented: self.$plantEditorSheetIsPresented, plant: self.plant)
+                PlantEditorForm(isPresented: self.$model.plantEditorSheetIsPresented, plant: self.model.plant)
             }
             .environmentObject(self.growModel)
         }
@@ -83,17 +77,17 @@ struct PlantDetailView: View {
     
     // MARK: Actions
     private func showActionSheet() {
-        plantActionSheetIsPresented.toggle()
+        model.plantActionSheetIsPresented.toggle()
     }
-    
+
     private func presentEditor() {
-        plantEditorSheetIsPresented.toggle()
+        model.plantEditorSheetIsPresented.toggle()
     }
     
     // MARK: Intents
     private func deletePlant() {
         withAnimation {
-            growModel.removePlant(plant)
+            growModel.removePlant(model.plant)
         }
     }
 }
@@ -134,7 +128,7 @@ extension PlantDetailView {
     var ageValue: String {
         let ageString: String
         
-        if let plantingDate = plant.plantingDate {
+        if let plantingDate = model.plant.plantingDate {
             ageString = "Planted " + Formatters.relativeDateFormatter.string(for: plantingDate)
         } else {
             ageString = "Not planted"
@@ -150,15 +144,19 @@ extension PlantDetailView {
 
 struct PlantDetailView_Previews: PreviewProvider {
     static var previews: some View {
+        let model = GrowModel(context: .init(concurrencyType: .mainQueueConcurrencyType))
         let plant = Plant(name: "My New Plant")
         
+        model.addPlant(plant)
+        
         let view = NavigationView {
-            PlantDetailView(plant: plant)
+            PlantDetailView(model: .init(plant: plant))
         }
         
         return Group {
             view
             view.environment(\.colorScheme, .dark)
         }
+        .environmentObject(model)
     }
 }

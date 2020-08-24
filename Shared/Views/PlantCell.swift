@@ -28,8 +28,16 @@ struct IconImage: View {
     }
 }
 
+class PlantCellViewModel: ObservableObject {
+    @Published var plant: Plant
+    
+    init(plant: Plant) {
+        self.plant = plant
+    }
+}
+
 struct PlantCell: View {
-    var plant: Plant
+    @ObservedObject var model: PlantCellViewModel
     
     var body: some View {
         HStack(alignment: .top) {
@@ -38,8 +46,8 @@ struct PlantCell: View {
                 //                    .imageScale(.large)
                 //                    .foregroundColor(.blue)
                 
-                Text(plant.name).font(.headline)
-                Text("\(plant.careTasks.count == 0 ? "No" : "\(plant.careTasks.count)") Task").opacity(0.8).font(.subheadline)
+                Text(model.plant.name).font(.headline)
+                Text("\(model.plant.careTasks.count == 0 ? "No" : "\(model.plant.careTasks.count)") Task").opacity(0.8).font(.subheadline)
             }
             
             Spacer()
@@ -52,7 +60,7 @@ struct PlantCell_Previews: PreviewProvider {
     static var previews: some View {
         let plant = Plant(name: "My Plant", careTasks: [])
         return
-            PlantCell(plant: plant)
+            PlantCell(model: .init(plant: plant))
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 15).fill(Color.systemGroupedBackground))
     }

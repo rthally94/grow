@@ -15,13 +15,11 @@ struct AllPlantsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
-                Text("\(growModel.plants.first?.name ?? "NONE")")
-                if !growModel.plants.isEmpty {
-                    ForEach(growModel.plants) { plant in
+                if !growModel.plantStorage.plants.isEmpty {
+                    ForEach(growModel.plantStorage.plants) { plant in
                         VStack {
-                            Text(plant.name)
-                            NavigationLink(destination: PlantDetailView(plant: plant)) {
-                                PlantCell(plant: plant)
+                            NavigationLink(destination: PlantDetailView(model: .init(plant: plant))) {
+                                PlantCell(model: .init(plant: plant))
                                     .background(RoundedRectangle(cornerRadius: 15).fill(Color.systemGroupedBackground))
                             }
                             .buttonStyle(PlainButtonStyle())
