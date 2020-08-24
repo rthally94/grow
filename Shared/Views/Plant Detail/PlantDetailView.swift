@@ -9,10 +9,10 @@
 import SwiftUI
 import CoreData
 
-struct PlantDetailConfig {
-    var plant: Plant
-    var plantActionSheetIsPresented = false
-    var plantEditorSheetIsPresented = false
+class PlantDetailConfig: ObservableObject {
+    @Publsihed var plant: Plant
+    @Published var plantActionSheetIsPresented = false
+    @Published var plantEditorSheetIsPresented = false
     
     var careTasks: [CareTask] {
         plant.careTasks
@@ -21,7 +21,7 @@ struct PlantDetailConfig {
 
 struct PlantDetailView: View {
     @EnvironmentObject var growModel: GrowModel
-    @State var config: PlantDetailConfig
+    @ObservedObject var config: PlantDetailConfig
     
     var body: some View {
         ScrollView {
