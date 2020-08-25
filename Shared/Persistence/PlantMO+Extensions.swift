@@ -27,6 +27,7 @@ extension PlantMO {
         self.name = plant.name
         self.isFavorite = plant.isFavorite
         self.plantingDate = plant.plantingDate
+        
         self.careTasks = []
     }
 }
