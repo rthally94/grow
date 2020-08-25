@@ -23,7 +23,7 @@ extension CareTaskType {
 }
 
 extension CareTaskType {
-    static let WateringType = CareTaskType(name: "Watering", color: "")
+    static let WateringType = CareTaskType(name: "Watering")
     static let PruningType = CareTaskType(name: "Pruning")
     static let FertilizingType = CareTaskType(name: "Pruning")
 }
