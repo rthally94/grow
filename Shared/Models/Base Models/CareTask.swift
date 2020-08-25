@@ -8,7 +8,8 @@
 
 import Foundation
 
-struct CareTaskType: Equatable, Hashable {
+struct CareTaskType: Identifiable, Equatable, Hashable {
+    var id = UUID()
     var name: String
     var icon: String?
     var color: String?
@@ -17,7 +18,7 @@ struct CareTaskType: Equatable, Hashable {
 extension CareTaskType {
     init?(managedObject: CareTaskTypeMO) {
         let name = managedObject.name ?? "New Task"
-        self.init(name: name, icon: managedObject.icon, color: managedObject.color)
+        self.init(id: managedObject.id ?? UUID(), name: name, icon: managedObject.icon, color: managedObject.color)
     }
 }
 
