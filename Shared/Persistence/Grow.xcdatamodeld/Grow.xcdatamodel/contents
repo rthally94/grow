@@ -5,7 +5,7 @@
         <attribute name="notes" optional="YES" attributeType="String"/>
         <relationship name="interval" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CareTaskInterval" inverseName="task" inverseEntity="CareTaskInterval"/>
         <relationship name="logs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CareTaskLog" inverseName="task" inverseEntity="CareTaskLog"/>
-        <relationship name="plants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Plant" inverseName="careTasks" inverseEntity="Plant"/>
+        <relationship name="plant" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Plant" inverseName="careTasks" inverseEntity="Plant"/>
         <relationship name="type" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="CareTaskType" inverseName="tasks" inverseEntity="CareTaskType"/>
     </entity>
     <entity name="CareTaskInterval" representedClassName="CareTaskIntervalMO" syncable="YES" codeGenerationType="class">
@@ -30,13 +30,13 @@
         <attribute name="isFavorite" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="plantingDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="careTasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CareTask" inverseName="plants" inverseEntity="CareTask"/>
+        <relationship name="careTasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CareTask" inverseName="plant" inverseEntity="CareTask"/>
     </entity>
     <elements>
-        <element name="CareTask" positionX="294.21484375" positionY="-279.07421875" width="128" height="133"/>
-        <element name="CareTaskInterval" positionX="546.89453125" positionY="-430.8671875" width="128" height="88"/>
-        <element name="CareTaskLog" positionX="558.48828125" positionY="-267.2421875" width="128" height="88"/>
-        <element name="CareTaskType" positionX="555.50390625" positionY="-136.5390625" width="128" height="118"/>
-        <element name="Plant" positionX="-15.7265625" positionY="-304.86328125" width="128" height="118"/>
+        <element name="CareTask" positionX="317.09375" positionY="-279.93359375" width="128" height="133"/>
+        <element name="CareTaskInterval" positionX="583.16015625" positionY="-418.3125" width="128" height="88"/>
+        <element name="CareTaskLog" positionX="602.875" positionY="-264.96484375" width="128" height="88"/>
+        <element name="CareTaskType" positionX="612.69921875" positionY="-44.51171875" width="128" height="118"/>
+        <element name="Plant" positionX="-207.8984375" positionY="-291.28125" width="128" height="118"/>
     </elements>
 </model>
