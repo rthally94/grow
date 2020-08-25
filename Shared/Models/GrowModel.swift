@@ -22,13 +22,20 @@ class GrowModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     let plantStorage: PlantStorage
+    let careTaskStorage: CareTaskStorage
     
     init(context: NSManagedObjectContext) {
         self.context = context
         
         plantStorage = PlantStorage(context: context)
+        careTaskStorage = CareTaskStorage(context: context)
         
         plantStorage.$plants
+            .map { _ in }
+            .sink(receiveValue: objectWillChange.send)
+            .store(in: &cancellables)
+        
+        careTaskStorage.objectWillChange
             .map { _ in }
             .sink(receiveValue: objectWillChange.send)
             .store(in: &cancellables)
@@ -69,17 +76,14 @@ extension GrowModel {
         plantStorage.update(plant)
     }
     
-    //    /// Adds a care task to a plant in the dataset.
-    //    /// - Parameters:
-    //    ///   - task: The task to assign
-    //    ///   - plant: The plant the task will be assigned to.
-    //    func addCareTask(_ task: CareTask, to plant: Plant) {
-    //        guard let plantIndex = plants.firstIndex(of: plant) else { return }
-    //        guard careTaskTypes.contains(where: { $0.id == task.associatedTask }) else { return }
-    //
-    //        plants[plantIndex].addCareTask(task)
-    //    }
-    //
+    /// Adds a care task to a plant in the dataset.
+    /// - Parameters:
+    ///   - task: The task to assign
+    ///   - plant: The plant the task will be assigned to.
+    func addCareTask(_ task: CareTask, to plant: Plant) {
+        careTaskStorage.add(task, to: plant)
+    }
+    
     //    /// Removes a care task from a plant.
     //    /// - Parameters:
     //    ///   - task: The task to unassign.
