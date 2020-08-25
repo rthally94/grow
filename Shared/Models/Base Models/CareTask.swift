@@ -31,12 +31,12 @@ extension CareTaskType {
 
 struct CareTask: Identifiable, Equatable, Hashable {
     var id = UUID()
+    
     var type: CareTaskType?
-    var interval: CareInterval
-
-    var notes: String
-
-    var logs: [CareTaskLog]
+    var interval = CareInterval()
+    
+    var notes = ""
+    var logs = [CareTaskLog]()
 }
 
 extension CareTask {
