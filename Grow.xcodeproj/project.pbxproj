@@ -42,6 +42,8 @@
 		21F4C23424BF15A900EB73E0 /* StatefulPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */; };
 		21F4C23624BF267A00EB73E0 /* PlantEditorForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */; };
 		FB081BA824DCA1D700FB0835 /* CareTaskType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB081BA724DCA1D700FB0835 /* CareTaskType.swift */; };
+		FB10CF8624F43F49001153DD /* CareTaskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB10CF8524F43F49001153DD /* CareTaskStorage.swift */; };
+		FB10CF8824F54158001153DD /* CareTaskLogMO+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB10CF8724F54158001153DD /* CareTaskLogMO+Extension.swift */; };
 		FB2DA7A224E47CB0001F1484 /* NSManagedObjectContext+ChildContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2DA7A124E47CB0001F1484 /* NSManagedObjectContext+ChildContext.swift */; };
 		FB355E5724EDE59000E6E94C /* PlantMO+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB355E5624EDE59000E6E94C /* PlantMO+Extensions.swift */; };
 		FB355E5924EE005F00E6E94C /* CareTaskMO+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB355E5824EE005F00E6E94C /* CareTaskMO+Extensions.swift */; };
@@ -114,6 +116,8 @@
 		21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewWrapper.swift; sourceTree = "<group>"; };
 		21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantEditorForm.swift; sourceTree = "<group>"; };
 		FB081BA724DCA1D700FB0835 /* CareTaskType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskType.swift; sourceTree = "<group>"; };
+		FB10CF8524F43F49001153DD /* CareTaskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskStorage.swift; sourceTree = "<group>"; };
+		FB10CF8724F54158001153DD /* CareTaskLogMO+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CareTaskLogMO+Extension.swift"; sourceTree = "<group>"; };
 		FB2DA7A124E47CB0001F1484 /* NSManagedObjectContext+ChildContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+ChildContext.swift"; sourceTree = "<group>"; };
 		FB355E5624EDE59000E6E94C /* PlantMO+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlantMO+Extensions.swift"; sourceTree = "<group>"; };
 		FB355E5824EE005F00E6E94C /* CareTaskMO+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CareTaskMO+Extensions.swift"; sourceTree = "<group>"; };
@@ -227,6 +231,7 @@
 			children = (
 				21BFB3F324B678DB00B94A72 /* GrowModel.swift */,
 				FB355E5B24EEFE7100E6E94C /* PlantStorage.swift */,
+				FB10CF8524F43F49001153DD /* CareTaskStorage.swift */,
 				FB355E5A24EEFE5700E6E94C /* Base Models */,
 				21BFB3F424B678DC00B94A72 /* Helpers */,
 			);
@@ -293,6 +298,7 @@
 				FB2DA7A124E47CB0001F1484 /* NSManagedObjectContext+ChildContext.swift */,
 				FB355E5624EDE59000E6E94C /* PlantMO+Extensions.swift */,
 				FB355E5824EE005F00E6E94C /* CareTaskMO+Extensions.swift */,
+				FB10CF8724F54158001153DD /* CareTaskLogMO+Extension.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -416,6 +422,7 @@
 				FB355E5724EDE59000E6E94C /* PlantMO+Extensions.swift in Sources */,
 				21BFB3B924B66E0800B94A72 /* AllPlantsView.swift in Sources */,
 				21F4C23224BF0E2300EB73E0 /* WeekPicker.swift in Sources */,
+				FB10CF8624F43F49001153DD /* CareTaskStorage.swift in Sources */,
 				2193552A24C07CC600F38392 /* IntervalPicker.swift in Sources */,
 				212A1E8A24B7664C002C147F /* PlantDetailView.swift in Sources */,
 				FB355E5C24EEFE7100E6E94C /* PlantStorage.swift in Sources */,
@@ -436,6 +443,7 @@
 				21BFB3FA24B678DC00B94A72 /* Formatters.swift in Sources */,
 				FB969D1F24E1FAAF008B3CF9 /* CareTaskTypePicker.swift in Sources */,
 				21DC516D24C506A1007372B1 /* CareTask.swift in Sources */,
+				FB10CF8824F54158001153DD /* CareTaskLogMO+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
