@@ -96,6 +96,8 @@ struct PlantEditorForm: View {
     // MARK: Actions
     private func addTask() {
         // TODO: Implement add task intent
+        let newTask = CareTask()
+        growModel.addCareTask(newTask, to: editorConfig.plant)
     }
     
     private func deleteTask(indices: IndexSet) {
