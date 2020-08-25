@@ -8,13 +8,15 @@
 
 import Foundation
 
-struct CareTaskLog: Equatable, Hashable {
+struct CareTaskLog: Identifiable, Equatable, Hashable {
+    var id = UUID()
     var date: Date
     var note: String
 }
 
 extension CareTaskLog {
     init?(managedObject: CareTaskLogMO) {
+        self.id = managedObject.id ?? UUID()
         self.date = managedObject.date ?? Date()
         self.note = ""
     }
