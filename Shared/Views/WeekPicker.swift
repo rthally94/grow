@@ -15,12 +15,12 @@ struct WeekPicker: View {
     
     private let symbols = Calendar.current.veryShortStandaloneWeekdaySymbols
     
-    init(selection: Binding<Int>?) {
+    init(selection: Binding<Int>) {
         singleSelection = selection
         pickerIsMulti = false
     }
     
-    init(selection: Binding<Set<Int>>?) {
+    init(selection: Binding<Set<Int>>) {
         multiSelection = selection
         pickerIsMulti = true
     }
