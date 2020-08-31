@@ -50,6 +50,7 @@
 		FB5D0F4B24F7DAD40070A75C /* CareTaskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5D0F4A24F7DAD40070A75C /* CareTaskStorage.swift */; };
 		FB969D1F24E1FAAF008B3CF9 /* CareTaskTypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB969D1E24E1FAAF008B3CF9 /* CareTaskTypePicker.swift */; };
 		FBA6A29424FAE5E10075E822 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA6A29324FAE5E10075E822 /* ImageLoader.swift */; };
+		FBA6A29724FD44700075E822 /* CareTaskDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA6A29624FD44700075E822 /* CareTaskDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
 		FB5D0F4A24F7DAD40070A75C /* CareTaskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskStorage.swift; sourceTree = "<group>"; };
 		FB969D1E24E1FAAF008B3CF9 /* CareTaskTypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskTypePicker.swift; sourceTree = "<group>"; };
 		FBA6A29324FAE5E10075E822 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		FBA6A29624FD44700075E822 /* CareTaskDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +157,7 @@
 		212A1E9624BE0EE3002C147F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FBA6A29524FD445F0075E822 /* CareTaskDetail */,
 				21C0C95124D0A3840062BEA8 /* PlantsTaskList */,
 				212A1E8D24BB192C002C147F /* Plant Detail */,
 				212A1E9D24BE2768002C147F /* Plant Editor */,
@@ -292,6 +295,14 @@
 			path = Persistence;
 			sourceTree = "<group>";
 		};
+		FBA6A29524FD445F0075E822 /* CareTaskDetail */ = {
+			isa = PBXGroup;
+			children = (
+				FBA6A29624FD44700075E822 /* CareTaskDetail.swift */,
+			);
+			path = CareTaskDetail;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -402,6 +413,7 @@
 				2193552824BF2C1900F38392 /* UITextFieldWrapper.swift in Sources */,
 				21BFB3B424B66E0800B94A72 /* SceneDelegate.swift in Sources */,
 				21BFB3F824B678DC00B94A72 /* GrowModel.swift in Sources */,
+				FBA6A29724FD44700075E822 /* CareTaskDetail.swift in Sources */,
 				FB10CF8A24F549CA001153DD /* StorageCRUD.swift in Sources */,
 				FB355E5924EE005F00E6E94C /* CareTaskMO+Extensions.swift in Sources */,
 				212A1E9524BD4EA5002C147F /* Color+SystemColor.swift in Sources */,
