@@ -30,9 +30,9 @@ struct UITextFieldWrapper: UIViewRepresentable {
     func updateUIView(_ uiView: UITextField, context: Context) {
         uiView.text = text
         
-        if isFirstResponder {
-            uiView.becomeFirstResponder()
-        }
+//        if isFirstResponder {
+//            uiView.becomeFirstResponder()
+//        }
     }
     
     var placeholder: String
