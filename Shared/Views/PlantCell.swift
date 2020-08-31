@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct IconImage: View {
     var icon: Image
@@ -28,8 +29,7 @@ struct IconImage: View {
 }
 
 struct PlantCell: View {
-    @EnvironmentObject var model: GrowModel
-    var plant: Plant
+    @ObservedObject var plant: PlantMO
     
     var body: some View {
         HStack(alignment: .top) {
@@ -39,23 +39,22 @@ struct PlantCell: View {
                 //                    .foregroundColor(.blue)
                 
                 Text(plant.name).font(.headline)
-                Text("\(plant.careTasks.count == 0 ? "No" : "\(plant.careTasks.count)") Task").opacity(0.8).font(.subheadline)
+                Text("\(plant.careTasks.count == 0 ? "No" : "\(plant.careTasks.count)") Tasks").opacity(0.8).font(.subheadline)
             }
             
-            Spacer(minLength: 16)
-            Button(action: toggleFavorite, label: {Image(systemName: plant.isFavorite ? "star.fill" : "star")})
+            Spacer()
         }
-    }
-    
-    func toggleFavorite() {
-        model.setPlantFavorite(!plant.isFavorite, for: plant)
+        .padding()
     }
 }
 
 struct PlantCell_Previews: PreviewProvider {
     static var previews: some View {
-        PlantCell(plant: Plant()).environmentObject(GrowModel())
-            .padding()
-            .background(RoundedRectangle(cornerRadius: 15).fill(Color.systemGroupedBackground))
+        let plant = PlantMO(context: .init(concurrencyType: .mainQueueConcurrencyType))
+        
+        return
+            PlantCell(plant: plant)
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 15).fill(Color.systemGroupedBackground))
     }
 }
