@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 extension CareTaskMO {
-    static func allTasksFetchRequest() -> NSFetchRequest<CareTaskMO> {
+    
     /// Creates a predicate for filtering tasks that require care today. Includes tasks that have outstanding care needs.
     /// - Returns: The predicate for filtering
     static func tasksNeedingCareTodayPredicate() -> NSPredicate {
@@ -31,8 +31,10 @@ extension CareTaskMO {
         
         return NSCompoundPredicate(andPredicateWithSubpredicates: [lowerBound, upperBound])
     }
+    
+    static func taskFetchRequest() -> NSFetchRequest<CareTaskMO> {
         let request: NSFetchRequest<CareTaskMO> = CareTaskMO.fetchRequest()
-        request.sortDescriptors = [ NSSortDescriptor(keyPath: \CareTaskMO.type, ascending: true) ]
+        request.sortDescriptors = [ NSSortDescriptor(keyPath: \CareTaskMO.type_, ascending: true) ]
         return request
     }
 }
