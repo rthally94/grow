@@ -40,10 +40,61 @@ extension CareTaskMO {
 }
 
 extension CareTaskMO {
-    convenience init?(task: CareTask, context: NSManagedObjectContext) {
-        self.init(context: context)
+    var id: UUID {
+        get {
+            if let id = id_ {
+                return id
+            } else {
+                let id = UUID()
+                id_ = id
+                return id
+            }
+        }
+    }
+    
+    var note: String {
+        get { note_ ?? "" }
+        set { note_ = newValue }
+    }
+    
+    var type: CareTaskTypeMO {
+        get {
+            if let type = type_ { return type }
+            else {
+                guard let context = managedObjectContext else { fatalError("Cannot fetch default task type. Care Task not linked to a managed object context.") }
+                if let type = try? context.fetch(CareTaskTypeMO.allBuiltInTypesRequest()).first {
+                    return type
+                } else {
+                    let type = CareTaskTypeMO(context: context)
+                    type.id = UUID()
+                    type.builtIn = true
+                    type.name = "General"
+                    type.color = "systemBlue"
+                    type.icon = "doc.fill"
+                    
+                    type_ = type
+                    return type
+                }
+            }
+        }
         
-        self.id = task.id
-        self.notes = task.notes
+        set { type_ = newValue }
+    }
+    
+    var interval: CareTaskIntervalMO {
+        get {
+            if let interval = interval_ { return interval }
+            else {
+                guard let context = managedObjectContext else { fatalError("Cannot fetch default interval. Care Task not linked to a managed object context.") }
+                let interval = CareTaskIntervalMO(context: context)
+                interval.unit = .never
+                interval.values = []
+                
+                interval_ = interval
+                return interval
+            }
+        }
+        
+        set { interval_ = newValue }
     }
 }
