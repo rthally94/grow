@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct RootView: View {
+    @EnvironmentObject var growModel: GrowModel
+    
     var body: some View {
         TabView {
             NavigationView {
@@ -30,6 +32,13 @@ struct RootView: View {
                     Text("Plants")
                 }
             }
+        }
+        .sheet(item: $growModel.selectedPlantForEditing) { plant in
+            NavigationView {
+                PlantEditorForm(plant: plant)
+            }
+            .accentColor(.GrowGreen2)
+            .environmentObject(self.growModel)
         }
     }
 }
