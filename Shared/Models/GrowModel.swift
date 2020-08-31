@@ -12,23 +12,33 @@ import Combine
 
 class GrowModel: ObservableObject {
     let context: NSManagedObjectContext
+    
     private var cancellables = Set<AnyCancellable>()
     
     let plantStorage: PlantStorage
     let careTaskStorage: CareTaskStorage
+    let careTaskTypeStorage: CareTaskTypeStorage
+    
+    @Published var selectedPlantForEditing: PlantMO?
     
     init(context: NSManagedObjectContext) {
         self.context = context
         
         plantStorage = PlantStorage(context: context)
         careTaskStorage = CareTaskStorage(context: context)
+        careTaskTypeStorage = CareTaskTypeStorage(context: context)
         
         plantStorage.$plants
             .map { _ in }
             .sink(receiveValue: objectWillChange.send)
             .store(in: &cancellables)
         
-        careTaskStorage.objectWillChange
+        careTaskStorage.$tasks
+            .map { _ in }
+            .sink(receiveValue: objectWillChange.send)
+            .store(in: &cancellables)
+        
+        careTaskTypeStorage.$types
             .map { _ in }
             .sink(receiveValue: objectWillChange.send)
             .store(in: &cancellables)
@@ -77,6 +87,18 @@ extension GrowModel {
         careTaskStorage.add(task, to: plant)
     }
     
+// CareTaskType Intents
+extension GrowModel {
+    func addCareTaskType(name: String) {
+        careTaskTypeStorage.create(name: name)
+    }
+    
+    func removeCareTaskType(indices: IndexSet) {
+        for index in indices {
+            careTaskTypeStorage.delete(careTaskTypeStorage.types[index])
+        }
+    }
+}
     //    /// Removes a care task from a plant.
     //    /// - Parameters:
     //    ///   - task: The task to unassign.
