@@ -153,6 +153,7 @@ struct GrowPicker<Data: RandomAccessCollection, Content: View>: View where Data.
                 .font(style.TextFont)
                 .lineLimit(1)
             }
+            .buttonStyle(PlainButtonStyle())
             .foregroundColor(getSegmentColor(isSelected: isSelected, isDefault: isDefault))
             .frame(minWidth: 0, maxWidth: .infinity)
             .eraseToAnyView()
