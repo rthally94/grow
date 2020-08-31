@@ -14,7 +14,7 @@ class CareTaskTypeStorage: NSObject, ObservableObject {
     private let context: NSManagedObjectContext
     private let allTypesController: NSFetchedResultsController<CareTaskTypeMO>
     
-    @Published var allTypes = [CareTaskTypeMO]()
+    @Published var types = [CareTaskTypeMO]()
     
     init(context: NSManagedObjectContext) {
         self.context = context
@@ -27,7 +27,7 @@ class CareTaskTypeStorage: NSObject, ObservableObject {
         
         do {
             try allTypesController.performFetch()
-            allTypes = allTypesController.fetchedObjects ?? []
+            types = allTypesController.fetchedObjects ?? []
         } catch {
             print("Fetch Failed! | \(error.localizedDescription)")
         }
@@ -35,22 +35,22 @@ class CareTaskTypeStorage: NSObject, ObservableObject {
 }
 
 extension CareTaskTypeStorage: NSFetchedResultsControllerDelegate {
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        allTypes = allTypesController.fetchedObjects ?? []
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        types = allTypesController.fetchedObjects ?? []
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
         case .update:
-            print("Updated")
+            print("Updated type")
         case.delete:
-            print("Deleted")
+            print("Deleted type")
         case .insert:
-            print("Inserted")
+            print("Inserted type")
         case .move:
-            print("Moved")
+            print("Moved type")
         default:
-            print("Other")
+            print("Other type")
         }
     }
 }
