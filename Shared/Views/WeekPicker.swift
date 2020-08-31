@@ -9,59 +9,47 @@
 import SwiftUI
 
 struct WeekPicker: View {
-    enum SelectionMode {
-        case single, multiple
-    }
+    var singleSelection: Binding<Int>?
+    var multiSelection: Binding<Set<Int>>?
+    let pickerIsMulti: Bool
     
-    @Binding var selection: Set<Int>
-    
-    var daysOfWeek: [(String, Bool)] {
-        return symbols.enumerated().map { (index, value) in
-            let isSelected = selection.contains(index)
-            
-            return ("\(value.lowercased()).circle.fill", isSelected)
-        }
-    }
-    
-    var selectionMode: SelectionMode
     private let symbols = Calendar.current.veryShortStandaloneWeekdaySymbols
     
-    init(selection: Binding<Set<Int>>, selectionMode: SelectionMode = .single) {
-        self._selection = selection
-        self.selectionMode = selectionMode
+    init(selection: Binding<Int>) {
+        singleSelection = selection
+        pickerIsMulti = false
+    }
+    
+    init(selection: Binding<Set<Int>>) {
+        multiSelection = selection
+        pickerIsMulti = true
     }
     
     var body: some View {
-        HStack {
-            ForEach(Array(daysOfWeek.enumerated()), id: \.0) { (index, day) in
-                Image(systemName: day.0)
-                    .font(.title)
-                    .foregroundColor(day.1 ? .accentColor : .gray)
-                    .frame(maxWidth: .infinity)
-                    .onTapGesture{ self.handleSelection(index: index) }
-            }
+        getPickerView()
+    }
+    
+    private func getPickerView() -> some View {
+        if !pickerIsMulti {
+            return GrowPicker(0..<symbols.count, selection: singleSelection, content: pickerContent)
+        } else {
+            return GrowPicker(0..<symbols.count, selection: multiSelection, content: pickerContent)
         }
     }
     
-    func handleSelection(index: Int) {
-        switch selectionMode {
-        case .single:
-            selection.removeAll()
-            selection.insert(index)
-        case .multiple:
-            if selection.contains(index) {
-                selection.remove(index)
-            } else {
-                selection.insert(index)
-            }
-        }
+    private func pickerContent(item: Int, isSelected: Bool) -> some View {
+        Text(self.symbols[item])
+            .foregroundColor(isSelected ? .white : nil)
+            .padding(.vertical, 6)
+            .frame(minWidth: .zero, maxWidth: .infinity)
+            .background(Circle().scale(isSelected ? 1 : 0))
     }
 }
 
 struct WeekPicker_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            StatefulPreviewWrapper(Set(arrayLiteral: 0)) { value in
+            StatefulPreviewWrapper(0) { value in
                 VStack {
                     WeekPicker(selection: value)
                     Text(value.wrappedValue.description)
@@ -71,7 +59,7 @@ struct WeekPicker_Previews: PreviewProvider {
             
             StatefulPreviewWrapper(Set(0...6)) { value in
                 VStack {
-                    WeekPicker(selection: value, selectionMode: .multiple)
+                    WeekPicker(selection: value)
                     Text(value.wrappedValue.description)
                 }
             }

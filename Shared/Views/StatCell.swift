@@ -9,25 +9,43 @@
 import SwiftUI
 
 struct StatCell<Content: View>: View {
-    let title: Text
+    let title: Text?
+    let icon: Image?
     let content: () -> Content
     
     var body: some View {
         VStack(alignment: .leading) {
-            self.title
-                .opacity(0.8)
+            HStack {
+                icon?
+                    .renderingMode(.template)
+                    .imageScale(.small)
+                
+                self.title?
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                
+                Spacer()
+            }
+            .foregroundColor(.blue)
+            .opacity(0.8)
+            
             HStack {
                 content()
-            }.font(.headline)
+            }.font(.system(size: 18, weight: .semibold, design: .rounded))
         }
     }
     
-    init(title: String, @ViewBuilder content: @escaping () -> Content) {
-        self.init(title: Text(title), content: content)
+    init(title: String, iconSystemName: String, @ViewBuilder content: @escaping () -> Content) {
+        self.init(title: Text(title), icon: Image(systemName: iconSystemName), content: content)
     }
     
-    init(title: Text, @ViewBuilder content: @escaping () -> Content) {
+    init(title: String, iconName: String, @ViewBuilder content: @escaping () -> Content) {
+        self.init(title: Text(title), icon: Image(iconName), content: content)
+    }
+    
+    init(title: Text? = nil, icon: Image? = nil, @ViewBuilder content: @escaping () -> Content) {
         self.title = title
+        self.icon = icon
         self.content = content
     }
 }
@@ -36,7 +54,7 @@ struct StatCell_Previews: PreviewProvider {
     static var previews: some View {
         Group {
 //            StatCell(title: "Title", subtitle: "Subtitle")
-            StatCell(title: Text("Title"), content: {
+            StatCell(title: Text("Title"), icon: Image(systemName: "flame"), content: {
                 Image(systemName: "cloud")
                 Text("Content")
             })
