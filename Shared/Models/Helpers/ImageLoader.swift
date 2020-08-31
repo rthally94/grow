@@ -7,3 +7,23 @@
 //
 
 import Foundation
+import SwiftUI
+
+struct ImageLoader {
+    let imageName: String
+    var uiImage: UIImage
+    var image: Image
+    
+    init?(_ imageName: String) {
+        self.imageName = imageName
+        if let bundleImage = UIImage(named: imageName) {
+            self.uiImage = bundleImage
+            self.image = Image(imageName)
+        } else if let systemImage = UIImage(systemName: imageName) {
+            self.uiImage = systemImage
+            self.image = Image(systemName: imageName)
+        } else {
+            return nil
+        }
+    }
+}
