@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+protocol StorageCRUD {
+    associatedtype Item
+    @discardableResult func create() -> Item
+    func delete(_ item: Item)
+}

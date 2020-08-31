@@ -10,13 +10,6 @@ import Foundation
 import CoreData
 import Combine
 
-protocol StorageCRUD {
-    associatedtype Item
-    func add(_ item: Item) -> Void
-    func update(_ item: Item) -> Void
-    func remove(_ item: Item) -> Void
-}
-
 class GrowModel: ObservableObject {
     let context: NSManagedObjectContext
     private var cancellables = Set<AnyCancellable>()
