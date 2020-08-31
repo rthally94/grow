@@ -54,3 +54,32 @@ extension CareTaskTypeStorage: NSFetchedResultsControllerDelegate {
         }
     }
 }
+
+extension CareTaskTypeStorage {
+    func create(name: String) {
+        let type = CareTaskTypeMO(context: context)
+        type.id = UUID()
+        type.name = name
+        type.builtIn = false
+    }
+    
+    func delete(_ type: CareTaskTypeMO) {
+        // If built in - do not delete
+        guard type.builtIn == false else { return }
+        
+        // Get a built in task
+        let request: NSFetchRequest<CareTaskTypeMO> = CareTaskTypeMO.allBuiltInTypesRequest()
+        guard let replacementType = try? context.fetch(request).first else { return }
+        
+        // Type cast NSSet as Set
+        guard let tasks = type.tasks as? Set<CareTaskMO> else { return }
+        
+        // Replace current type with replacement
+        for task in tasks {
+            task.type = replacementType
+        }
+        
+        // Delete current type
+        context.delete(type)
+    }
+}
