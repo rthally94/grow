@@ -19,14 +19,36 @@ extension PlantMO {
     }
 }
 
+extension PlantMO: Identifiable { }
+
 extension PlantMO {
-    convenience init?(plant: Plant, context: NSManagedObjectContext) {
-        self.init(context: context)
+    public var id: UUID {
+        if let id = id_ {
+            return id
+        } else {
+            let id = UUID()
+            id_ = id
+            return id
+        }
+    }
+    
+    var name: String {
+        get {
+            name_ ?? ""
+        }
         
-        self.name = plant.name
-        self.isFavorite = plant.isFavorite
-        self.plantingDate = plant.plantingDate
+        set {
+            name_ = newValue
+        }
+    }
+    
+    var careTasks: Set<CareTaskMO> {
+        get {
+            careTasks_ as? Set<CareTaskMO> ?? []
+        }
         
-        self.careTasks = []
+        set {
+            careTasks_ = newValue as NSSet
+        }
     }
 }
