@@ -51,40 +51,35 @@ class GrowModel: ObservableObject {
     }
 }
 
-// MARK: PLant Intents
+// MARK: Plant Intents
 extension GrowModel {
     /// Adds a default plant to the dataset
     func addPlant() {
-        let newPlantCount = plantStorage.plants.reduce(0) { (count, plant) in
-            plant.name.hasPrefix("New Plant") ? count + 1 : count
-        }
-        let newPlantName = "New Plant \(newPlantCount + 1)"
-        
-        addPlant(Plant(name: newPlantName))
+        plantStorage.create()
     }
     
     /// Adds a parameterized plant to the dataset
     /// - Parameter name: The name of the plant
-    func addPlant(_ plant: Plant) {
-        plantStorage.add(plant)
+    func addPlant(name: String? = nil, isFavorite: Bool? = nil, plantingDate: Date? = nil, careTasks: Set<CareTaskMO>? = nil) {
+        let newPlant = plantStorage.create()
+        updatePlant(newPlant, name: name, isFavorite: isFavorite, plantingDate: plantingDate, careTasks: careTasks)
     }
     
     /// Removes a plant from the dataset
     /// - Parameter plant: The plant to remove
-    func removePlant(_ plant: Plant) {
-        plantStorage.remove(plant)
+    func removePlant(_ plant: PlantMO) {
+        plantStorage.delete(plant)
     }
     
-    func updatePlant(_ plant: Plant) {
-        plantStorage.update(plant)
+    func updatePlant(_ plant: PlantMO, name: String? = nil, isFavorite: Bool? = nil, plantingDate: Date? = nil, careTasks: Set<CareTaskMO>? = nil) {
+        plantStorage.update(plant, name: name, isFavorite: isFavorite, plantingDate: plantingDate, careTasks: careTasks)
     }
     
-    /// Adds a care task to a plant in the dataset.
-    /// - Parameters:
-    ///   - task: The task to assign
-    ///   - plant: The plant the task will be assigned to.
-    func addCareTask(_ task: CareTask, to plant: Plant) {
-        careTaskStorage.add(task, to: plant)
+    func selectPlantForEditing(_ plant: PlantMO) {
+        // Set as selected
+        selectedPlantForEditing = plant
+    }
+    
     }
     
 // CareTaskType Intents
