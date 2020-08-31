@@ -11,6 +11,26 @@ import CoreData
 
 extension CareTaskMO {
     static func allTasksFetchRequest() -> NSFetchRequest<CareTaskMO> {
+    /// Creates a predicate for filtering tasks that require care today. Includes tasks that have outstanding care needs.
+    /// - Returns: The predicate for filtering
+    static func tasksNeedingCareTodayPredicate() -> NSPredicate {
+        let startOfDay = Calendar.current.startOfDay(for: Date())
+        let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay) ?? Date()
+        
+        return NSPredicate(format: "ANY logs_.date <= %@ ", endOfDay as NSDate)
+    }
+    
+    /// Creates a predicate for filtering tasks that require care on a specified date.
+    /// - Parameter date: The desired date for care
+    /// - Returns: The predicate for filtering
+    static func tasksNeedingCarePrediate(on date: Date) -> NSPredicate {
+        let startOfDay = Calendar.current.startOfDay(for: date)
+        let endOfDay = Calendar.current.date(byAdding: .day, value: 1, to: startOfDay) ?? Date()
+        let lowerBound = NSPredicate(format: "ANY logs_.date >= %@", startOfDay as NSDate)
+        let upperBound = NSPredicate(format: "ANY logs_.date < %@", endOfDay as NSDate)
+        
+        return NSCompoundPredicate(andPredicateWithSubpredicates: [lowerBound, upperBound])
+    }
         let request: NSFetchRequest<CareTaskMO> = CareTaskMO.fetchRequest()
         request.sortDescriptors = [ NSSortDescriptor(keyPath: \CareTaskMO.type, ascending: true) ]
         return request
