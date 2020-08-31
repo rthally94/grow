@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		212A1E8A24B7664C002C147F /* PlantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E8924B7664C002C147F /* PlantDetailView.swift */; };
-		212A1E8C24B893F7002C147F /* CareTaskLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E8B24B893F7002C147F /* CareTaskLog.swift */; };
 		212A1E9124BD2143002C147F /* CareActivityList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9024BD2143002C147F /* CareActivityList.swift */; };
 		212A1E9324BD4BC8002C147F /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9224BD4BC7002C147F /* RootView.swift */; };
 		212A1E9524BD4EA5002C147F /* Color+SystemColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9424BD4EA5002C147F /* Color+SystemColor.swift */; };
@@ -17,7 +16,6 @@
 		212A1E9C24BE1137002C147F /* StatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212A1E9B24BE1137002C147F /* StatCell.swift */; };
 		2193552824BF2C1900F38392 /* UITextFieldWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2193552724BF2C1900F38392 /* UITextFieldWrapper.swift */; };
 		2193552A24C07CC600F38392 /* IntervalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2193552924C07CC600F38392 /* IntervalPicker.swift */; };
-		2193552C24C1217E00F38392 /* CareInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2193552B24C1217E00F38392 /* CareInterval.swift */; };
 		21BFB3B224B66E0800B94A72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3B124B66E0800B94A72 /* AppDelegate.swift */; };
 		21BFB3B424B66E0800B94A72 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3B324B66E0800B94A72 /* SceneDelegate.swift */; };
 		21BFB3B724B66E0800B94A72 /* Grow.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3B524B66E0800B94A72 /* Grow.xcdatamodeld */; };
@@ -28,29 +26,30 @@
 		21BFB3F824B678DC00B94A72 /* GrowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3F324B678DB00B94A72 /* GrowModel.swift */; };
 		21BFB3F924B678DC00B94A72 /* RelativeDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3F524B678DC00B94A72 /* RelativeDateFormatter.swift */; };
 		21BFB3FA24B678DC00B94A72 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3F624B678DC00B94A72 /* Formatters.swift */; };
-		21BFB3FB24B678DC00B94A72 /* Plant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3F724B678DC00B94A72 /* Plant.swift */; };
 		21BFB41524B67A5D00B94A72 /* CareIntervalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3FF24B6793500B94A72 /* CareIntervalTest.swift */; };
 		21BFB41724B67A5D00B94A72 /* GrowModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21BFB3FD24B6793500B94A72 /* GrowModelTest.swift */; };
 		21C0C95324D0A39B0062BEA8 /* PlantsTaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C0C95224D0A39B0062BEA8 /* PlantsTaskList.swift */; };
 		21C0C95524D1C8240062BEA8 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C0C95424D1C8240062BEA8 /* Date+Extension.swift */; };
 		21DBE11724D5B6FB00D8CC9C /* GrowTaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DBE11624D5B6FB00D8CC9C /* GrowTaskCard.swift */; };
-		21DC516D24C506A1007372B1 /* CareTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DC516C24C506A1007372B1 /* CareTask.swift */; };
 		21DC517024C50AF2007372B1 /* CareTaskEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DC516F24C50AF2007372B1 /* CareTaskEditor.swift */; };
 		21E8883424D60EB300BC0EAC /* SegmentedPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E8883324D60EB300BC0EAC /* SegmentedPicker.swift */; };
 		21F49F7424CF809E00ECC828 /* PlantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F49F7324CF809E00ECC828 /* PlantCell.swift */; };
 		21F4C23224BF0E2300EB73E0 /* WeekPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23124BF0E2300EB73E0 /* WeekPicker.swift */; };
 		21F4C23424BF15A900EB73E0 /* StatefulPreviewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */; };
 		21F4C23624BF267A00EB73E0 /* PlantEditorForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */; };
-		FB081BA824DCA1D700FB0835 /* CareTaskType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB081BA724DCA1D700FB0835 /* CareTaskType.swift */; };
-		FB10CF8624F43F49001153DD /* CareTaskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB10CF8524F43F49001153DD /* CareTaskStorage.swift */; };
-		FB10CF8824F54158001153DD /* CareTaskLogMO+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB10CF8724F54158001153DD /* CareTaskLogMO+Extension.swift */; };
+		FB10CF8624F43F49001153DD /* CareTaskTypeStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB10CF8524F43F49001153DD /* CareTaskTypeStorage.swift */; };
+		FB10CF8A24F549CA001153DD /* StorageCRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB10CF8924F549CA001153DD /* StorageCRUD.swift */; };
+		FB10CF8C24F6B005001153DD /* CareTaskTypeMO+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB10CF8B24F6B005001153DD /* CareTaskTypeMO+Extension.swift */; };
 		FB2DA7A224E47CB0001F1484 /* NSManagedObjectContext+ChildContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2DA7A124E47CB0001F1484 /* NSManagedObjectContext+ChildContext.swift */; };
 		FB355E5724EDE59000E6E94C /* PlantMO+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB355E5624EDE59000E6E94C /* PlantMO+Extensions.swift */; };
 		FB355E5924EE005F00E6E94C /* CareTaskMO+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB355E5824EE005F00E6E94C /* CareTaskMO+Extensions.swift */; };
 		FB355E5C24EEFE7100E6E94C /* PlantStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB355E5B24EEFE7100E6E94C /* PlantStorage.swift */; };
 		FB54CAC424D84C17006BB3C5 /* Color+GrowColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB54CAC324D84C17006BB3C5 /* Color+GrowColors.swift */; };
 		FB54CAC624D886F3006BB3C5 /* GrowPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB54CAC524D886F3006BB3C5 /* GrowPicker.swift */; };
+		FB5D0F4924F7007A0070A75C /* CareTaskIntervalMO+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5D0F4824F7007A0070A75C /* CareTaskIntervalMO+Extension.swift */; };
+		FB5D0F4B24F7DAD40070A75C /* CareTaskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5D0F4A24F7DAD40070A75C /* CareTaskStorage.swift */; };
 		FB969D1F24E1FAAF008B3CF9 /* CareTaskTypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB969D1E24E1FAAF008B3CF9 /* CareTaskTypePicker.swift */; };
+		FBA6A29424FAE5E10075E822 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA6A29324FAE5E10075E822 /* ImageLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,7 +77,6 @@
 
 /* Begin PBXFileReference section */
 		212A1E8924B7664C002C147F /* PlantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailView.swift; sourceTree = "<group>"; };
-		212A1E8B24B893F7002C147F /* CareTaskLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskLog.swift; sourceTree = "<group>"; };
 		212A1E9024BD2143002C147F /* CareActivityList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareActivityList.swift; sourceTree = "<group>"; };
 		212A1E9224BD4BC7002C147F /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		212A1E9424BD4EA5002C147F /* Color+SystemColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+SystemColor.swift"; sourceTree = "<group>"; };
@@ -87,7 +85,6 @@
 		212A1E9B24BE1137002C147F /* StatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatCell.swift; sourceTree = "<group>"; };
 		2193552724BF2C1900F38392 /* UITextFieldWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldWrapper.swift; sourceTree = "<group>"; };
 		2193552924C07CC600F38392 /* IntervalPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalPicker.swift; sourceTree = "<group>"; };
-		2193552B24C1217E00F38392 /* CareInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareInterval.swift; sourceTree = "<group>"; };
 		21BFB3AE24B66E0800B94A72 /* Grow!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Grow!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21BFB3B124B66E0800B94A72 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21BFB3B324B66E0800B94A72 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,7 +97,6 @@
 		21BFB3F324B678DB00B94A72 /* GrowModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrowModel.swift; sourceTree = "<group>"; };
 		21BFB3F524B678DC00B94A72 /* RelativeDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelativeDateFormatter.swift; sourceTree = "<group>"; };
 		21BFB3F624B678DC00B94A72 /* Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
-		21BFB3F724B678DC00B94A72 /* Plant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plant.swift; sourceTree = "<group>"; };
 		21BFB3FD24B6793500B94A72 /* GrowModelTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrowModelTest.swift; sourceTree = "<group>"; };
 		21BFB3FF24B6793500B94A72 /* CareIntervalTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CareIntervalTest.swift; sourceTree = "<group>"; };
 		21BFB40B24B67A2400B94A72 /* GrowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,23 +104,25 @@
 		21C0C95224D0A39B0062BEA8 /* PlantsTaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantsTaskList.swift; sourceTree = "<group>"; };
 		21C0C95424D1C8240062BEA8 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		21DBE11624D5B6FB00D8CC9C /* GrowTaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowTaskCard.swift; sourceTree = "<group>"; };
-		21DC516C24C506A1007372B1 /* CareTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTask.swift; sourceTree = "<group>"; };
 		21DC516F24C50AF2007372B1 /* CareTaskEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskEditor.swift; sourceTree = "<group>"; };
 		21E8883324D60EB300BC0EAC /* SegmentedPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedPicker.swift; sourceTree = "<group>"; };
 		21F49F7324CF809E00ECC828 /* PlantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantCell.swift; sourceTree = "<group>"; };
 		21F4C23124BF0E2300EB73E0 /* WeekPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekPicker.swift; sourceTree = "<group>"; };
 		21F4C23324BF15A900EB73E0 /* StatefulPreviewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewWrapper.swift; sourceTree = "<group>"; };
 		21F4C23524BF267A00EB73E0 /* PlantEditorForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantEditorForm.swift; sourceTree = "<group>"; };
-		FB081BA724DCA1D700FB0835 /* CareTaskType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskType.swift; sourceTree = "<group>"; };
-		FB10CF8524F43F49001153DD /* CareTaskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskStorage.swift; sourceTree = "<group>"; };
-		FB10CF8724F54158001153DD /* CareTaskLogMO+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CareTaskLogMO+Extension.swift"; sourceTree = "<group>"; };
+		FB10CF8524F43F49001153DD /* CareTaskTypeStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskTypeStorage.swift; sourceTree = "<group>"; };
+		FB10CF8924F549CA001153DD /* StorageCRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCRUD.swift; sourceTree = "<group>"; };
+		FB10CF8B24F6B005001153DD /* CareTaskTypeMO+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CareTaskTypeMO+Extension.swift"; sourceTree = "<group>"; };
 		FB2DA7A124E47CB0001F1484 /* NSManagedObjectContext+ChildContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+ChildContext.swift"; sourceTree = "<group>"; };
 		FB355E5624EDE59000E6E94C /* PlantMO+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlantMO+Extensions.swift"; sourceTree = "<group>"; };
 		FB355E5824EE005F00E6E94C /* CareTaskMO+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CareTaskMO+Extensions.swift"; sourceTree = "<group>"; };
 		FB355E5B24EEFE7100E6E94C /* PlantStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantStorage.swift; sourceTree = "<group>"; };
 		FB54CAC324D84C17006BB3C5 /* Color+GrowColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+GrowColors.swift"; sourceTree = "<group>"; };
 		FB54CAC524D886F3006BB3C5 /* GrowPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowPicker.swift; sourceTree = "<group>"; };
+		FB5D0F4824F7007A0070A75C /* CareTaskIntervalMO+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CareTaskIntervalMO+Extension.swift"; sourceTree = "<group>"; };
+		FB5D0F4A24F7DAD40070A75C /* CareTaskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskStorage.swift; sourceTree = "<group>"; };
 		FB969D1E24E1FAAF008B3CF9 /* CareTaskTypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskTypePicker.swift; sourceTree = "<group>"; };
+		FBA6A29324FAE5E10075E822 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,10 +227,11 @@
 		21BFB3E924B678A100B94A72 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FB10CF8924F549CA001153DD /* StorageCRUD.swift */,
 				21BFB3F324B678DB00B94A72 /* GrowModel.swift */,
 				FB355E5B24EEFE7100E6E94C /* PlantStorage.swift */,
-				FB10CF8524F43F49001153DD /* CareTaskStorage.swift */,
-				FB355E5A24EEFE5700E6E94C /* Base Models */,
+				FB5D0F4A24F7DAD40070A75C /* CareTaskStorage.swift */,
+				FB10CF8524F43F49001153DD /* CareTaskTypeStorage.swift */,
 				21BFB3F424B678DC00B94A72 /* Helpers */,
 			);
 			path = Models;
@@ -246,6 +245,7 @@
 				21BFB3F524B678DC00B94A72 /* RelativeDateFormatter.swift */,
 				21BFB3F624B678DC00B94A72 /* Formatters.swift */,
 				21C0C95424D1C8240062BEA8 /* Date+Extension.swift */,
+				FBA6A29324FAE5E10075E822 /* ImageLoader.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -279,18 +279,6 @@
 			path = CareTaskEditor;
 			sourceTree = "<group>";
 		};
-		FB355E5A24EEFE5700E6E94C /* Base Models */ = {
-			isa = PBXGroup;
-			children = (
-				21BFB3F724B678DC00B94A72 /* Plant.swift */,
-				212A1E8B24B893F7002C147F /* CareTaskLog.swift */,
-				2193552B24C1217E00F38392 /* CareInterval.swift */,
-				21DC516C24C506A1007372B1 /* CareTask.swift */,
-				FB081BA724DCA1D700FB0835 /* CareTaskType.swift */,
-			);
-			path = "Base Models";
-			sourceTree = "<group>";
-		};
 		FB7D159B24EC35C000248A52 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,7 +286,8 @@
 				FB2DA7A124E47CB0001F1484 /* NSManagedObjectContext+ChildContext.swift */,
 				FB355E5624EDE59000E6E94C /* PlantMO+Extensions.swift */,
 				FB355E5824EE005F00E6E94C /* CareTaskMO+Extensions.swift */,
-				FB10CF8724F54158001153DD /* CareTaskLogMO+Extension.swift */,
+				FB10CF8B24F6B005001153DD /* CareTaskTypeMO+Extension.swift */,
+				FB5D0F4824F7007A0070A75C /* CareTaskIntervalMO+Extension.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -406,44 +395,43 @@
 			buildActionMask = 2147483647;
 			files = (
 				21BFB3B224B66E0800B94A72 /* AppDelegate.swift in Sources */,
+				FB5D0F4B24F7DAD40070A75C /* CareTaskStorage.swift in Sources */,
 				21F49F7424CF809E00ECC828 /* PlantCell.swift in Sources */,
 				FB54CAC624D886F3006BB3C5 /* GrowPicker.swift in Sources */,
 				212A1E9124BD2143002C147F /* CareActivityList.swift in Sources */,
 				2193552824BF2C1900F38392 /* UITextFieldWrapper.swift in Sources */,
 				21BFB3B424B66E0800B94A72 /* SceneDelegate.swift in Sources */,
 				21BFB3F824B678DC00B94A72 /* GrowModel.swift in Sources */,
+				FB10CF8A24F549CA001153DD /* StorageCRUD.swift in Sources */,
 				FB355E5924EE005F00E6E94C /* CareTaskMO+Extensions.swift in Sources */,
-				2193552C24C1217E00F38392 /* CareInterval.swift in Sources */,
 				212A1E9524BD4EA5002C147F /* Color+SystemColor.swift in Sources */,
 				21C0C95324D0A39B0062BEA8 /* PlantsTaskList.swift in Sources */,
 				FB2DA7A224E47CB0001F1484 /* NSManagedObjectContext+ChildContext.swift in Sources */,
-				FB081BA824DCA1D700FB0835 /* CareTaskType.swift in Sources */,
 				212A1E9824BE0F05002C147F /* InsetGroupedSection.swift in Sources */,
 				FB355E5724EDE59000E6E94C /* PlantMO+Extensions.swift in Sources */,
 				21BFB3B924B66E0800B94A72 /* AllPlantsView.swift in Sources */,
 				21F4C23224BF0E2300EB73E0 /* WeekPicker.swift in Sources */,
-				FB10CF8624F43F49001153DD /* CareTaskStorage.swift in Sources */,
+				FB10CF8624F43F49001153DD /* CareTaskTypeStorage.swift in Sources */,
 				2193552A24C07CC600F38392 /* IntervalPicker.swift in Sources */,
 				212A1E8A24B7664C002C147F /* PlantDetailView.swift in Sources */,
+				FB10CF8C24F6B005001153DD /* CareTaskTypeMO+Extension.swift in Sources */,
 				FB355E5C24EEFE7100E6E94C /* PlantStorage.swift in Sources */,
 				21DBE11724D5B6FB00D8CC9C /* GrowTaskCard.swift in Sources */,
 				21F4C23624BF267A00EB73E0 /* PlantEditorForm.swift in Sources */,
 				21BFB3F924B678DC00B94A72 /* RelativeDateFormatter.swift in Sources */,
-				21BFB3FB24B678DC00B94A72 /* Plant.swift in Sources */,
 				21F4C23424BF15A900EB73E0 /* StatefulPreviewWrapper.swift in Sources */,
 				212A1E9324BD4BC8002C147F /* RootView.swift in Sources */,
 				FB54CAC424D84C17006BB3C5 /* Color+GrowColors.swift in Sources */,
+				FBA6A29424FAE5E10075E822 /* ImageLoader.swift in Sources */,
 				212A1E9A24BE0FAF002C147F /* ListRow.swift in Sources */,
 				21DC517024C50AF2007372B1 /* CareTaskEditor.swift in Sources */,
 				212A1E9C24BE1137002C147F /* StatCell.swift in Sources */,
 				21E8883424D60EB300BC0EAC /* SegmentedPicker.swift in Sources */,
-				212A1E8C24B893F7002C147F /* CareTaskLog.swift in Sources */,
 				21BFB3B724B66E0800B94A72 /* Grow.xcdatamodeld in Sources */,
 				21C0C95524D1C8240062BEA8 /* Date+Extension.swift in Sources */,
+				FB5D0F4924F7007A0070A75C /* CareTaskIntervalMO+Extension.swift in Sources */,
 				21BFB3FA24B678DC00B94A72 /* Formatters.swift in Sources */,
 				FB969D1F24E1FAAF008B3CF9 /* CareTaskTypePicker.swift in Sources */,
-				21DC516D24C506A1007372B1 /* CareTask.swift in Sources */,
-				FB10CF8824F54158001153DD /* CareTaskLogMO+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
