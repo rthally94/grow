@@ -11,9 +11,8 @@ import CoreData
 
 extension PlantMO {
     static func allPlantsFetchRequest() -> NSFetchRequest<PlantMO> {
-        let request = NSFetchRequest<PlantMO>(entityName: "Plant")
-        
-        let sortByName = NSSortDescriptor(keyPath: \PlantMO.name, ascending: true)
+        let request: NSFetchRequest<PlantMO> = PlantMO.fetchRequest()
+        let sortByName = NSSortDescriptor(keyPath: \PlantMO.name_, ascending: true)
         request.sortDescriptors = [sortByName]
         
         return request
