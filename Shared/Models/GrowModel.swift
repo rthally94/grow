@@ -80,8 +80,20 @@ extension GrowModel {
         selectedPlantForEditing = plant
     }
     
+    func discardPlantForEditing() {
+        // Clears selection and removes child context ( removes changes )
+        selectedPlantForEditing = nil
+        context.rollback()
     }
     
+    func savePlantForEditing() {
+        // Only push changes if selectedPlant is in child context
+        try? context.save()
+        
+        selectedPlantForEditing = nil
+    }
+}
+
 // CareTaskType Intents
 extension GrowModel {
     func addCareTaskType(name: String) {
