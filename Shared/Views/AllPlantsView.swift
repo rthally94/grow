@@ -18,8 +18,8 @@ struct AllPlantsView: View {
                 if !growModel.plantStorage.plants.isEmpty {
                     ForEach(growModel.plantStorage.plants) { plant in
                         VStack {
-                            NavigationLink(destination: PlantDetailView(config: .init(plant: plant))) {
-                                PlantCell(model: .init(plant: plant))
+                            NavigationLink(destination: PlantDetailView(plant: plant)) {
+                                PlantCell(plant: plant)
                                     .background(RoundedRectangle(cornerRadius: 15).fill(Color.systemGroupedBackground))
                             }
                             .buttonStyle(PlainButtonStyle())
@@ -32,14 +32,12 @@ struct AllPlantsView: View {
                 }
                 
                 Button(action: addPlant) {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Image(systemName: "plus.circle.fill").imageScale(.large)
-                            Spacer()
-                        }
-                        
+                    HStack {
+                        Image(systemName: "plus.circle.fill").imageScale(.large)
                         Text("Add New")
+                        Spacer()
                     }
+                    .foregroundColor(.accentColor)
                     .padding()
                     .background(RoundedRectangle(cornerRadius: 15).fill(Color.systemGroupedBackground))
                 }.buttonStyle(PlainButtonStyle())

@@ -10,29 +10,17 @@ import SwiftUI
 import CoreData
 
 struct GrowTaskCard: View {
-    let careTask: CareTask
-    var firstFourPlants: [Plant] = []
+    let careTasks: [CareTaskMO]
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 VStack(alignment: .leading) {
-                    Text(careTask.type?.name ?? "").font(.headline)
-                    Text("\(careTask.logs.count)").font(.subheadline)
+                    Text(careTasks[0].type.name).font(.headline)
+                    Text("\(careTasks.count)").font(.subheadline)
                 }
                 Spacer()
             }
-            .padding()
-            VStack {
-                ForEach(firstFourPlants, id: \.self) { plant in
-                    HStack {
-                        Image(systemName: "square")
-                        Text("f")
-                        Spacer()
-                    }
-                }
-            }
-            .padding()
         }
         .background(background().foregroundColor(.systemGroupedBackground))
     }
@@ -46,9 +34,9 @@ struct GrowTaskCard: View {
 
 struct Grow_TaskCard_Previews: PreviewProvider {
     static var previews: some View {
-        let task = CareTask(type: CareTaskType(name: "Default"), interval: CareInterval(), notes: "", logs: [])
+        let task = CareTaskMO(context: .init(concurrencyType: .mainQueueConcurrencyType))
         
-        return GrowTaskCard(careTask: task)
+        return GrowTaskCard(careTasks: [task])
             .previewLayout(.sizeThatFits)
     }
 }

@@ -10,43 +10,40 @@ import SwiftUI
 import CoreData
 
 struct CareTaskEditor: View {
-    @Binding var careTask: CareTask
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var growModel: GrowModel
+    
+    @ObservedObject var task: CareTaskMO
     
     var body: some View {
         List {
             Section(header: Text("What").font(.headline)) {
-                CareTaskTypePicker(selection: $careTask.type)
+                CareTaskTypePicker(task: task)
             }
 
-            IntervalPicker(header: Text("Repeats").font(.headline), selection: $careTask.interval)
+            IntervalPicker(header: Text("Repeats").font(.headline), selection: task.interval)
 
             Section {
-                UITextFieldWrapper("Notes", text: $careTask.notes)
+                UITextFieldWrapper("Notes", text: $task.note)
             }
         }
         .listStyle(GroupedListStyle())
-//        .navigationBarBackButtonHidden(true)
-//        .navigationBarItems(leading: Button(action: goBack, label: {
-//            HStack {
-//                Image(systemName: "chevron.left")
-//                Text("Details")
-//            }
-//        }))
+    }
+        
+    func save() {
+        presentationMode.wrappedValue.dismiss()
     }
     
-//    func goBack() {
-//        onSave()
-//    }
+    func dismiss() {
+        presentationMode.wrappedValue.dismiss()
+    }
 }
 
 struct CareTaskEditor_Previews: PreviewProvider {
     static var previews: some View {
-        let type = CareTaskType(name: "Default")
-        let interval = CareInterval()
-        let task = CareTask(type: type, interval: interval, notes: "", logs: [])
+        let task = CareTaskMO(context: .init(concurrencyType: .mainQueueConcurrencyType))
         
-        return StatefulPreviewWrapper(task) { state in
-            CareTaskEditor(careTask: state)
-        }
+        return CareTaskEditor(task: task)
+        
     }
 }

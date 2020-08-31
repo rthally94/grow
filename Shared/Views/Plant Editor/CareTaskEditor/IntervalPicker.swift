@@ -10,18 +10,19 @@ import SwiftUI
 import CoreData
 
 struct IntervalPicker<Header: View>: View {
+    typealias Interval = CareTaskIntervalMO
     @Environment(\.presentationMode) var presentationMode
     
     var header: Header
-    @Binding var selection: CareInterval
+    @ObservedObject var selection: Interval
     
     // MARK: Selection Functions
     
-    private var unitChoice: CareInterval.Unit {
+    private var unitChoice: Interval.Unit {
         return selection.unit
     }
     
-    private func updateUnitSelection(unit: CareInterval.Unit) {
+    private func updateUnitSelection(unit: Interval.Unit) {
         selection.unit = unit
         
         switch unit {
@@ -29,7 +30,7 @@ struct IntervalPicker<Header: View>: View {
         case .monthly: updateDayOfMonth(date: Date())
             
         default:
-            selection.interval = []
+            selection.values = []
         }
     }
     
@@ -38,12 +39,12 @@ struct IntervalPicker<Header: View>: View {
     }
     
     private var weekdaySelection: Set<Int> {
-        return selection.interval
+        return selection.values
     }
     
     private func updateWeekdaySelection(daysOfWeek: Set<Int>) {
         if selection.unit == .weekly {
-            selection.interval = daysOfWeek
+            selection.values = daysOfWeek
         }
     }
     
@@ -52,26 +53,26 @@ struct IntervalPicker<Header: View>: View {
     }
     
     private var dateForSelectedDayOfMonth: Date {
-        return Calendar.current.date(bySetting: .day, value: selection.interval.first ?? 1, of: Date()) ?? Date()
+        return Calendar.current.date(bySetting: .day, value: selection.values.first ?? 1, of: Date()) ?? Date()
     }
     
     private func updateDayOfMonth(date: Date) {
         if selection.unit == .monthly {
-            selection.interval = [Calendar.current.component(.day, from: date)]
+            selection.values = [Calendar.current.component(.day, from: date)]
         }
     }
     
     // MARK: Initializer
-    init(header: Header, selection: Binding<CareInterval>) {
+    init(header: Header, selection: CareTaskIntervalMO) {
         self.header = header
-        self._selection = selection
+        self.selection = selection
     }
     
     // MARK: Body
     var body: some View {
         Group {
             Section(header: header) {
-                ForEach(CareInterval.Unit.allCases, id: \.self) { unit in
+                ForEach(Interval.Unit.allCases, id: \.self) { unit in
                     HStack {
                         Text(unit.description.capitalized)
                         Spacer()
@@ -111,25 +112,26 @@ struct IntervalPicker<Header: View>: View {
     
     // MARK: Computed Properties
     private var monthlyFooter: String {
-        let dayOfMonth = Formatters.ordinalNumberFormatter.string(for: selection.interval)
+        let dayOfMonth = Formatters.ordinalNumberFormatter.string(for: selection.values)
         return "This task will repeat" + (dayOfMonth != nil ? "on the \(dayOfMonth!) on every month" : "every month")
     }
 }
 
 extension IntervalPicker where Header == EmptyView {
-    init(selection: Binding<CareInterval>) {
+    init(selection: Interval) {
         self.init(header: EmptyView(), selection: selection)
     }
 }
 
 struct IntervalPicker_Previews: PreviewProvider {
     static var previews: some View {
+        let interval = CareTaskIntervalMO(context: .init(concurrencyType: .mainQueueConcurrencyType))
+        interval.unit = .weekly
+        interval.values = [1, 3, 5]
         return
-            StatefulPreviewWrapper(CareInterval()) { state in
-                List {
-                    Text( state.wrappedValue.description )
-                    IntervalPicker(selection: state)
-                }.listStyle(GroupedListStyle())
-        }
+            List {
+                IntervalPicker(selection: interval)
+            }
+            .listStyle(GroupedListStyle())
     }
 }

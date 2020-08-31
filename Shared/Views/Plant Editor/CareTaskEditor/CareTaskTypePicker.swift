@@ -10,11 +10,10 @@ import SwiftUI
 import CoreData
 
 struct CareTaskTypePicker: View {
+    typealias CareTaskType = CareTaskTypeMO
     @EnvironmentObject var growModel: GrowModel
+    @ObservedObject var task: CareTaskMO
     
-    var taskTypes: [CareTaskType] = []
-    
-    @Binding var selection: CareTaskType?
     @State var editMode: EditMode = .inactive
     
     @State var newTypeName: String = ""
@@ -27,46 +26,59 @@ struct CareTaskTypePicker: View {
     var body: some View {
         NavigationLink(destination: child, label: {
             HStack {
-                Text(selection?.name ?? "Select Task Type")
+                Text(task.type.name)
             }
         })
     }
     
     var child: some View {
         List {
-            ForEach(taskTypes, id: \.self) { type in
-                Button(action: { self.selection = type } , label: {
+            Section {
+                ForEach(growModel.careTaskTypeStorage.types.filter { $0.builtIn }, id: \.id) { type in
+                    self.button(for: type)
+                }
+            }
+            
+            Section(header: Text("User")) {
+                ForEach(growModel.careTaskTypeStorage.types.filter { !$0.builtIn }, id: \.id) { type in
+                    self.button(for: type)
+                }
+                .onDelete(perform: onTaskTypeDelete(indices:))
+                
+                if isEditing {
+                    UITextFieldWrapper("New Type", text: $newTypeName, isFirstResponder: $textFieldIsFirstResponder, onCommit: textFieldDidEndEditing)
+                }
+                
+                Button(action: addTaskButtonDidPress, label: {
                     HStack {
-                        Text(type.name)
-                        Spacer()
-                        
-                        if type == self.selection {
-                            Image(systemName: "checkmark")
-                                .foregroundColor(.accentColor)
-                        }
-                    }
-                    .contentShape(Rectangle())
-                    
-                })
-                .buttonStyle(PlainButtonStyle())
+                        Image(systemName: "plus.circle.fill")
+                        Text("Add New")
+                    }})
             }
-            .onDelete(perform: onTaskTypeDelete(indices:))
-            
-            if isEditing {
-                UITextFieldWrapper("New Type", text: $newTypeName, isFirstResponder: $textFieldIsFirstResponder, onCommit: textFieldDidEndEditing)
-            }
-            
-            Button(action: addTaskButtonDidPress, label: {
-                HStack {
-                    Image(systemName: "plus.circle.fill")
-                    Text("Add New")
-                }})
         }
+    }
+    
+    func button(for type: CareTaskTypeMO) -> some View {
+        Button(action: { self.task.type = type } , label: {
+            HStack {
+                Text(type.name)
+                Spacer()
+                
+                if type == self.task.type {
+                    Image(systemName: "checkmark")
+                        .foregroundColor(.accentColor)
+                }
+            }
+            .contentShape(Rectangle())
+            
+        })
+            .buttonStyle(PlainButtonStyle())
     }
     
     func textFieldDidEndEditing() {
         if newTypeName != "" {
             // TODO: Implement new task type intent
+            growModel.addCareTaskType(name: newTypeName)
         }
         
         editMode = .inactive
@@ -81,17 +93,13 @@ struct CareTaskTypePicker: View {
     }
     
     func onTaskTypeDelete(indices: IndexSet) {
-        let objects = indices.compactMap { taskTypes[$0] }
-        for type in objects {
-            // TODO: Implement delete task type intent
-        }
+        // TOOD: Implement care task type deletion
+        growModel.removeCareTaskType(indices: indices)
     }
 }
 
 struct CareTaskTypePicker_Previews: PreviewProvider {
     static var previews: some View {
-        return StatefulPreviewWrapper(CareTaskType(name: "Default")) { state in
-            CareTaskTypePicker(selection: state)
-        }
+        return CareTaskTypePicker(task: CareTaskMO(context: .init(concurrencyType: .mainQueueConcurrencyType)))
     }
 }

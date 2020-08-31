@@ -9,27 +9,43 @@
 import SwiftUI
 
 struct PlantsTaskList: View {
+    @EnvironmentObject var growModel: GrowModel
     @State var selectedDay: Int = Calendar.current.component(.weekday, from: Date())-1
     
+    var selectedDayBinding: Binding<Int> {
+        Binding<Int>(
+            get: { self.selectedDay },
+            set: {
+                self.selectedDay = $0
+                self.growModel.careTaskStorage.getTasks(for: self.dateForSelectedDay())
+        })
+    }
+    
+    func dateForSelectedDay() -> Date {
+        Calendar.current.date(bySetting: .weekday, value: selectedDay+1, of: Date()) ?? Date()
+    }
+    
     var navigationBarTitle: String {
-        let date = Calendar.current.date(bySetting: .weekday, value: selectedDay+1, of: Date()) ?? Date()
+        let date = dateForSelectedDay()
         return Formatters.relativeDateFormatter.string(for: date)
     }
     
-    var careTasks: [CareTask] {
-        []
+    var sections: [CareTaskTypeMO: [CareTaskMO] ] {
+        Dictionary(grouping: growModel.careTaskStorage.tasks, by: { $0.type } )
     }
     
     var body: some View {
         ScrollView {
             VStack {
-                WeekPicker(selection: $selectedDay)
+                WeekPicker(selection: selectedDayBinding)
                 
                 Divider()
                 
-                ForEach(careTasks, id: \.self) { careTask in
-                    GrowTaskCard(careTask: careTask)
+                ForEach( [CareTaskTypeMO](sections.keys), id: \.id) { key in
+                    self.sections[key].map {
+                        GrowTaskCard(careTasks: $0 )
                         .padding(.vertical)
+                    }
                 }
             }
             .padding()

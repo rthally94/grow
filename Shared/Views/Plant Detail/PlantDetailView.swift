@@ -9,95 +9,90 @@
 import SwiftUI
 import CoreData
 
-class PlantDetailConfig: ObservableObject {
-    @Published var plant: Plant
-    @Published var plantActionSheetIsPresented = false
-    @Published var plantEditorSheetIsPresented = false
-    
-    var careTasks: [CareTask] {
-        plant.careTasks
-    }
-    
-    init(plant: Plant) {
-        self.plant = plant
-    }
-}
-
 struct PlantDetailView: View {
     @EnvironmentObject var growModel: GrowModel
-    @ObservedObject var config: PlantDetailConfig
+    @ObservedObject var plant: PlantMO
+    
+    @State var plantActionSheetIsPresented = false
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 15) {
-                HStack {
-                    Text(ageValue)
-                    Spacer()
-                }.padding(.bottom)
+                header
                 
-                if config.plant.careTasks.count > 0 {
-                    Section(header:
-                        Text("Care Tasks")
-                        .font(.headline)
-                    ) {
-                        VStack(spacing: 20) {
-                            ForEach(Array(config.careTasks)) { task in
-                                StatCell(title: Text(task.type?.name ?? "")) {
-                                    Text(task.interval.description)
-                                }
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding()
-                                .background(RoundedRectangle(cornerRadius: 15).foregroundColor(.systemGroupedBackground))
-                            }
-                        }
-                    }
+                if plant.careTasks.count > 0 {
+                    plantCareTasks
                 }
             }
             .padding(.horizontal)
         }
-        .navigationBarTitle(config.plant.name)
+        .navigationBarTitle(plant.name)
         .navigationBarItems(trailing: Button(action: showActionSheet) {
             Image(systemName: "ellipsis.circle")
                 .imageScale(.large)
-        })
-            .actionSheet(isPresented: $config.plantActionSheetIsPresented) {
-                ActionSheet(title: Text("Options"), buttons: [
-                    ActionSheet.Button.default(Text("Edit Plant"), action: presentEditor),
-                    ActionSheet.Button.destructive(Text("Delete Plant"), action: deletePlant),
-                    ActionSheet.Button.cancel()
-                ])
+                .padding(.vertical)
         }
-        .sheet(isPresented: $config.plantEditorSheetIsPresented) {
-            NavigationView {
-                PlantEditorForm(isPresented: self.$config.plantEditorSheetIsPresented, plant: self.config.plant)
+        .actionSheet(isPresented: $plantActionSheetIsPresented) {
+            ActionSheet(title: Text("Options"), buttons: [
+                ActionSheet.Button.default(Text("Edit Plant").foregroundColor(.accentColor), action: presentEditor),
+                ActionSheet.Button.destructive(Text("Delete Plant"), action: deletePlant),
+                ActionSheet.Button.cancel()
+            ])
             }
-            .environmentObject(self.growModel)
+            
+            
+        )
+    }
+    
+    var header: some View {
+        HStack {
+            Text(ageValue)
+            Spacer()
+        }.padding(.bottom)
+    }
+    
+    var plantCareTasks: some View {
+        Section(header:
+            Text("Care Tasks")
+                .font(.headline)
+        ) {
+            VStack(spacing: 20) {
+                ForEach(Array(plant.careTasks), id: \.self) { task in
+                    StatCell(title: Text(task.type.name), icon: task.type.iconImage.map { $0.image } ) {
+                        Text( task.interval.description.prefix(1).capitalized + task.interval.description.dropFirst() )
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(RoundedRectangle(cornerRadius: 15).foregroundColor(.systemGroupedBackground))
+                }
+            }
         }
     }
     
     // MARK: Actions
     private func showActionSheet() {
-        config.plantActionSheetIsPresented.toggle()
+        plantActionSheetIsPresented.toggle()
     }
-
+    
     private func presentEditor() {
-        config.plantEditorSheetIsPresented.toggle()
+        growModel.selectPlantForEditing(plant)
     }
     
     // MARK: Intents
     private func deletePlant() {
         withAnimation {
-            growModel.removePlant(config.plant)
+            growModel.removePlant(plant)
         }
     }
 }
 
 // MARK: Computed Properties
 extension PlantDetailView {
-//    var plantIndex: Int {
-//        guard let plantIndex =  model.plants.firstIndex(of: plant) else { fatalError("Plant must be in model to be in detail view.") }
-//        return plantIndex
-//    }
+    //    var plantIndex: Int {
+    //        guard let plantIndex =  model.plants.firstIndex(of: plant) else { fatalError("Plant must be in model to be in detail view.") }
+    //        return plantIndex
+    //    }
     
     //    var careTaskLogCount: String {
     //        "\(plant.careTaskLogs.count)"
@@ -128,10 +123,10 @@ extension PlantDetailView {
     var ageValue: String {
         let ageString: String
         
-        if let plantingDate = config.plant.plantingDate {
+        if let plantingDate = plant.plantingDate {
             ageString = "Planted " + Formatters.relativeDateFormatter.string(for: plantingDate)
         } else {
-            ageString = "Not planted"
+            ageString = "Not planted yet."
         }
         
         return ageString
@@ -145,12 +140,12 @@ extension PlantDetailView {
 struct PlantDetailView_Previews: PreviewProvider {
     static var previews: some View {
         let model = GrowModel(context: .init(concurrencyType: .mainQueueConcurrencyType))
-        let plant = Plant(name: "My New Plant")
+        model.addPlant()
         
-        model.addPlant(plant)
+        guard let plant = model.plantStorage.plants.first else { fatalError("Plant not found in model") }
         
         let view = NavigationView {
-            PlantDetailView(config: .init(plant: plant))
+            PlantDetailView(plant: plant)
         }
         
         return Group {
