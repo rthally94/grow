@@ -8,7 +8,15 @@
 
 import Foundation
 
-class RelativeDateFormatter {
+class RelativeDateFormatter: Formatter {
+    override init() {
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
     var locale: Locale {
         set {
             dateFormatter.locale = newValue
@@ -49,5 +57,10 @@ class RelativeDateFormatter {
             let sanitizedDate = cal.date(from: cal.dateComponents([.year, .month, .day], from: date)) ?? Date()
             return relativeDateFormatter.localizedString(for: sanitizedDate, relativeTo: sanitizedToday)
         }
+    }
+    
+    override func string(for obj: Any?) -> String? {
+        guard let date = obj as? Date else { return nil }
+        return string(for: date)
     }
 }
