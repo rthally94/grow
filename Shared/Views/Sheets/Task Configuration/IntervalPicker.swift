@@ -36,7 +36,7 @@ struct IntervalPicker: View {
             return "Task does not repeat."
         case .weekly:
             let weekdays = Array(intervalValues).sorted()
-            let weekdayLabels = weekdays.map { Calendar.current.shortWeekdaySymbols[$0]}
+            let weekdayLabels = weekdays.map { Calendar.current.shortWeekdaySymbols[$0-1]}
             return "Task repeats \(intervalUnit.description) on \( ListFormatter.localizedString(byJoining: weekdayLabels) ).."
         case .monthly:
             let days = Array(intervalValues).sorted()

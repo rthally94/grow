@@ -13,7 +13,7 @@ struct WeekPicker: View {
     
     private let symbols = Calendar.current.veryShortStandaloneWeekdaySymbols
     var pickerRange: Range<Int> {
-        0..<7
+        1..<8
     }
     
     var body: some View {
@@ -41,13 +41,13 @@ struct WeekPicker: View {
     private func pickerContent(item: Int, isSelected: Bool) -> some View {
         Group {
             if isSelected {
-                Text(self.symbols[item])
+                Text(self.symbols[item-1])
                     .foregroundColor(.white)
                     .padding(.vertical, 6)
                     .frame(minWidth: .zero, maxWidth: .infinity)
                     .background(RoundedRectangle(cornerRadius: 10))
             } else {
-                Text(self.symbols[item])
+                Text(self.symbols[item-1])
                     .padding(.vertical, 6)
                     .frame(minWidth: .zero, maxWidth: .infinity)
                     .background(RoundedRectangle(cornerRadius: 10).stroke())
