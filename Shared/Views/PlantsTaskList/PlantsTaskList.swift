@@ -12,7 +12,7 @@ struct PlantsTaskList: View {
     @FetchRequest(fetchRequest: CareTask.allTasksFetchRequest()) var allTasks: FetchedResults<CareTask>
     var careTasksNeedingCareOnSelectedDay: [CareTask] {
         allTasks.filter { task in
-            task.nextCareDate == dateForSelectedDay()
+            task.nextCareDate(for: Date()) == dateForSelectedDay()
         }
     }
     

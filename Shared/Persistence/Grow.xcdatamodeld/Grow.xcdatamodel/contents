@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="20A5384c" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="20A5395g" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CareTask" representedClassName="CareTask" syncable="YES" codeGenerationType="class">
         <attribute name="intervalUnit_" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="intervalValues_" optional="YES" attributeType="Transformable"/>
@@ -8,7 +8,7 @@
         <relationship name="plant" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Plant" inverseName="careTasks_" inverseEntity="Plant"/>
         <relationship name="type_" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CareTaskType" inverseName="tasks" inverseEntity="CareTaskType"/>
     </entity>
-    <entity name="CareTaskLog" representedClassName="CareTaskLogMO" syncable="YES" codeGenerationType="class">
+    <entity name="CareTaskLog" representedClassName="CareTaskLog" syncable="YES" codeGenerationType="class">
         <attribute name="date_" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="task" optional="YES" maxCount="1" deletionRule="Deny" destinationEntity="CareTask" inverseName="logs_" inverseEntity="CareTask"/>
     </entity>

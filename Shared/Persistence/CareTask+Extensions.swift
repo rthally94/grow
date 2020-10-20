@@ -119,56 +119,125 @@ extension CareTask {
         }
     }
     
-    var logs: [CareTaskLogMO] {
-        get { logs_?.array as? [CareTaskLogMO] ?? [] }
+    var logs: [CareTaskLog] {
+        get { logs_?.array as? [CareTaskLog] ?? [] }
         set { logs_ = NSOrderedSet(array: newValue) }
     }
     
-    var latestLog: CareTaskLogMO? {
+    var latestLog: CareTaskLog? {
         logs.max(by: { $0.date > $1.date })
     }
     
-    var nextCareDate: Date {
-        func nextCareDate(for date: Date) -> Date {
-            let errorDate = Date(timeIntervalSinceReferenceDate: 0)
+    func nextCareDate(for date: Date) -> Date? {
+        let nextTaskDate: Date?
+        
+        switch(intervalUnit, latestLog) {
+        case (.daily, nil):
+            nextTaskDate = date
+        case (.daily, .some):
+            nextTaskDate = Calendar.current.date(byAdding: .day, value: 1, to: date)
             
-            switch intervalUnit {
-            case .never:
-                return errorDate
-                
-            case .daily:
-                return Calendar.current.date(byAdding: .day, value: 1, to: date) ?? errorDate
-                
-            case .weekly:
-                let lastCompletedWeekday = Calendar.current.component(.weekday, from: date)
-                let weekdays = intervalValues.sorted()
-                
-                if weekdays.contains(lastCompletedWeekday) {
-                    return date
-                } else {
-                    let nextWeekday = weekdays.first(where: { $0 > lastCompletedWeekday }) ?? weekdays[0]
-                    return Calendar.current.nextDate(after: date, matching: .init(weekday: nextWeekday), matchingPolicy: .nextTime) ?? errorDate
-                }
-                
-            case .monthly:
-                let lastCompletedDay = Calendar.current.component(.day, from: date)
-                let days = intervalValues.sorted()
-                
-                if days.contains(lastCompletedDay) {
-                    return date
-                } else {
-                    let nextDay = days.first(where: { $0 > lastCompletedDay }) ?? days[0]
-                    return Calendar.current.nextDate(after: date, matching: .init(day: nextDay), matchingPolicy: .previousTimePreservingSmallerComponents) ?? errorDate
-                }
+        case (.weekly, nil):
+            let weekday = Calendar.current.component(.weekday, from: date)
+            
+            let weekdays = intervalValues.sorted()
+            
+            if weekdays.contains(weekday) {
+                nextTaskDate =  date
+            } else {
+                let nextWeekday = weekdays.first(where: { $0 > weekday }) ?? weekdays[0]
+                nextTaskDate = Calendar.current.nextDate(after: date, matching: .init(weekday: nextWeekday), matchingPolicy: .nextTimePreservingSmallerComponents)
             }
+        case (.weekly, let log):
+            let weekday = Calendar.current.component(.weekday, from: log!.date)
+            
+            let weekdays = intervalValues.sorted()
+            
+            let nextWeekday = weekdays.first(where: { $0 > weekday }) ?? weekdays[0]
+            nextTaskDate = Calendar.current.nextDate(after: date, matching: .init(weekday: nextWeekday), matchingPolicy: .nextTimePreservingSmallerComponents)
+            
+        case (.monthly, nil):
+            let lastCompletedDay = Calendar.current.component(.day, from: date)
+            let days = intervalValues.sorted()
+            
+            if days.contains(lastCompletedDay) {
+                nextTaskDate = date
+            } else {
+                let nextDay = days.first(where: { $0 > lastCompletedDay }) ?? days[0]
+                nextTaskDate = Calendar.current.nextDate(after: date, matching: .init(day: nextDay), matchingPolicy: .previousTimePreservingSmallerComponents)
+            }
+        case (.monthly, let log):
+            let lastCompletedDay = Calendar.current.component(.day, from: log!.date)
+            let days = intervalValues.sorted()
+                
+            let nextDay = days.first(where: { $0 > lastCompletedDay }) ?? days[0]
+            nextTaskDate = Calendar.current.nextDate(after: date, matching: .init(day: nextDay), matchingPolicy: .previousTimePreservingSmallerComponents)
+            
+        default:
+            nextTaskDate = nil
         }
         
-        if let lastLog = latestLog {
-            // Has a log. Use its date as the reference point
-            return Calendar.current.startOfDay(for: nextCareDate(for: lastLog.date))
+        if let next = nextTaskDate {
+            return Calendar.current.startOfDay(for: next)
         } else {
-            // Has not been logged. Use next possible date matching interval
-            return Calendar.current.startOfDay(for: nextCareDate(for: Date()))
+            return nextTaskDate
         }
     }
+    
+    //    func nextCareDate() -> Date? {
+    
+    //        func nextCareDate(for date: Date) -> Date? {
+    //            switch intervalUnit {
+    //            case .daily:
+    //                return Calendar.current.date(byAdding: .day, value: 1, to: date)
+    //
+    //            case .weekly:
+    //                let lastCompletedWeekday = Calendar.current.component(.weekday, from: date)
+    //                let weekdays = intervalValues.sorted()
+    //
+    //                if weekdays.contains(lastCompletedWeekday) {
+    //                    return date
+    //                } else {
+    //                    let nextWeekday = weekdays.first(where: { $0 > lastCompletedWeekday }) ?? weekdays[0]
+    //                    return Calendar.current.nextDate(after: date, matching: .init(weekday: nextWeekday), matchingPolicy: .nextTime)
+    //                }
+    //
+    //            case .monthly:
+    //                let lastCompletedDay = Calendar.current.component(.day, from: date)
+    //                let days = intervalValues.sorted()
+    //
+    //                if days.contains(lastCompletedDay) {
+    //                    return date
+    //                } else {
+    //                    let nextDay = days.first(where: { $0 > lastCompletedDay }) ?? days[0]
+    //                    return Calendar.current.nextDate(after: date, matching: .init(day: nextDay), matchingPolicy: .previousTimePreservingSmallerComponents)
+    //                }
+    //
+    //            default:
+    //                return nil
+    //            }
+    //        }
+    //
+    //        if let lastLog = latestLog {
+    //            // Has a log. Use its date as the reference point
+    //            if let next = nextCareDate(for: lastLog.date) {
+    //                return Calendar.current.startOfDay(for: next)
+    //            } else {
+    //                return nil
+    //            }
+    //        } else {
+    //            // Has not been logged. Use next possible date matching interval
+    //            if let next = nextCareDate(for: Calendar.current.date(byAdding: .day, value: -1, to: Date())) {
+    //                return Calendar.current.startOfDay(for: next)
+    //            } else {
+    //                return nil
+    //            }
+    //        }
+    
+    //        if let next = nextCareDate(for: latestLog.date) {
+    //            return Calendar.current.startOfDay(for: next)
+    //        } else {
+    //            return nil
+    //        }
+    //    }
 }

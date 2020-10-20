@@ -48,6 +48,7 @@
 		FB7499D02539064700DDCFF0 /* PlantIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7499CF2539064700DDCFF0 /* PlantIcon.swift */; };
 		FB7499D7253906F400DDCFF0 /* PlantCareTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7499D6253906F400DDCFF0 /* PlantCareTasks.swift */; };
 		FB7834652533AE4E0017AFF6 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7834642533AE4E0017AFF6 /* Persistence.swift */; };
+		FB953839253F15EE00AC7E01 /* CareTaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB953838253F15EE00AC7E01 /* CareTaskTests.swift */; };
 		FB969D1F24E1FAAF008B3CF9 /* CareTaskTypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB969D1E24E1FAAF008B3CF9 /* CareTaskTypePicker.swift */; };
 		FB99CED72537946900722CE3 /* PlantEditMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB99CED62537946900722CE3 /* PlantEditMenu.swift */; };
 		FB99CEDB2537E70900722CE3 /* WeekCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB99CEDA2537E70900722CE3 /* WeekCalendarView.swift */; };
@@ -124,6 +125,7 @@
 		FB7499CF2539064700DDCFF0 /* PlantIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantIcon.swift; sourceTree = "<group>"; };
 		FB7499D6253906F400DDCFF0 /* PlantCareTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantCareTasks.swift; sourceTree = "<group>"; };
 		FB7834642533AE4E0017AFF6 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		FB953838253F15EE00AC7E01 /* CareTaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskTests.swift; sourceTree = "<group>"; };
 		FB969D1E24E1FAAF008B3CF9 /* CareTaskTypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskTypePicker.swift; sourceTree = "<group>"; };
 		FB99CED62537946900722CE3 /* PlantEditMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantEditMenu.swift; sourceTree = "<group>"; };
 		FB99CEDA2537E70900722CE3 /* WeekCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCalendarView.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 			children = (
 				21BFB40F24B67A2400B94A72 /* Info.plist */,
 				FB2299C72534DFAC001C7697 /* UIColor+HexExtension.swift */,
+				FB953838253F15EE00AC7E01 /* CareTaskTests.swift */,
 			);
 			path = GrowTests;
 			sourceTree = "<group>";
@@ -517,6 +520,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB2299C82534DFAC001C7697 /* UIColor+HexExtension.swift in Sources */,
+				FB953839253F15EE00AC7E01 /* CareTaskTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

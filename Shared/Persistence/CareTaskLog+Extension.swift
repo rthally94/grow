@@ -7,8 +7,20 @@
 //
 
 import Foundation
+import CoreData
 
-extension CareTaskLogMO {
+extension CareTaskLog {
+    static func create(for task: CareTask, in context: NSManagedObjectContext) -> CareTaskLog {
+        let log = CareTaskLog(context: context)
+        log.task = task
+        
+        try? context.save()
+        
+        return log
+    }
+}
+
+extension CareTaskLog {
     var date: Date {
         get { date_ ?? Date() }
         set { date_ = newValue }

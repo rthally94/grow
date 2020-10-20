@@ -37,4 +37,11 @@ class GrowModel: ObservableObject {
         viewContext.delete(plant)
         try? viewContext.save()
     }
+    
+    func addLog(date: Date, to task: CareTask) {
+        let log = CareTaskLog.create(for: task, in: viewContext)
+        log.date = date
+        
+        try? viewContext.save()
+    }
 }

@@ -39,7 +39,7 @@ struct CareTaskCardView: View {
             Text("Watering")
             Spacer()
             Menu {
-                Button(action: {}, label: { Label("Add Log", systemImage: "note.text.badge.plus") })
+                Button(action: addLog, label: { Label("Add Log", systemImage: "note.text.badge.plus") })
                 Button(action: showIntervalPicker, label: { Label("Change Interval", systemImage: "calendar.badge.clock") })
             }
             label: {
@@ -69,7 +69,7 @@ struct CareTaskCardView: View {
     var lastTaskDate: some View {
         VStack(alignment: .leading) {
             Text("Last").font(.subheadline).opacity(0.8)
-            if let latestLog = task.logs.max(by: { $0.date > $1.date }) {
+            if let latestLog = task.latestLog {
                 Text(latestLog.date, formatter: Formatters.relativeDateFormatter)
             } else {
                 Text("Not completed")
@@ -80,14 +80,13 @@ struct CareTaskCardView: View {
     var nextTaskDate: some View {
         VStack(alignment: .leading) {
             Text("Next").font(.subheadline).opacity(0.8)
-            Text(task.nextCareDate, formatter: Formatters.relativeDateFormatter)
+            Text(task.nextCareDate(for: Date()) ?? Date(), formatter: Formatters.relativeDateFormatter)
         }
     }
     
     private func addLog() {
         let date = Date()
-        
-        
+        growModel.addLog(date: date, to: task)
     }
     
     private func showIntervalPicker() {
