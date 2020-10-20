@@ -13,21 +13,53 @@ struct IntervalPicker: View {
     typealias IntervalChoices = CareTask.IntervalUnit
     typealias PickerChoice = Int
     
-    @State var intervalSelection: IntervalChoices = .never
-    @State var pickerChoice: Set<PickerChoice> = []
+    @Binding var intervalUnit: IntervalChoices {
+        willSet {
+            switch newValue {
+            // When going, reapply state
+            case .weekly:
+                intervalValues = [ Calendar.current.component(.weekday, from: Date()) ]
+            case.monthly:
+                intervalValues = [ Calendar.current.component(.day, from: Date()) ]
+                
+            default:
+                return
+            }
+        }
+    }
+    
+    @Binding var intervalValues: Set<PickerChoice>
+    
+    var eventOccurance: String {
+        switch intervalUnit {
+        case .never:
+            return "Task does not repeat."
+        case .weekly:
+            let weekdays = Array(intervalValues).sorted()
+            let weekdayLabels = weekdays.map { Calendar.current.shortWeekdaySymbols[$0]}
+            return "Task repeats \(intervalUnit.description) on \( ListFormatter.localizedString(byJoining: weekdayLabels) ).."
+        case .monthly:
+            let days = Array(intervalValues).sorted()
+            let dayOrdinals = days.map { NumberFormatter.localizedString(from: $0 as NSNumber, number: .ordinal) }
+            return "Task repeats \(intervalUnit.description) on the \( ListFormatter.localizedString(byJoining: dayOrdinals) )."
+            
+        default:
+            return "Task repeats \(intervalUnit.description)."
+        }
+    }
     
     // MARK: Body
     var body: some View {
         List {
             // Interval Choices
-            Section {
+            Section(footer: Text(eventOccurance)) {
                 ForEach(IntervalChoices.allCases, id: \.self) { intervalChoice in
                     Button(action: { onIntervalSelection(interval: intervalChoice)}) {
                         HStack {
                             Text(intervalChoice.description.capitalized)
                             Spacer()
                             
-                            if intervalChoice == intervalSelection {
+                            if intervalChoice == intervalUnit {
                                 Image(systemName: "checkmark")
                                     .foregroundColor(.accentColor)
                                     .transition(.identity)
@@ -40,15 +72,12 @@ struct IntervalPicker: View {
             }
             
             Section {
-                switch intervalSelection {
+                switch intervalUnit {
                 case .weekly:
-                    WeekPicker(selection: $pickerChoice)
+                    WeekPicker(selection: $intervalValues)
                     
                 case .monthly:
-                    Group {
-                        Text("1")
-                        Text("2")
-                    }
+                    MonthPicker(selection: $intervalValues)
                     
                 default:
                     EmptyView()
@@ -60,13 +89,17 @@ struct IntervalPicker: View {
     
     private func onIntervalSelection(interval: IntervalChoices) {
         withAnimation {
-            intervalSelection = interval
+            intervalUnit = interval
         }
     }
 }
 
 struct IntervalPicker_Previews: PreviewProvider {
     static var previews: some View {
-        IntervalPicker()
+        StatefulPreviewWrapper( CareTask.IntervalUnit.never ) { unitState in
+            StatefulPreviewWrapper( Set<Int>(arrayLiteral: 1) ) { valueState in
+                IntervalPicker(intervalUnit: unitState, intervalValues: valueState)
+            }
+        }
     }
 }

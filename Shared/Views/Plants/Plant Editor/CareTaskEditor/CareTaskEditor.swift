@@ -19,7 +19,7 @@ struct CareTaskEditor: View {
                 CareTaskTypePicker(task: task)
             }
 
-            IntervalPicker()
+            TaskIntervalPicker(task: task)
 
             Section {
                 UITextFieldWrapper("Notes", text: $task.note)

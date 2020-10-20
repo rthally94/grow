@@ -19,17 +19,21 @@ class GrowModel: ObservableObject {
         var id: UUID { UUID() }
         
         case configurePlantNameAppearance(Plant)
-        case configureTaskInterval(Binding<(CareTask.IntervalUnit, Set<Int>)>)
+        case configureTaskInterval(CareTask)
     }
     
     @Published var sheetToPresent: SheetStates? = nil
     
-    func createPlant() {
+    func addNewPlant() {
         let plant = Plant.create(in: viewContext)
+        editPlant(plant)
+    }
+    
+    func editPlant(_ plant: Plant) {
         sheetToPresent = .configurePlantNameAppearance(plant)
     }
     
-    func delete(plant: Plant) {
+    func deletePlant(_ plant: Plant) {
         viewContext.delete(plant)
         try? viewContext.save()
     }

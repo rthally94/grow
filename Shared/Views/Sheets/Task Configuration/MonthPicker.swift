@@ -1,27 +1,29 @@
 //
-//  WeekPicker.swift
+//  MonthPicker.swift
 //  Grow iOS
 //
-//  Created by Ryan Thally on 7/15/20.
+//  Created by Ryan Thally on 10/19/20.
 //  Copyright © 2020 Ryan Thally. All rights reserved.
 //
 
 import SwiftUI
 
-struct WeekPicker: View {
+struct MonthPicker: View {
     @Binding var selection: Set<Int>
     
-    private let symbols = Calendar.current.veryShortStandaloneWeekdaySymbols
-    var pickerRange: Range<Int> {
-        0..<7
+    private var symbols: [String] {
+        pickerRange.map{ "\($0)" }
+    }
+    
+    private var pickerRange: Range<Int> {
+        1..<32
     }
     
     var body: some View {
-        HStack {
+        LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
             ForEach(pickerRange) { index in
                 Button(action: { withAnimation{toggleSelection(index)} }) {
                     pickerContent(item: index, isSelected: selection.contains(index))
-                        .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(PlainButtonStyle())
             }
@@ -41,17 +43,18 @@ struct WeekPicker: View {
     private func pickerContent(item: Int, isSelected: Bool) -> some View {
         Group {
             if isSelected {
-                Text(self.symbols[item])
+                Text(self.symbols[item-1])
                     .foregroundColor(.white)
                     .padding(.vertical, 6)
                     .frame(minWidth: .zero, maxWidth: .infinity)
                     .background(RoundedRectangle(cornerRadius: 10))
             } else {
-                Text(self.symbols[item])
+                Text(self.symbols[item-1])
                     .padding(.vertical, 6)
                     .frame(minWidth: .zero, maxWidth: .infinity)
                     .background(RoundedRectangle(cornerRadius: 10).stroke())
                     .foregroundColor(.gray)
+                    
             }
         }
         .foregroundColor(.accentColor)
@@ -59,11 +62,11 @@ struct WeekPicker: View {
     }
 }
 
-struct WeekPicker_Previews: PreviewProvider {
+struct MonthPicker_Previews: PreviewProvider {
     static var previews: some View {
-        StatefulPreviewWrapper(Set(1...3)) { value in
+        StatefulPreviewWrapper(Set(1...4)) { value in
             VStack {
-                WeekPicker(selection: value)
+                MonthPicker(selection: value)
                 Text(value.wrappedValue.description)
             }
         }

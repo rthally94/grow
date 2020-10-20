@@ -126,7 +126,6 @@ struct PlantNameAppearanceEditorView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button("Cancel") {
-                    viewContext.rollback()
                     growModel.sheetToPresent = nil
                 }
             }

@@ -40,7 +40,7 @@ struct RootView: View {
                         PlantNameAppearanceEditorView(plant: plant)
                 
                     case .configureTaskInterval(let task):
-                        IntervalPicker()
+                        TaskIntervalPicker(task: task)
                         .navigationBarTitle("Change Interval", displayMode: .inline)
                 }
             }

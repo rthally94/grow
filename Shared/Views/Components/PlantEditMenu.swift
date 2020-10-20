@@ -20,7 +20,7 @@ struct PlantEditMenu: View {
                 Label("Name and Appearance", systemImage: "pencil")
             })
             
-            Button(action: { growModel.delete(plant: plant) }, label: {
+            Button(action: { growModel.deletePlant(plant) }, label: {
                 Label("Delete", systemImage: "trash")
             })
         }, label: {

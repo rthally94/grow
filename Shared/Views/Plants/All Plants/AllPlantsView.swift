@@ -30,7 +30,7 @@ struct AllPlantsView: View {
     }
     private func addPlant() {
         withAnimation {
-            growModel.createPlant()
+            growModel.addNewPlant()
         }
     }
 }
@@ -90,7 +90,7 @@ struct PlantsListView: View {
     
     private func addPlant() {
         withAnimation {
-            growModel.createPlant()
+            growModel.addNewPlant()
         }
     }
 }

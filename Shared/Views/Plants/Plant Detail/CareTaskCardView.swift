@@ -84,8 +84,14 @@ struct CareTaskCardView: View {
         }
     }
     
+    private func addLog() {
+        let date = Date()
+        
+        
+    }
+    
     private func showIntervalPicker() {
-        growModel.sheetToPresent = .configureTaskInterval($task.interval)
+        growModel.sheetToPresent = .configureTaskInterval(task)
     }
 }
 

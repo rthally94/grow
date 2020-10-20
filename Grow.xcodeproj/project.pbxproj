@@ -41,6 +41,8 @@
 		FB355E5924EE005F00E6E94C /* CareTask+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB355E5824EE005F00E6E94C /* CareTask+Extensions.swift */; };
 		FB54CAC424D84C17006BB3C5 /* Color+GrowColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB54CAC324D84C17006BB3C5 /* Color+GrowColors.swift */; };
 		FB54CAC624D886F3006BB3C5 /* GrowPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB54CAC524D886F3006BB3C5 /* GrowPicker.swift */; };
+		FB709B2F253DE09E00D4DF01 /* MonthPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB709B2E253DE09E00D4DF01 /* MonthPicker.swift */; };
+		FB709B32253E121B00D4DF01 /* TaskIntervalPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB709B31253E121B00D4DF01 /* TaskIntervalPicker.swift */; };
 		FB7499C82538827F00DDCFF0 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7499C72538827F00DDCFF0 /* CardView.swift */; };
 		FB7499CB2538858C00DDCFF0 /* PlantHero.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7499CA2538858C00DDCFF0 /* PlantHero.swift */; };
 		FB7499D02539064700DDCFF0 /* PlantIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7499CF2539064700DDCFF0 /* PlantIcon.swift */; };
@@ -115,6 +117,8 @@
 		FB355E5824EE005F00E6E94C /* CareTask+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CareTask+Extensions.swift"; sourceTree = "<group>"; };
 		FB54CAC324D84C17006BB3C5 /* Color+GrowColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+GrowColors.swift"; sourceTree = "<group>"; };
 		FB54CAC524D886F3006BB3C5 /* GrowPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowPicker.swift; sourceTree = "<group>"; };
+		FB709B2E253DE09E00D4DF01 /* MonthPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPicker.swift; sourceTree = "<group>"; };
+		FB709B31253E121B00D4DF01 /* TaskIntervalPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskIntervalPicker.swift; sourceTree = "<group>"; };
 		FB7499C72538827F00DDCFF0 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		FB7499CA2538858C00DDCFF0 /* PlantHero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantHero.swift; sourceTree = "<group>"; };
 		FB7499CF2539064700DDCFF0 /* PlantIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantIcon.swift; sourceTree = "<group>"; };
@@ -314,8 +318,10 @@
 		FB7499DC25390C1B00DDCFF0 /* Task Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				FB709B31253E121B00D4DF01 /* TaskIntervalPicker.swift */,
 				2193552924C07CC600F38392 /* IntervalPicker.swift */,
 				21F4C23124BF0E2300EB73E0 /* WeekPicker.swift */,
+				FB709B2E253DE09E00D4DF01 /* MonthPicker.swift */,
 			);
 			path = "Task Configuration";
 			sourceTree = "<group>";
@@ -464,6 +470,7 @@
 				21BFB3B224B66E0800B94A72 /* AppDelegate.swift in Sources */,
 				21F49F7424CF809E00ECC828 /* PlantCell.swift in Sources */,
 				FB54CAC624D886F3006BB3C5 /* GrowPicker.swift in Sources */,
+				FB709B2F253DE09E00D4DF01 /* MonthPicker.swift in Sources */,
 				2193552824BF2C1900F38392 /* UITextFieldWrapper.swift in Sources */,
 				21BFB3B424B66E0800B94A72 /* SceneDelegate.swift in Sources */,
 				FBA6A29724FD44700075E822 /* CareTaskDetail.swift in Sources */,
@@ -500,6 +507,7 @@
 				FB7499D02539064700DDCFF0 /* PlantIcon.swift in Sources */,
 				21C0C95524D1C8240062BEA8 /* Date+Extension.swift in Sources */,
 				21BFB3FA24B678DC00B94A72 /* Formatters.swift in Sources */,
+				FB709B32253E121B00D4DF01 /* TaskIntervalPicker.swift in Sources */,
 				FB969D1F24E1FAAF008B3CF9 /* CareTaskTypePicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
