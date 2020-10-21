@@ -31,6 +31,9 @@
 		FB00E36F2503CA6B00A7417A /* CareTaskLog+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB00E36E2503CA6B00A7417A /* CareTaskLog+Extension.swift */; };
 		FB10CF8C24F6B005001153DD /* CareTaskType+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB10CF8B24F6B005001153DD /* CareTaskType+Extension.swift */; };
 		FB1366BB25349B3100BDAB05 /* Grow.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FB1366B925349B3000BDAB05 /* Grow.xcdatamodeld */; };
+		FB1EA3872540B10500FE3701 /* MultilineTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1EA3862540B10500FE3701 /* MultilineTextEditor.swift */; };
+		FB1EA38A2540B16700FE3701 /* TaskSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1EA3892540B16700FE3701 /* TaskSummary.swift */; };
+		FB1EA3912540BEE500FE3701 /* AllTaskLogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1EA3902540BEE500FE3701 /* AllTaskLogs.swift */; };
 		FB2299C12534B0B7001C7697 /* CareTaskCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2299C02534B0B7001C7697 /* CareTaskCardView.swift */; };
 		FB2299C52534C13E001C7697 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2299C42534C13E001C7697 /* UIColor+Extensions.swift */; };
 		FB2299C82534DFAC001C7697 /* UIColor+HexExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2299C72534DFAC001C7697 /* UIColor+HexExtension.swift */; };
@@ -108,6 +111,9 @@
 		FB00E36E2503CA6B00A7417A /* CareTaskLog+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CareTaskLog+Extension.swift"; sourceTree = "<group>"; };
 		FB10CF8B24F6B005001153DD /* CareTaskType+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CareTaskType+Extension.swift"; sourceTree = "<group>"; };
 		FB1366BA25349B3000BDAB05 /* Grow.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Grow.xcdatamodel; sourceTree = "<group>"; };
+		FB1EA3862540B10500FE3701 /* MultilineTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextEditor.swift; sourceTree = "<group>"; };
+		FB1EA3892540B16700FE3701 /* TaskSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSummary.swift; sourceTree = "<group>"; };
+		FB1EA3902540BEE500FE3701 /* AllTaskLogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTaskLogs.swift; sourceTree = "<group>"; };
 		FB2299C02534B0B7001C7697 /* CareTaskCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareTaskCardView.swift; sourceTree = "<group>"; };
 		FB2299C42534C13E001C7697 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		FB2299C72534DFAC001C7697 /* UIColor+HexExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexExtension.swift"; sourceTree = "<group>"; };
@@ -288,6 +294,7 @@
 				FB99CEDA2537E70900722CE3 /* WeekCalendarView.swift */,
 				FB7499C72538827F00DDCFF0 /* CardView.swift */,
 				FB7499CF2539064700DDCFF0 /* PlantIcon.swift */,
+				FB1EA3862540B10500FE3701 /* MultilineTextEditor.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -364,6 +371,8 @@
 			isa = PBXGroup;
 			children = (
 				FBA6A29624FD44700075E822 /* CareTaskDetail.swift */,
+				FB1EA3892540B16700FE3701 /* TaskSummary.swift */,
+				FB1EA3902540BEE500FE3701 /* AllTaskLogs.swift */,
 			);
 			path = CareTaskDetail;
 			sourceTree = "<group>";
@@ -472,11 +481,13 @@
 			files = (
 				21BFB3B224B66E0800B94A72 /* AppDelegate.swift in Sources */,
 				21F49F7424CF809E00ECC828 /* PlantCell.swift in Sources */,
+				FB1EA3912540BEE500FE3701 /* AllTaskLogs.swift in Sources */,
 				FB54CAC624D886F3006BB3C5 /* GrowPicker.swift in Sources */,
 				FB709B2F253DE09E00D4DF01 /* MonthPicker.swift in Sources */,
 				2193552824BF2C1900F38392 /* UITextFieldWrapper.swift in Sources */,
 				21BFB3B424B66E0800B94A72 /* SceneDelegate.swift in Sources */,
 				FBA6A29724FD44700075E822 /* CareTaskDetail.swift in Sources */,
+				FB1EA3872540B10500FE3701 /* MultilineTextEditor.swift in Sources */,
 				FB99CED72537946900722CE3 /* PlantEditMenu.swift in Sources */,
 				FB2299C52534C13E001C7697 /* UIColor+Extensions.swift in Sources */,
 				FB355E5924EE005F00E6E94C /* CareTask+Extensions.swift in Sources */,
@@ -498,6 +509,7 @@
 				FB7834652533AE4E0017AFF6 /* Persistence.swift in Sources */,
 				21BFB3F924B678DC00B94A72 /* RelativeDateFormatter.swift in Sources */,
 				FB99CEDB2537E70900722CE3 /* WeekCalendarView.swift in Sources */,
+				FB1EA38A2540B16700FE3701 /* TaskSummary.swift in Sources */,
 				FB7499C82538827F00DDCFF0 /* CardView.swift in Sources */,
 				21F4C23424BF15A900EB73E0 /* StatefulPreviewWrapper.swift in Sources */,
 				FB00E36F2503CA6B00A7417A /* CareTaskLog+Extension.swift in Sources */,
