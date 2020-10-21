@@ -10,7 +10,7 @@ import SwiftUI
 import CoreData
 
 struct GrowTaskCard: View {
-    let careTasks: [CareTaskMO]
+    let careTasks: [CareTask]
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,7 +20,7 @@ struct GrowTaskCard: View {
                     Text("\(careTasks.count)").font(.subheadline)
                 }
                 Spacer()
-            }
+            }.padding()
         }
         .background(background().foregroundColor(.systemGroupedBackground))
     }
@@ -34,7 +34,7 @@ struct GrowTaskCard: View {
 
 struct Grow_TaskCard_Previews: PreviewProvider {
     static var previews: some View {
-        let task = CareTaskMO(context: .init(concurrencyType: .mainQueueConcurrencyType))
+        let task = CareTask(context: .init(concurrencyType: .mainQueueConcurrencyType))
         
         return GrowTaskCard(careTasks: [task])
             .previewLayout(.sizeThatFits)

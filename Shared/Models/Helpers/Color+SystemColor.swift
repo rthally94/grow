@@ -14,4 +14,5 @@ extension Color {
     static let systemGroupedBackground = Color(UIColor.systemGray6)
     static let secondarySystemGroupedBackground = Color(UIColor.secondarySystemGroupedBackground)
     static let label = Color(UIColor.label)
+    static let systemGray6 = Color(UIColor.systemGray6)
 }
