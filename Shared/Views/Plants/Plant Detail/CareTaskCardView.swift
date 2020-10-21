@@ -38,30 +38,25 @@ struct CareTaskCardView: View {
             Image(systemName: "drop.fill")
             Text("Watering")
             Spacer()
-            Menu {
-                Button(action: addLog, label: { Label("Add Log", systemImage: "note.text.badge.plus") })
-                Button(action: showIntervalPicker, label: { Label("Change Interval", systemImage: "calendar.badge.clock") })
-            }
-            label: {
-                Label("Edit", systemImage: "ellipsis.circle.fill")
-                    .labelStyle(IconOnlyLabelStyle())
-                    .imageScale(.large)
-                    .foregroundColor(.gray)
-            }
+            NavigationLink(
+                destination: CareTaskDetail(task: task),
+                label: {
+                    Text("More")
+                    Image(systemName: "chevron.right")
+                })
+                .foregroundColor(.gray)
+//            Menu {
+//                Button(action: addLog, label: { Label("Add Log", systemImage: "note.text.badge.plus") })
+//                Button(action: showIntervalPicker, label: { Label("Change Interval", systemImage: "calendar.badge.clock") })
+//            }
+//            label: {
+//
+//            }
         }
     }
     
     var taskIntervalInfo: some View {
-        let intervalString: String = {
-            switch task.intervalUnit {
-            case .never:
-                return "No Interval"
-            default:
-                return task.intervalUnit.description.capitalized
-            }
-        }()
-        
-        return Text(intervalString)
+        Text(task.intervalDescription)
             .font(.headline)
             .foregroundColor(Color(task.type.color))
     }
