@@ -101,6 +101,24 @@ extension CareTask {
         set { type_ = newValue }
     }
     
+    var intervalDescription: String {
+        switch intervalUnit {
+        case .never:
+            return "Task does not repeat."
+        case .weekly:
+            let weekdays = Array(intervalValues).sorted()
+            let weekdayLabels = weekdays.map { Calendar.current.shortWeekdaySymbols[$0-1]}
+            return "\(intervalUnit.description.capitalized) on \( ListFormatter.localizedString(byJoining: weekdayLabels) ).."
+        case .monthly:
+            let days = Array(intervalValues).sorted()
+            let dayOrdinals = days.map { NumberFormatter.localizedString(from: $0 as NSNumber, number: .ordinal) }
+            return "\(intervalUnit.description.capitalized) on the \( ListFormatter.localizedString(byJoining: dayOrdinals) )."
+            
+        default:
+            return "\(intervalUnit.description.capitalized)."
+        }
+    }
+    
     var intervalUnit: IntervalUnit {
         get { IntervalUnit(rawValue: intervalUnit_) ?? .never }
         set { intervalUnit_ = newValue.rawValue }

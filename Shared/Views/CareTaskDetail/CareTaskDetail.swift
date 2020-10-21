@@ -9,84 +9,114 @@
 import SwiftUI
 
 struct CareTaskDetail: View {
-    var notesSupportsExpansion: Bool {
-        return true
+    @ObservedObject var task: CareTask
+    private var taskNoteBinding: Binding<String> {
+        return Binding<String>(
+            get: {
+                task.note
+            },
+            set: {
+                task.note = $0.trimmingCharacters(in: .newlines)
+            }
+        )
     }
-    
-    @State var notesIsExpanded: Bool = false
     
     var body: some View {
         List {
-            Section {
-                HStack {
-                    Image(systemName: "flame.fill")
-                    Text("Task Type")
-                    
-                    Spacer()
-                }
-                
-                Text("Plant Name")
-            }
-            
-            Section(header: Text("Interval").font(.headline)) {
-                HStack {
-                    Text("Last")
-                        .frame(maxWidth: .infinity)
-                    
+            Section(header: Text("Summary").font(Font.headline).textCase(nil)) {
+                VStack(alignment: .leading) {
+                    taskIntervalInfo
                     Divider()
-                    
-                    Text("Next")
-                        .frame(maxWidth: .infinity)
+                    HStack {
+                        lastTaskDate
+                        Spacer()
+                        nextTaskDate
+                        Spacer()
+                    }
                 }
-                Text("Do me all the time.")
+                .padding(.vertical, 4)
             }
             
-            Section (header: Text("Care Notes").font(.headline) ) {
-                if !notesIsExpanded {
-                    VStack(alignment: .trailing) {
-                        Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porttitor at tortor et porta. Sed non congue ante, a luctus velit. Cras quis imperdiet risus, mattis fringilla eros. Fusce et leo accumsan augue volutpat gravida. Fusce a ipsum sed libero interdum viverra quis non odio. Duis viverra suscipit consequat. Praesent fermentum fermentum vestibulum. Mauris sed orci posuere, dictum diam sed, placerat eros. Maecenas a sapien eget magna molestie suscipit. In dignissim dolor vitae mi molestie, dapibus sodales lacus egestas. Phasellus ipsum urna, mollis sit amet dapibus in, dictum eget nisi. ")
-                            .lineLimit(notesLineLimit)
-                        
-                        Button("more") {
-                            withAnimation {
-                                self.notesIsExpanded = true
-                            }
-                        }
-                    }
-                } else {
-                    Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porttitor at tortor et porta. Sed non congue ante, a luctus velit. Cras quis imperdiet risus, mattis fringilla eros. Fusce et leo accumsan augue volutpat gravida. Fusce a ipsum sed libero interdum viverra quis non odio. Duis viverra suscipit consequat. Praesent fermentum fermentum vestibulum. Mauris sed orci posuere, dictum diam sed, placerat eros. Maecenas a sapien eget magna molestie suscipit. In dignissim dolor vitae mi molestie, dapibus sodales lacus egestas. Phasellus ipsum urna, mollis sit amet dapibus in, dictum eget nisi. ")
-                }
+            TaskSummary(task: task)
+            
+            Section (header: Text("Care Notes").font(.headline).textCase(nil) ) {
                 
+                MultilineTextEditor(title: "Add a note", text: taskNoteBinding)
             }
             
-            Section(header: logHistoryHeader) {
-                ForEach(0..<numberOfVisibleLogs) { index in
-                    NavigationLink(destination: Text("fda")) {
-                        Text("\(index)")
-                    }
-                }
+            Section(header: logHistoryHeader.textCase(nil)) {
+                CareTaskLogsPreview(task: task)
             }
         }
-        .listStyle(GroupedListStyle())
+        .navigationTitle(task.type.name)
+        .listStyle(InsetGroupedListStyle())
+    }
+    
+    var taskIntervalInfo: some View {
+        VStack(alignment: .leading) {
+            Text("Interval").font(.subheadline).opacity(0.8)
+            Text(task.intervalDescription)
+        }
+    }
+    
+    var lastTaskDate: some View {
+        VStack(alignment: .leading) {
+            Text("Last").font(.subheadline).opacity(0.8)
+            if let latestLog = task.latestLog {
+                Text(latestLog.date, formatter: Formatters.relativeDateFormatter)
+            } else {
+                Text("Not completed")
+            }
+        }
+    }
+    
+    var nextTaskDate: some View {
+        VStack(alignment: .leading) {
+            Text("Next").font(.subheadline).opacity(0.8)
+            Text(task.nextCareDate(for: Date()) ?? Date(), formatter: Formatters.relativeDateFormatter)
+        }
     }
     
     var logHistoryHeader: some View {
         HStack {
             Text("History").font(.headline)
             Spacer()
-            NavigationLink("View All", destination: Text("History"))
+            NavigationLink("View All", destination: AllTaskLogs(task: task))
         }
     }
     
     // MARK: Constants
     private let notesLineLimit = 3
     private let numberOfVisibleLogs = 4
+    
+}
+
+struct CareTaskLogsPreview: View {
+    @FetchRequest var logs: FetchedResults<CareTaskLog>
+    
+    init(task: CareTask) {
+        _logs = FetchRequest(fetchRequest: CareTaskLog.fetchLogs(for: task, limit: 4))
+    }
+    
+    var body: some View {
+        ForEach(logs, id: \.self) { log in
+            Text(log.date, formatter: Formatters.dateFormatter)
+        }
+    }
 }
 
 struct CareTaskDetail_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            CareTaskDetail()
+        let viewContext = PersistenceController.preview.container.viewContext
+        
+        let request = CareTask.allTasksFetchRequest()
+        request.fetchLimit = 1
+        
+        let task = try? viewContext.fetch(request).first
+        
+        return NavigationView {
+            CareTaskDetail(task: task!)
         }
     }
 }
+    

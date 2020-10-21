@@ -10,6 +10,24 @@ import Foundation
 import CoreData
 
 extension CareTaskLog {
+    static func fetchLogs(for task: CareTask, limit: Int? = nil ) -> NSFetchRequest<CareTaskLog> {
+        let request: NSFetchRequest<CareTaskLog> = CareTaskLog.fetchRequest()
+        request.sortDescriptors = [
+            // Sort by date
+            NSSortDescriptor(keyPath: \CareTaskLog.date_, ascending: false)
+        ]
+        
+        request.predicate = NSPredicate(format: "task == %@", task)
+        
+        if let limit = limit, limit > 0 {
+            request.fetchLimit = limit
+        }
+        
+        return request
+    }
+}
+
+extension CareTaskLog {
     static func create(for task: CareTask, in context: NSManagedObjectContext) -> CareTaskLog {
         let log = CareTaskLog(context: context)
         log.task = task
