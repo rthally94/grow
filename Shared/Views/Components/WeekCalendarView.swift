@@ -56,7 +56,7 @@ struct WeekCalendarView<Header: View, Item: View>: View {
                 ForEach(daysInWeek) { day in
                     Button(action: { toggleSelection(for: day) }, label: {
                         VStack {
-                            content(day-startOfWeek, day)
+                            content(day-startOfWeek+1, day)
                                 .transition(.asymmetric(insertion: .scale, removal: .identity))
                             
                             if dayIsToday(day: day) {

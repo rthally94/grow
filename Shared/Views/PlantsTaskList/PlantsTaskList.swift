@@ -10,9 +10,11 @@ import SwiftUI
 
 struct PlantsTaskList: View {
     @FetchRequest(fetchRequest: CareTask.allTasksFetchRequest()) var allTasks: FetchedResults<CareTask>
+    
     var careTasksNeedingCareOnSelectedDay: [CareTask] {
         allTasks.filter { task in
-            task.nextCareDate(for: Date()) == dateForSelectedDay()
+            guard let date = task.calculateNextCareDate(for: dateForSelectedDay()) else { return false }
+            return Calendar.current.isDate(date, inSameDayAs: dateForSelectedDay())
         }
     }
     
@@ -20,19 +22,18 @@ struct PlantsTaskList: View {
         let startOfWeek = Calendar.current.nextDate(after: Date(), matching: .init(weekday: 1), matchingPolicy: .nextTime, direction: .backward) ?? Date()
         return Calendar.current.startOfDay(for: startOfWeek)
     }()
-        
-    @State var selectedDay: Int = Calendar.current.component(.weekday, from: Date())
     
-    var selectedDayBinding: Binding<Int> {
-        Binding<Int>(
-            get: { self.selectedDay - 1 },
-            set: {
-                self.selectedDay = $0 + 1
-        })
+    @State var selectedDay: Int = Calendar.current.component(.day, from: Date())
+    
+    var selectedDayBinding: Binding<Set<Int>> {
+        Binding<Set<Int>>(
+            get: { [self.selectedDay] },
+            set: { self.selectedDay = $0.filter { $0 != selectedDay }.first ?? 1 }
+        )
     }
     
     func dateForSelectedDay() -> Date {
-        Calendar.current.date(bySetting: .weekday, value: selectedDay, of: startingDate) ?? Date()
+        Calendar.current.date(bySetting: .day, value: selectedDay, of: startingDate) ?? Date()
     }
     
     var navigationBarTitle: String {
@@ -47,27 +48,44 @@ struct PlantsTaskList: View {
     var body: some View {
         ScrollView {
             VStack {
-//                WeekPicker(selection: selectedDayBinding)
+                WeekCalendarView(date: startingDate, selection: selectedDayBinding) { (index, day) in
+                    if selectedDay == day {
+                        Text("\(day)")
+                            .padding(4)
+                            .background(RoundedRectangle(cornerRadius: 4).strokeBorder(lineWidth: 2, antialiased: true))
+                            .foregroundColor(.accentColor)
+                            .aspectRatio(1.0, contentMode: .fill)
+                    } else {
+                        Text("\(day)")
+                            .opacity(0.8)
+                            .transition(.identity)
+                    }
+                }
                 
                 Divider()
                 
-                ForEach( [CareTaskType](sections.keys), id: \.self) { key in
-                    self.sections[key].map {
-                        GrowTaskCard(careTasks: $0 )
-                        .padding(.vertical)
+                LazyVStack {
+                    ForEach( [CareTaskType](sections.keys), id: \.self) { key in
+                        self.sections[key].map {
+                            GrowTaskCard(careTasks: $0 )
+                                .padding(.vertical)
+                        }
                     }
                 }
             }
             .padding()
         }
-    .navigationBarTitle(navigationBarTitle)
+        .navigationBarTitle(navigationBarTitle)
     }
 }
 
 struct PlantsTaskList_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
+        let viewContext = PersistenceController.preview.container.viewContext
+        
+        return NavigationView {
             PlantsTaskList()
         }
+        .environment(\.managedObjectContext, viewContext)
     }
 }

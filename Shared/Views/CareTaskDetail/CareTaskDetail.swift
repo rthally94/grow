@@ -73,7 +73,7 @@ struct CareTaskDetail: View {
     var nextTaskDate: some View {
         VStack(alignment: .leading) {
             Text("Next").font(.subheadline).opacity(0.8)
-            Text(task.nextCareDate(for: Date()) ?? Date(), formatter: Formatters.relativeDateFormatter)
+            Text(task.calculateNextCareDate(for: Date()) ?? Date(), formatter: Formatters.relativeDateFormatter)
         }
     }
     

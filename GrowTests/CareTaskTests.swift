@@ -34,14 +34,14 @@ class CareTaskTests: XCTestCase {
     func testCareTask_WhenIntervalIsNever_NextCareDateIsNil() {
         let sut = makeSUT()
         
-        XCTAssertNil(sut.nextCareDate(for: Date()))
+        XCTAssertNil(sut.calculateNextCareDate(for: Date()))
     }
     
     func testCareTask_WhenIntervalIsDailyWithNoLogs_NextCareDateIsToday() throws {
         let sut = makeSUT(unit: .daily)
         
         let startOfToday = Calendar.current.startOfDay(for: Date())
-        let nextCareDate = try XCTUnwrap(sut.nextCareDate(for: startOfToday))
+        let nextCareDate = try XCTUnwrap(sut.calculateNextCareDate(for: startOfToday))
         
         XCTAssertEqual(nextCareDate, startOfToday)
     }
@@ -52,7 +52,7 @@ class CareTaskTests: XCTestCase {
         
         let sut = makeSUT(unit: .weekly, values: [1])
         
-        let nextCareDate = try XCTUnwrap(sut.nextCareDate(for: testDate))
+        let nextCareDate = try XCTUnwrap(sut.calculateNextCareDate(for: testDate))
         
         XCTAssertEqual(testDate, nextCareDate)
     }
@@ -63,7 +63,7 @@ class CareTaskTests: XCTestCase {
         
         let sut = makeSUT(unit: .weekly, values: [1])
         
-        let nextCareDate = try XCTUnwrap(sut.nextCareDate(for: testDate))
+        let nextCareDate = try XCTUnwrap(sut.calculateNextCareDate(for: testDate))
         
         let correctDateComponents = DateComponents(year: 2020, month: 1, day: 5)
         let correctDate = try XCTUnwrap(Calendar.current.date(from: correctDateComponents))
@@ -79,7 +79,7 @@ class CareTaskTests: XCTestCase {
         
         let sut = makeSUT(unit: .monthly, values: [1])
         
-        let nextCareDate = try XCTUnwrap(sut.nextCareDate(for: testDate))
+        let nextCareDate = try XCTUnwrap(sut.calculateNextCareDate(for: testDate))
         
         XCTAssertEqual(testDate, nextCareDate)
     }
@@ -92,7 +92,7 @@ class CareTaskTests: XCTestCase {
         
         let sut = makeSUT(unit: .monthly, values: [1])
         
-        let nextCareDate = try XCTUnwrap(sut.nextCareDate(for: testDate))
+        let nextCareDate = try XCTUnwrap(sut.calculateNextCareDate(for: testDate))
         
         let correctDateComponents = DateComponents(year: 2020, month: 2, day: 1)
         let correctDate = try XCTUnwrap(Calendar.current.date(from: correctDateComponents))
@@ -111,7 +111,7 @@ class CareTaskTests: XCTestCase {
         testLog.date = testDate
         sut.addToLogs_(testLog)
         
-        XCTAssertNil(sut.nextCareDate(for: testDate))
+        XCTAssertNil(sut.calculateNextCareDate(for: testDate))
     }
     
     func testCareTask_WhenIntervalIsDailyWithLog_NextCareDateIsTheNextDay() throws {
@@ -124,7 +124,7 @@ class CareTaskTests: XCTestCase {
         testLog.date = testDate
         sut.addToLogs_(testLog)
         
-        let nextCareDate = try XCTUnwrap(sut.nextCareDate(for: testDate))
+        let nextCareDate = try XCTUnwrap(sut.calculateNextCareDate(for: testDate))
         
         let correctDateComponents = DateComponents(year: 2020, month: 1, day: 6)
         let correctDate = try XCTUnwrap(Calendar.current.date(from: correctDateComponents))
@@ -142,7 +142,7 @@ class CareTaskTests: XCTestCase {
         testLog.date = testDate
         sut.addToLogs_(testLog)
         
-        let nextCareDate = try XCTUnwrap(sut.nextCareDate(for: testDate))
+        let nextCareDate = try XCTUnwrap(sut.calculateNextCareDate(for: testDate))
         
         let correctDateComponents = DateComponents(year: 2020, month: 1, day: 12)
         let correctDate = try XCTUnwrap(Calendar.current.date(from: correctDateComponents))
@@ -164,7 +164,7 @@ class CareTaskTests: XCTestCase {
         testLog.date = logDate
         sut.addToLogs_(testLog)
         
-        let nextCareDate = try XCTUnwrap(sut.nextCareDate(for: testDate))
+        let nextCareDate = try XCTUnwrap(sut.calculateNextCareDate(for: testDate))
         
         let correctDateComponents = DateComponents(year: 2020, month: 1, day: 12)
         let correctDate = try XCTUnwrap(Calendar.current.date(from: correctDateComponents))
@@ -186,7 +186,7 @@ class CareTaskTests: XCTestCase {
         testLog.date = logDate
         sut.addToLogs_(testLog)
         
-        let nextCareDate = try XCTUnwrap(sut.nextCareDate(for: testDate))
+        let nextCareDate = try XCTUnwrap(sut.calculateNextCareDate(for: testDate))
         
         let correctDateComponents = DateComponents(year: 2020, month: 2, day: 1)
         let correctDate = try XCTUnwrap(Calendar.current.date(from: correctDateComponents))
@@ -206,7 +206,7 @@ class CareTaskTests: XCTestCase {
         testLog.date = logDate
         sut.addToLogs_(testLog)
         
-        let nextCareDate = try XCTUnwrap(sut.nextCareDate(for: testDate))
+        let nextCareDate = try XCTUnwrap(sut.calculateNextCareDate(for: testDate))
         
         let correctDateComponents = DateComponents(year: 2020, month: 2, day: 1)
         let correctDate = try XCTUnwrap(Calendar.current.date(from: correctDateComponents))

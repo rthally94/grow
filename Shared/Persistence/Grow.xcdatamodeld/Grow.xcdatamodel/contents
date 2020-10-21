@@ -2,7 +2,8 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="20A5395g" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CareTask" representedClassName="CareTask" syncable="YES" codeGenerationType="class">
         <attribute name="intervalUnit_" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="intervalValues_" optional="YES" attributeType="Transformable"/>
+        <attribute name="intervalValues_" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformerName"/>
+        <attribute name="nextCareDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="note_" optional="YES" attributeType="String"/>
         <relationship name="logs_" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="CareTaskLog" inverseName="task" inverseEntity="CareTaskLog"/>
         <relationship name="plant" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Plant" inverseName="careTasks_" inverseEntity="Plant"/>
@@ -29,7 +30,7 @@
         <relationship name="careTasks_" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CareTask" inverseName="plant" inverseEntity="CareTask"/>
     </entity>
     <elements>
-        <element name="CareTask" positionX="194.90625" positionY="-287.4921875" width="169.00390625" height="133"/>
+        <element name="CareTask" positionX="194.90625" positionY="-287.4921875" width="169.00390625" height="148"/>
         <element name="CareTaskLog" positionX="602.875" positionY="-264.96484375" width="128" height="73"/>
         <element name="CareTaskType" positionX="612.69921875" positionY="-44.51171875" width="128" height="133"/>
         <element name="Plant" positionX="-207.8984375" positionY="-291.28125" width="128" height="133"/>

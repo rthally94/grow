@@ -121,12 +121,18 @@ extension CareTask {
     
     var intervalUnit: IntervalUnit {
         get { IntervalUnit(rawValue: intervalUnit_) ?? .never }
-        set { intervalUnit_ = newValue.rawValue }
+        set {
+            intervalUnit_ = newValue.rawValue
+            updateNextCareDate()
+        }
     }
     
     var intervalValues: Set<Int> {
         get { intervalValues_ as? Set<Int> ?? [] }
-        set { intervalValues_ = newValue as NSSet }
+        set {
+            intervalValues_ = newValue as NSSet
+            updateNextCareDate()
+        }
     }
     
     var interval: (IntervalUnit, Set<Int>) {
@@ -139,14 +145,21 @@ extension CareTask {
     
     var logs: [CareTaskLog] {
         get { logs_?.array as? [CareTaskLog] ?? [] }
-        set { logs_ = NSOrderedSet(array: newValue) }
+        set {
+            logs_ = NSOrderedSet(array: newValue)
+            updateNextCareDate()
+        }
     }
     
     var latestLog: CareTaskLog? {
         logs.max(by: { $0.date > $1.date })
     }
     
-    func nextCareDate(for date: Date) -> Date? {
+    func updateNextCareDate() {
+        nextCareDate = calculateNextCareDate(for: Date())
+    }
+    
+    func calculateNextCareDate(for date: Date) -> Date? {
         let nextTaskDate: Date?
         
         switch(intervalUnit, latestLog) {
@@ -201,61 +214,4 @@ extension CareTask {
             return nextTaskDate
         }
     }
-    
-    //    func nextCareDate() -> Date? {
-    
-    //        func nextCareDate(for date: Date) -> Date? {
-    //            switch intervalUnit {
-    //            case .daily:
-    //                return Calendar.current.date(byAdding: .day, value: 1, to: date)
-    //
-    //            case .weekly:
-    //                let lastCompletedWeekday = Calendar.current.component(.weekday, from: date)
-    //                let weekdays = intervalValues.sorted()
-    //
-    //                if weekdays.contains(lastCompletedWeekday) {
-    //                    return date
-    //                } else {
-    //                    let nextWeekday = weekdays.first(where: { $0 > lastCompletedWeekday }) ?? weekdays[0]
-    //                    return Calendar.current.nextDate(after: date, matching: .init(weekday: nextWeekday), matchingPolicy: .nextTime)
-    //                }
-    //
-    //            case .monthly:
-    //                let lastCompletedDay = Calendar.current.component(.day, from: date)
-    //                let days = intervalValues.sorted()
-    //
-    //                if days.contains(lastCompletedDay) {
-    //                    return date
-    //                } else {
-    //                    let nextDay = days.first(where: { $0 > lastCompletedDay }) ?? days[0]
-    //                    return Calendar.current.nextDate(after: date, matching: .init(day: nextDay), matchingPolicy: .previousTimePreservingSmallerComponents)
-    //                }
-    //
-    //            default:
-    //                return nil
-    //            }
-    //        }
-    //
-    //        if let lastLog = latestLog {
-    //            // Has a log. Use its date as the reference point
-    //            if let next = nextCareDate(for: lastLog.date) {
-    //                return Calendar.current.startOfDay(for: next)
-    //            } else {
-    //                return nil
-    //            }
-    //        } else {
-    //            // Has not been logged. Use next possible date matching interval
-    //            if let next = nextCareDate(for: Calendar.current.date(byAdding: .day, value: -1, to: Date())) {
-    //                return Calendar.current.startOfDay(for: next)
-    //            } else {
-    //                return nil
-    //            }
-    //        }
-    
-    //        if let next = nextCareDate(for: latestLog.date) {
-    //            return Calendar.current.startOfDay(for: next)
-    //        } else {
-    //            return nil
-    //        }
-    //    }
 }

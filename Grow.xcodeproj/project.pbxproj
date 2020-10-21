@@ -268,8 +268,8 @@
 		21C0C95124D0A3840062BEA8 /* PlantsTaskList */ = {
 			isa = PBXGroup;
 			children = (
-				FB54CAC524D886F3006BB3C5 /* GrowPicker.swift */,
 				21C0C95224D0A39B0062BEA8 /* PlantsTaskList.swift */,
+				FB54CAC524D886F3006BB3C5 /* GrowPicker.swift */,
 				21DBE11624D5B6FB00D8CC9C /* GrowTaskCard.swift */,
 			);
 			path = PlantsTaskList;
