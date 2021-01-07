@@ -46,35 +46,37 @@ struct PlantsTaskList: View {
     }
     
     var body: some View {
-        ScrollView {
+//        ScrollView {
             VStack {
-                WeekCalendarView(date: startingDate, selection: selectedDayBinding) { (index, day) in
-                    if selectedDay == day {
-                        Text("\(day)")
-                            .padding(4)
-                            .background(RoundedRectangle(cornerRadius: 4).strokeBorder(lineWidth: 2, antialiased: true))
-                            .foregroundColor(.accentColor)
-                            .aspectRatio(1.0, contentMode: .fill)
-                    } else {
-                        Text("\(day)")
-                            .opacity(0.8)
-                            .transition(.identity)
-                    }
-                }
-                
-                Divider()
-                
-                LazyVStack {
-                    ForEach( [CareTaskType](sections.keys), id: \.self) { key in
-                        self.sections[key].map {
-                            GrowTaskCard(careTasks: $0 )
-                                .padding(.vertical)
-                        }
-                    }
-                }
+                WeekCalendarViewExtended()
+//                WeekCalendarView(date: startingDate, selection: selectedDayBinding) { (index, day) in
+//                    if selectedDay == day {
+//                        Text("\(day)")
+//                            .padding(4)
+//                            .background(RoundedRectangle(cornerRadius: 4).strokeBorder(lineWidth: 2, antialiased: true))
+//                            .foregroundColor(.accentColor)
+//                            .aspectRatio(1.0, contentMode: .fill)
+//                    } else {
+//                        Text("\(day)")
+//                            .opacity(0.8)
+//                            .transition(.identity)
+//                    }
+//                }
             }
-            .padding()
-        }
+                
+//                Divider()
+                
+//                LazyVStack {
+//                    ForEach( [CareTaskType](sections.keys), id: \.self) { key in
+//                        self.sections[key].map {
+//                            GrowTaskCard(careTasks: $0 )
+//                                .padding(.vertical)
+//                        }
+//                    }
+//                }
+//            }
+//            .padding()
+//        }
         .navigationBarTitle(navigationBarTitle)
     }
 }

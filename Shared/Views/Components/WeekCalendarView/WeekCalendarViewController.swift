@@ -15,7 +15,7 @@ private let weekDateReuseIdentifier = "WeekDateCell"
 class WeekCalendarViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     // Calendar constraints
     var lowerBound: Date {
-        guard let start = Calendar.current.nextWeekend(startingAfter: Date(timeIntervalSince1970: 0), direction: .forward)?.start else { return Date() }
+        guard let start = Calendar.current.nextWeekend(startingAfter: Date(timeIntervalSince1970: 0), direction: .backward)?.start else { return Date() }
         return Calendar.current.date(byAdding: .day, value: 1, to: start) ?? Date()
     }
     
@@ -30,9 +30,18 @@ class WeekCalendarViewController: UIViewController, UICollectionViewDataSource, 
     // Calendar state
     private let scrollviewOffset = PassthroughSubject<CGFloat, Never>()
     private var scrollviewOffsetSubscription: AnyCancellable?
+    private func weekPickerDidScroll(visibleItems: [NSCollectionLayoutVisibleItem], point: CGPoint, env: NSCollectionLayoutEnvironment) {
+        let pageWidth = env.container.effectiveContentSize.width
+        let page = (point.x + pageWidth / 2) / pageWidth
+        self.scrollviewOffset.send(page)
+    }
     
-    var currentPage: Int = 0
     var selectedDate = Date(timeIntervalSince1970: 0)
+    
+    var currentPage: Int {
+        let selectedDateIndex = index(for: selectedDate)
+        return selectedDateIndex.item / 7
+    }
     
     var currentWeekday: Int {
         Calendar.current.component(.weekday, from: selectedDate)
@@ -54,18 +63,14 @@ class WeekCalendarViewController: UIViewController, UICollectionViewDataSource, 
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(30))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(30))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = sectionIndex == 1 ? .paging : .none
                 
                 if sectionIndex == 1 {
-                    section.visibleItemsInvalidationHandler = { (visibleItems, point, env) in
-                        let pageWidth = env.container.effectiveContentSize.width
-                        let page = (point.x + pageWidth / 2) / pageWidth
-                        self.scrollviewOffset.send(page)
-                    }
+                    section.visibleItemsInvalidationHandler = self.weekPickerDidScroll(visibleItems:point:env:)
                 }
                 
                 return section
@@ -99,31 +104,32 @@ class WeekCalendarViewController: UIViewController, UICollectionViewDataSource, 
     }()
     
     // MARK:- Intents
-    private func selectDate(at index: IndexPath) {
-        let components = DateComponents(day: index.item)
-        guard let newDate = Calendar.current.date(byAdding: components, to: lowerBound) else { return }
+    private func selectDate(at indexPath: IndexPath, animated: Bool = true) {
+        let newDate = date(for: indexPath)
+        guard newDate >= lowerBound && newDate < upperBound else { return }
         
-        selectedDate = newDate
-        currentPage = index.item / 7
-        collectionView.reloadItems(at: [IndexPath(item: 0, section: 2)])
+        let oldIndex = index(for: selectedDate)
+        let newIndex = indexPath
+        
+        self.selectedDate = newDate
+        
+        collectionView.performBatchUpdates {
+            self.collectionView.reloadSections([2])
+            self.collectionView.deselectItem(at: oldIndex, animated: animated)
+            self.collectionView.selectItem(at: newIndex, animated: animated, scrollPosition: .centeredHorizontally)
+        }
     }
     
-    private func selectDate(on page: Int) {
-        guard page != currentPage else { return }
-        let currentIndex = self.index(for: self.selectedDate)
-        let newIndex: IndexPath
-        
-        if page < currentPage {
-            newIndex = IndexPath(item: currentIndex.item - 7, section: 1)
-            guard newIndex.item >= 0 else { return }
-        } else if page > self.currentPage {
-            newIndex = IndexPath(item: currentIndex.item + 7, section: 1)
-            guard newIndex.item < self.numberOfDays else { return }
-        } else {
-            return
-        }
-        
-        self.selectDate(at: newIndex)
+    private func previousWeek() {
+        guard let newDate = Calendar.current.date(byAdding: .weekdayOrdinal, value: -1, to: selectedDate) else { return }
+        let newIndex = index(for: newDate)
+        self.collectionView(self.collectionView, didSelectItemAt: newIndex)
+    }
+    
+    private func nextWeek() {
+        guard let newDate = Calendar.current.date(byAdding: .weekdayOrdinal, value: 1, to: selectedDate) else { return }
+        let newIndex = index(for: newDate)
+        self.collectionView(self.collectionView, didSelectItemAt: newIndex)
     }
     
     // MARK:- View Lifecycle
@@ -158,12 +164,16 @@ class WeekCalendarViewController: UIViewController, UICollectionViewDataSource, 
                 return Int(floor($0))
             }
             .sink {
-                self.selectDate(on: $0)
+                if self.currentPage > $0 {
+                    self.previousWeek()
+                } else if self.currentPage < $0 {
+                    self.nextWeek()
+                }
             }
-            
         
-        selectDate(at: index(for: Date()))
-        collectionView.scrollToItem(at: index(for: selectedDate), at: .left, animated: false)
+        let indexOfToday = index(for: Date())
+        self.selectDate(at: indexOfToday, animated: false)
+        self.collectionView(self.collectionView, didSelectItemAt: indexOfToday)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -213,104 +223,14 @@ class WeekCalendarViewController: UIViewController, UICollectionViewDataSource, 
         
         // Configure cell for selection
         if let cell = collectionView.cellForItem(at: indexPath) as? WeekDateCell {
-            cell.backgroundColor = .red
+            cell.showSelection()
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         // Configure cell for deselection
         if let cell = collectionView.cellForItem(at: indexPath) as? WeekDateCell {
-            cell.backgroundColor = .clear
+            cell.hideSelection()
         }
-    }
-}
-
-class WeekLabelCell: UICollectionViewCell {
-    let textLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font = UIFont.preferredFont(forTextStyle: .caption1)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        contentView.addSubview(textLabel)
-        
-        
-        NSLayoutConstraint.activate([
-            textLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
-            textLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
-            textLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
-            textLabel.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
-        ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-class WeekDateCell: UICollectionViewCell {
-    let textLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font = UIFont.preferredFont(forTextStyle: .body)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let selectionImage: UIImageView = {
-        let imageView = UIImageView()
-        
-        let circleImageConfiguration = UIImage.SymbolConfiguration(scale: .large)
-        let circleImage = UIImage(systemName: "circle.fill", withConfiguration: circleImageConfiguration)
-        imageView.image = circleImage
-        
-        imageView.contentMode = .scaleAspectFit
-        
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        contentView.addSubview(selectionImage)
-        contentView.addSubview(textLabel)
-        
-        NSLayoutConstraint.activate([
-            textLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
-            textLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
-            textLabel.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
-            textLabel.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
-            
-            selectionImage.topAnchor.constraint(equalTo: contentView.topAnchor),
-            selectionImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            selectionImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            selectionImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-        ])
-        
-        hideSelection()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func prepareForReuse() {
-        hideSelection()
-    }
-    
-    func showSelection() {
-        selectionImage.isHidden = false
-        textLabel.font = UIFont.preferredFont(forTextStyle: .callout)
-    }
-    
-    func hideSelection() {
-        selectionImage.isHidden = true
-        textLabel.font = UIFont.preferredFont(forTextStyle: .body)
     }
 }
